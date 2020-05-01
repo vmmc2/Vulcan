@@ -1,4 +1,4 @@
-## Design Skectches
+# Design Skectches
 
-# What is it?
+## What is it?
 * A folder that contains my initial design ideas for Vulcan.
