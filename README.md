@@ -5,6 +5,8 @@ RISC-V Instruction Set Simulator
 - [x] finish the home page layout
 - [ ] finish the editor page layout
 - [ ] integrate the editor page with codemirror
+- [ ] finish the simulator page layout
+- [ ] finish the reference page layout
 
 ## Etapa Dificil: Conectar o CodeMirror com o Flutter Web
 * No momento em que estou fazendo o projeto, a API do CodeMirror (ou o que quer que seja aquilo) ta disponivel apenas para Dart:HTML. Nao tem um package ou plugin ou qualquer coisa do tipo para gente plugar no nosso aplicativo Flutter Web. Ou seja, vamo ter que fazer todo esse procedimento na tora.
