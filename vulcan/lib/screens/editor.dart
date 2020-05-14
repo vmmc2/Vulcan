@@ -75,12 +75,20 @@ class _EditorState extends State<Editor> {
           body: Column(
             children: <Widget>[
               ActionBar(),
+              Text(
+                'To start coding wait for the editor to be loaded and then click on it.',
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: 15.0,
+                  color: Color(0xFF1CFDFC),
+                ),
+              ),
               Container(
                 color: Color(0xFF02143D),
                 //vou tirar o expanded de cima do code editor. se der bosta, volta dar um wrap no CodeEditor usando o Expanded()
                 child: CodeEditor(
                     editorId: _editorId,
-                    height: 580,
+                    height: 550,
                     width: 1300,
                     initialOptions: _editorOptions,
                     onEditorCreated: handleEditorCreated,
