@@ -5,7 +5,7 @@ RISC-V Instruction Set Simulator
 - [x] finish the home page layout
 - [x] finish the editor page layout
 - [x] integrate the editor page with codemirror
-- [ ] try to fix the problem with the space key.
+- [x] try to fix the problem with the space key.
 - [ ] finish the simulator page layout
 - [ ] finish the reference page layout
 - [ ] code the assembler
