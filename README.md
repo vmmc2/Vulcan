@@ -10,6 +10,8 @@ RISC-V Instruction Set Simulator
 - [ ] finish the reference page layout
 - [ ] code the assembler
 - [ ] code the processor and the instructions execution
+- [ ] do the reference page content
+- [ ] study RISC-V assembly
 
 ## Etapa Dificil: Conectar o CodeMirror com o Flutter Web
 * No momento em que estou fazendo o projeto, a API do CodeMirror (ou o que quer que seja aquilo) ta disponivel apenas para Dart:HTML. Nao tem um package ou plugin ou qualquer coisa do tipo para gente plugar no nosso aplicativo Flutter Web. Ou seja, vamo ter que fazer todo esse procedimento na tora.
