@@ -1,4 +1,4 @@
-# Vulcan
+# Vulcan: A RISC-V Instruction Set Simulator
 
 A new Flutter project.
 
