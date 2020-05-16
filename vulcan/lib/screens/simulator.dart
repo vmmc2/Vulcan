@@ -35,7 +35,6 @@ class _SimulatorState extends State<Simulator> {
                     color: Color(0xFF1CFDFC),
                   ),
                 ),
-                SizedBox(height: 20.0),
                 Expanded( //nao tinha esse Expanded() antes.
                   child: Row( //Nessa linha eu vou ter o status do simulador com as instrucoes executadas e a sua direita eu vou ter os registradores e a cache
                     children: <Widget>[
@@ -57,7 +56,7 @@ class _SimulatorState extends State<Simulator> {
                               decoration: BoxDecoration(
                                 color: Color(0xFFCDE6F5),
                               ),
-                              height: 515.0,
+                              height: 535.0,
                               width: 980.0,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -135,7 +134,7 @@ class _SimulatorState extends State<Simulator> {
                           ),
                         ],
                       ),
-                      SizedBox(width: 30.0),
+                      SizedBox(width: 20.0),
                       Column( //segunda coluna vai ficar os registradores e a memoria.
                         crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
@@ -153,7 +152,7 @@ class _SimulatorState extends State<Simulator> {
                                 decoration: BoxDecoration(
                                   color: Color(0xFFCDE6F5),
                                 ),
-                                height: 515.0,
+                                height: 535.0,
                                 width: 500.0,
                               ),
                             ),
