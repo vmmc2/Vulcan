@@ -102,7 +102,10 @@ class _EditorState extends State<Editor> {
                 ],
               ),
               floatingActionButton: FloatingActionButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/simulator');
+                  return;
+                },
                 tooltip: 'Simulate',
                 elevation: 20.0,
                 hoverElevation: 5.0,
