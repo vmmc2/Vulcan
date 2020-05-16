@@ -100,6 +100,7 @@ class _SimulatorState extends State<Simulator> {
                                       ),
                                     ],
                                   ),
+                                  //Divider(),
                                   Expanded( //Por algum motivo, para usar ListView ou ListView.builder dentro de um widget sem ser Scaffold tem que por ela dentro de um Expanded() antes.
                                     child: ListView.builder(
                                       padding: const EdgeInsets.all(8.0),
@@ -154,6 +155,76 @@ class _SimulatorState extends State<Simulator> {
                                 ),
                                 height: 535.0,
                                 width: 500.0,
+                                child: Column(
+                                  children: <Widget>[
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        ButtonTheme(
+                                          height: 20.0,
+                                          child: FlatButton(
+                                            onPressed: () {},
+                                            child: Text(
+                                              'Registers',
+                                              style: TextStyle(
+                                                fontFamily: 'Poppins',
+                                                fontSize: 16.0,
+                                                color: Color(0xFF02143D),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        ButtonTheme(
+                                          height: 20.0,
+                                          child: FlatButton(
+                                            onPressed: () {},
+                                            child: Text(
+                                              'Memory',
+                                              style: TextStyle(
+                                                fontFamily: 'Poppins',
+                                                fontSize: 16.0,
+                                                color: Color(0xFF02143D),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        ButtonTheme(
+                                          height: 20.0,
+                                          child: FlatButton(
+                                            onPressed: () {},
+                                            child: Text(
+                                              'Integer (R)',
+                                              style: TextStyle(
+                                                fontFamily: 'Poppins',
+                                                fontSize: 14.0,
+                                                color: Color(0xFF02143D),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        ButtonTheme(
+                                          height: 20.0,
+                                          child: FlatButton(
+                                            onPressed: () {},
+                                            child: Text(
+                                              'Floating (F)',
+                                              style: TextStyle(
+                                                fontFamily: 'Poppins',
+                                                fontSize: 14.0,
+                                                color: Color(0xFF02143D),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ],
