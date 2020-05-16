@@ -1,4 +1,4 @@
-# vulcan
+# Vulcan
 
 A new Flutter project.
 
