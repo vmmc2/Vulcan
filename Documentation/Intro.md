@@ -20,3 +20,6 @@
   * No caso do RISC-V, existe um ISA/módulo básico (núcleo), chamado de RV32I, que executa uma pilha completa de software. O RV32I está congelado e nunca será alterado. Tal característica fornece estabilidade aos criadores de compiladores, desenvolvedores de sistemas operacionais e programadores de linguagem Assembly.
   * Como já foi dito, a modularidade vem de extensões padrão opcionais que o hardware pode incluir ou não, dependendo das necessidades da aplicação.
   * Tal fato permite implementações simples, muito pequenas e de baixo consumo de energia, que podem ser críticas para aplicações embarcadas.
+
+## Mais Vantagens do RISC-V
+* O fato de possuir uma ISA modular simples e pequena faz com que o tamanho dos processadores que implementam essa ISA seja reduzido quando comparado a outras ISAs.
