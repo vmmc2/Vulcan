@@ -64,7 +64,7 @@ class _HomeState extends State<Home> {
                               'Home',
                               style: TextStyle(
                                   fontFamily: 'Poppins',
-                                  color: Color(0xFF1CFDFC)
+                                  color: Color(0xFF1CFDFC),
                               ),
                             ),
                             color: Color(0xFF22007C),
