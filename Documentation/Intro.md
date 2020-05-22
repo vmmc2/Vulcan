@@ -19,3 +19,4 @@
   * Como o nome sugere, a ISA Modular adota uma abordagem de dividir as extensões com novas instruções em módulos que podem ou não ser adicionados a uma implementação de processador de acordo com as necessidades da aplicação. Não há necessidade de utilizarmos a ISA inteira (que pode conter uma série de instruções que não terão utilidade para a nossa aplicação).
   * No caso do RISC-V, existe um ISA/módulo básico (núcleo), chamado de RV32I, que executa uma pilha completa de software. O RV32I está congelado e nunca será alterado. Tal característica fornece estabilidade aos criadores de compiladores, desenvolvedores de sistemas operacionais e programadores de linguagem Assembly.
   * Como já foi dito, a modularidade vem de extensões padrão opcionais que o hardware pode incluir ou não, dependendo das necessidades da aplicação.
+  * Tal fato permite implementações simples, muito pequenas e de baixo consumo de energia, que podem ser críticas para aplicações embarcadas.
