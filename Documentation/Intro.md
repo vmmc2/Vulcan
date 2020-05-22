@@ -24,3 +24,7 @@
 ## Mais Vantagens do RISC-V
 * O fato de possuir uma ISA modular simples e pequena faz com que o tamanho dos processadores que implementam essa ISA seja reduzido quando comparado a outras ISAs.
 * Ademais, o fato de apresentar uma ISA simples faz com que o custo de documentação seja reduzido e facilita o processo de aprendizado dos clientes sobre como usar adequadamente as instruções da ISA.
+
+## Diferença entre Arquitetura e Implementação
+* Muitas pessoas acabam confundindo esses dois conceitos. E, por consequência, acabam usando tais termos intercambiavelmente. Entretanto, existem diferenças cruciais entre eles.
+* A arquitetura diz respeito ao conhecimento que o programador de linguagem Assembly deve possuir para desenvolver/escrever um programa correto (no que diz respeito à sintaxe), sem se preocupar com o desempenho/eficiência do programa escrito. Cabe à implementação lidar com o desempenho dos programas escritos em Assembly. Quando estamos analisando esse aspecto, vemos que exigem diferentes estratégias de implementação, como por exemplo: Ciclo Simples, Multi-Ciclo, Pipeline, Superescalar (que executa mais de uma instrução por ciclo de clock), entre outras.
