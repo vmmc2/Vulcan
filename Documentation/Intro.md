@@ -8,3 +8,5 @@
 
 ## Considerações Iniciais e Histórico:
 * O RISC-V se trata de uma arquitetura de conjunto de instruções (ISA) open-source criada em 2011 e que se destaca entre suas concorrentes (ARM, Intel e Mips) por sua elegância e simplicidade.
+
+## ISA Incremental vs. ISA Modular
