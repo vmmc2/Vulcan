@@ -28,3 +28,4 @@
 ## Diferença entre Arquitetura e Implementação
 * Muitas pessoas acabam confundindo esses dois conceitos. E, por consequência, acabam usando tais termos intercambiavelmente. Entretanto, existem diferenças cruciais entre eles.
 * A arquitetura diz respeito ao conhecimento que o programador de linguagem Assembly deve possuir para desenvolver/escrever um programa correto (no que diz respeito à sintaxe), sem se preocupar com o desempenho/eficiência do programa escrito. Cabe à implementação lidar com o desempenho dos programas escritos em Assembly. Quando estamos analisando esse aspecto, vemos que exigem diferentes estratégias de implementação, como por exemplo: Ciclo Simples, Multi-Ciclo, Pipeline, Superescalar (que executa mais de uma instrução por ciclo de clock), entre outras.
+* Fazendo uma analogia, podemos enxergar a arquitetura como um blueprint/esboço/ideia e a implementação como uma estratégia/metodologia para executar tal ideia.
