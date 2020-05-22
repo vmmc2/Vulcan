@@ -15,3 +15,4 @@
 * Essa prática entretanto contém inúmeras desvantagens. Dentre elas:
   * Crescimento exagerado do número de instruções presentes na ISA. Vamos tomar como exemplo uma ISA dominante: 80x86. Levando, em consideração que sua primeira versão foi lançada em 1978 temos que, em média, 3 novas instruções foram adicionadas por mês até os dias atuais.
   * Deve implementar os erros das extensões anteriores mesmo quando eles não fazem mais sentido. Tal prática faz com que as ISAs Incrementais possuam uma certa quantidade de instruções consideradas "inúteis" devido a sua baixa aplicabilidade.
+* A ISA Modular, por outro lado, foi a abordagem adotada pelo RISC-V. Essa é uma das características que o fazem ser tão incomum e diferenciado em relação aos seus antecessores. No entanto, como funciona uma ISA Modular e quais são as suas vantagens?
