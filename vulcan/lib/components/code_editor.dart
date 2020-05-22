@@ -12,7 +12,7 @@ class CodeEditor extends StatefulWidget {
   final Function(CodeMirror) onEditorCreated;
   final double width;
   final double height;
-  final String editorId; //vai ser o ID do editor no arquivo HTML
+  final String editorId; //vai ser o ID do editor no arquivo HTML.
   final Map initialOptions; //Configuaracao do editor
   final FocusNode focusNode;
 
