@@ -10,12 +10,12 @@ class MyApp extends StatelessWidget{
   @override
   Widget build(BuildContext context){
     return MaterialApp(
-      initialRoute: '/',
+      initialRoute: '/', //Indica qual eh a pagina inicial. No caso eh a Home()
       routes: {
-        '/' : (context) => Home(),
-        '/editor' : (context) => Editor(),
-        '/simulator' : (context) => Simulator(),
-        '/reference' : (context) => Reference(),
+        '/' : (context) => Home(),  //Pagina Inicial
+        '/editor' : (context) => Editor(), //Pagina do Editor
+        '/simulator' : (context) => Simulator(), //Pagina do Simulador
+        '/reference' : (context) => Reference(), //Pagina da Referencia/Orientacoes/Explicacoes sobre o ISA do RISC-V e sobre a arquitetura no geral.
       },
     );
   }
