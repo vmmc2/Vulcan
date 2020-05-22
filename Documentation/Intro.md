@@ -23,3 +23,4 @@
 
 ## Mais Vantagens do RISC-V
 * O fato de possuir uma ISA modular simples e pequena faz com que o tamanho dos processadores que implementam essa ISA seja reduzido quando comparado a outras ISAs.
+* Ademais, o fato de apresentar uma ISA simples faz com que o custo de documentação seja reduzido e facilita o processo de aprendizado dos clientes sobre como usar adequadamente as instruções da ISA.
