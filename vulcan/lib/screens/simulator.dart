@@ -5,9 +5,29 @@ import 'package:vulcan/components/top_bar.dart';
 import 'package:vulcan/components/action_bar.dart';
 import 'package:vulcan/screens/error.dart';
 import 'package:vulcan/utilities/instruction_card.dart';
+import 'package:vulcan/components/status_button.dart';
+import 'package:vulcan/components/register_card.dart';
+import 'package:vulcan/components/floating_register_list.dart';
+import 'package:vulcan/components/integer_register_list.dart';
 
 List<String> teste = ['Teste', 'Para', 'Ver', 'Como', 'O', 'List', 'View', 'Funciona', 'Em', 'Detalhes','porra', 'caralho', 'misera','0','1','2','3','4','5','6','7','8','9'];
 int number = 0;
+
+const kColumnStyle = TextStyle(
+  fontFamily: 'Poppins',
+  fontSize: 16.0,
+  color: Color(0xFF02143D),
+);
+
+const kRowStyle = TextStyle(
+  fontFamily: 'Poppins',
+  fontSize: 14.0,
+  color: Color(0xFF02143D),
+);
+
+//variaveis que serao usadas para controlar o painel de status
+enum MajorStatus{register, memory}
+enum TypeRegister{integer, floating}
 
 class Simulator extends StatefulWidget {
   @override
@@ -15,6 +35,20 @@ class Simulator extends StatefulWidget {
 }
 
 class _SimulatorState extends State<Simulator> {
+  MajorStatus currentStatus = MajorStatus.register;
+  TypeRegister cStatus = TypeRegister.integer;
+  String dropdownValue = ' Text';
+
+  Widget putData(MajorStatus currentStatus, TypeRegister cStatus){
+    if(currentStatus == MajorStatus.memory){
+      return MemoryView();
+    }else if(currentStatus == MajorStatus.register && cStatus == TypeRegister.integer){
+      return IntegerRegisterList();
+    }else if(currentStatus == MajorStatus.register && cStatus == TypeRegister.floating){
+      return FloatingRegisterList();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -57,7 +91,7 @@ class _SimulatorState extends State<Simulator> {
                                 color: Color(0xFFCDE6F5),
                               ),
                               height: 535.0,
-                              width: 980.0,
+                              width: 930.0, //tava 980.0 antes
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
@@ -100,7 +134,14 @@ class _SimulatorState extends State<Simulator> {
                                       ),
                                     ],
                                   ),
-                                  //Divider(),
+                                  SizedBox(
+                                    height: 0.5,
+                                    width: 980.0,
+                                    child: Divider(
+                                      color: Color(0xFF02143D),
+                                      thickness: 2.0,
+                                    ),
+                                  ),
                                   Expanded( //Por algum motivo, para usar ListView ou ListView.builder dentro de um widget sem ser Scaffold tem que por ela dentro de um Expanded() antes.
                                     child: ListView.builder(
                                       padding: const EdgeInsets.all(8.0),
@@ -154,74 +195,72 @@ class _SimulatorState extends State<Simulator> {
                                   color: Color(0xFFCDE6F5),
                                 ),
                                 height: 535.0,
-                                width: 500.0,
+                                width: 540.0,
                                 child: Column(
                                   children: <Widget>[
+                                    SizedBox(height: 5.0),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: <Widget>[
-                                        ButtonTheme(
-                                          height: 20.0,
-                                          child: FlatButton(
-                                            onPressed: () {},
-                                            child: Text(
-                                              'Registers',
-                                              style: TextStyle(
-                                                fontFamily: 'Poppins',
-                                                fontSize: 16.0,
-                                                color: Color(0xFF02143D),
-                                              ),
-                                            ),
-                                          ),
+                                        StatusButton(name: 'Registers', fSize: 16.0, hei: 32.0, wid: 100.0,
+                                          backGroundColour: currentStatus == MajorStatus.register ? Color(0xFF02143D) : Color(0xFFCDE6F5),
+                                          textColour: currentStatus == MajorStatus.register ? Color(0xFFCDE6F5) : Color(0xFF02143D),
+                                          onPressed: () {
+                                            setState(() {
+                                              currentStatus = MajorStatus.register;
+                                            });
+                                          },
                                         ),
-                                        ButtonTheme(
-                                          height: 20.0,
-                                          child: FlatButton(
-                                            onPressed: () {},
-                                            child: Text(
-                                              'Memory',
-                                              style: TextStyle(
-                                                fontFamily: 'Poppins',
-                                                fontSize: 16.0,
-                                                color: Color(0xFF02143D),
-                                              ),
-                                            ),
-                                          ),
+                                        SizedBox(width: 20.0),
+                                        StatusButton(name: 'Memory', fSize: 16.0, hei: 32.0, wid: 100.0,
+                                          backGroundColour: currentStatus == MajorStatus.memory ? Color(0xFF02143D) : Color(0xFFCDE6F5),
+                                          textColour: currentStatus == MajorStatus.memory ? Color(0xFFCDE6F5) : Color(0xFF02143D),
+                                            onPressed: () {
+                                            setState(() {
+                                              currentStatus = MajorStatus.memory;
+                                            });
+                                          },
                                         ),
                                       ],
                                     ),
+                                    SizedBox(height: 5.0),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: <Widget>[
-                                        ButtonTheme(
-                                          height: 20.0,
-                                          child: FlatButton(
-                                            onPressed: () {},
-                                            child: Text(
-                                              'Integer (R)',
-                                              style: TextStyle(
-                                                fontFamily: 'Poppins',
-                                                fontSize: 14.0,
-                                                color: Color(0xFF02143D),
-                                              ),
-                                            ),
-                                          ),
+                                        StatusButton(name: 'Integer (I)', fSize: 12.0, hei: 25.0, wid: 80.0,
+                                          backGroundColour: (currentStatus == MajorStatus.register) && (cStatus == TypeRegister.integer)? Color(0xFF02143D) : Color(0xFFCDE6F5),
+                                          textColour: (currentStatus == MajorStatus.register) && (cStatus == TypeRegister.integer)? Color(0xFFCDE6F5) : Color(0xFF02143D),
+                                          onPressed: () {
+                                            if(currentStatus != MajorStatus.register) return;
+                                            setState(() {
+                                              cStatus = TypeRegister.integer;
+                                            });
+                                          },
                                         ),
-                                        ButtonTheme(
-                                          height: 20.0,
-                                          child: FlatButton(
-                                            onPressed: () {},
-                                            child: Text(
-                                              'Floating (F)',
-                                              style: TextStyle(
-                                                fontFamily: 'Poppins',
-                                                fontSize: 14.0,
-                                                color: Color(0xFF02143D),
-                                              ),
-                                            ),
-                                          ),
+                                        SizedBox(width: 20.0),
+                                        StatusButton(name: 'Floating (F)', fSize: 12.0, hei: 25.0, wid: 80.0,
+                                          backGroundColour: (currentStatus == MajorStatus.register) && (cStatus == TypeRegister.floating)? Color(0xFF02143D) : Color(0xFFCDE6F5),
+                                          textColour: (currentStatus == MajorStatus.register) && (cStatus == TypeRegister.floating)? Color(0xFFCDE6F5) : Color(0xFF02143D),
+                                          onPressed: () {
+                                            if(currentStatus != MajorStatus.register) return;
+                                            setState(() {
+                                              cStatus = TypeRegister.floating;
+                                            });
+                                          },
                                         ),
                                       ],
+                                    ),
+                                    SizedBox(height: 5.0),
+                                    SizedBox(
+                                      height: 0.5,
+                                      width: 540.0,
+                                      child: Divider(
+                                        color: Color(0xFF02143D),
+                                        thickness: 2.0,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: putData(currentStatus, cStatus),
                                     ),
                                   ],
                                 ),
@@ -240,3 +279,477 @@ class _SimulatorState extends State<Simulator> {
     );
   }
 }
+
+class MemoryView extends StatefulWidget { //Widget stateful responsavel por mostrar o status da memoria e por se movimentar atraves dela...
+  List<int> memory = new List<int>.generate(1000000, (int index) => index); //inicializar e memoria como privada porque nao tem logica o cara se capaz de mudar ela diretamente...
+  int cursor = 0; //vai servir para me guiar na horar de ir mudando de list em list.
+  String dropdownValue = ' Text';
+  Map memorySegments = <String, int>{
+    ' Text' : 0,
+    ' Data': 45,
+    ' Heap': 12343,
+    ' Stack': 999992,
+  };
+
+  @override
+  _MemoryViewState createState() => _MemoryViewState();
+}
+
+class _MemoryViewState extends State<MemoryView> {
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(6.0),
+          child: Row(
+            children: <Widget>[
+              SizedBox(width: 10.0),
+              Text(
+                'Memory Segment:',
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: 14.0,
+                  color: Color(0xFF02143D),
+                ),
+              ),
+              SizedBox(width: 10.0),
+              Container(
+                height: 30.0,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5.0),
+                  border: Border.all(
+                    color: Color(0xFF02143D),
+                    width: 1.0,
+                  ),
+                ),
+                child: DropdownButton<String>(
+                  value: widget.dropdownValue,
+                  dropdownColor: Color(0xFFCDE6F5),
+                  icon: Icon(
+                    Icons.arrow_downward,
+                    color: Color(0xFF02143D),
+                  ),
+                  iconSize: 20,
+                  elevation: 16,
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
+                    fontSize: 14.0,
+                    color: Color(0xFF02143D),
+                  ),
+                  underline: Container(
+                    height: 0,
+                    color: Color(0xFF02143D),
+                  ),
+                  onChanged: (String newValue) {
+                    setState(() {
+                      widget.dropdownValue = newValue;
+                      widget.cursor = widget.memorySegments[widget.dropdownValue];
+                    });
+                  },
+                  items: <String>[' Text', ' Data', ' Heap', ' Stack']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
+              ),
+              SizedBox(width: 110.0),
+              Container(
+                height: 30.0,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5.0),
+                  border: Border.all(
+                    color: Color(0xFF02143D),
+                    width: 1.0,
+                  ),
+                ),
+                child: FlatButton(
+                  onPressed: () {
+                    if(widget.cursor == 0) return;
+                    else{
+                      setState(() {
+                        if(widget.cursor - 28 < 0){
+                          widget.cursor = 0;
+                        } else {
+                          widget.cursor -= 28;
+                        }
+                      });
+                    }
+                  },
+                  color: Color(0xFFCDE6F5),
+                  child: Text(
+                    'Up',
+                    style: TextStyle(
+                      fontFamily: 'Poppins',
+                      fontSize: 14.0,
+                      color: Color(0xFF02143D),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(width: 10.0),
+              Container(
+                height: 30.0,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5.0),
+                  border: Border.all(
+                    color: Color(0xFF02143D),
+                    width: 1.0,
+                  ),
+                ),
+                child: FlatButton(
+                  onPressed: () {
+                    if(widget.cursor == 999992) return;
+                    else{
+                      setState(() {
+                        if(widget.cursor + 28 > 999992){
+                          widget.cursor = 999992;
+                        }else {
+                          widget.cursor += 28;
+                        }
+                      });
+                    }
+                  },
+                  color: Color(0xFFCDE6F5),
+                  child: Text(
+                    'Down',
+                    style: TextStyle(
+                      fontFamily: 'Poppins',
+                      fontSize: 14.0,
+                      color: Color(0xFF02143D),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(6.0),
+          child: Expanded(
+            child: DataTable(
+              columns: [
+                DataColumn(
+                  label: Text(
+                    'Address',
+                    style: kColumnStyle,
+                  ),
+                ),
+                DataColumn(
+                  label: Text(
+                    '+3',
+                    style: kColumnStyle,
+                  ),
+                ),
+                DataColumn(
+                  label: Text(
+                    '+2',
+                    style: kColumnStyle,
+                  ),
+                ),
+                DataColumn(
+                  label: Text(
+                    '+1',
+                    style: kColumnStyle,
+                  ),
+                ),
+                DataColumn(
+                  label: Text(
+                    '+0',
+                    style: kColumnStyle,
+                  ),
+                ),
+              ],
+              rows: [
+                DataRow(
+                    cells: [
+                      DataCell(Text('0', style: kRowStyle)),
+                      DataCell(Text('${widget.memory[widget.cursor + 3]}', style: kRowStyle)),
+                      DataCell(Text('${widget.memory[widget.cursor + 2]}', style: kRowStyle)),
+                      DataCell(Text('${widget.memory[widget.cursor + 1]}', style: kRowStyle)),
+                      DataCell(Text('${widget.memory[widget.cursor + 0]}', style: kRowStyle)),
+                    ]
+                ),
+                DataRow(
+                    cells: [
+                      DataCell(Text('1', style: kRowStyle)),
+                      DataCell(Text('${widget.memory[widget.cursor + 7]}', style: kRowStyle)),
+                      DataCell(Text('${widget.memory[widget.cursor + 6]}', style: kRowStyle)),
+                      DataCell(Text('${widget.memory[widget.cursor + 5]}', style: kRowStyle)),
+                      DataCell(Text('${widget.memory[widget.cursor + 4]}', style: kRowStyle)),
+                    ]
+                ),
+                DataRow(
+                    cells: [
+                      DataCell(Text('2', style: kRowStyle)),
+                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 11]}' : '--', style: kRowStyle)),
+                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 10]}' : '--', style: kRowStyle)),
+                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 9]}' : '--', style: kRowStyle)),
+                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 8]}' : '--', style: kRowStyle)),
+                    ]
+                ),
+                DataRow(
+                    cells: [
+                      DataCell(Text('3', style: kRowStyle)),
+                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 15]}' : '--', style: kRowStyle)),
+                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 14]}' : '--', style: kRowStyle)),
+                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 13]}' : '--', style: kRowStyle)),
+                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 12]}' : '--', style: kRowStyle)),
+                    ]
+                ),
+                DataRow(
+                    cells: [
+                      DataCell(Text('4', style: kRowStyle)),
+                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 19]}' : '--', style: kRowStyle)),
+                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 18]}' : '--', style: kRowStyle)),
+                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 17]}' : '--', style: kRowStyle)),
+                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 16]}' : '--', style: kRowStyle)),
+                    ]
+                ),
+                DataRow(
+                    cells: [
+                      DataCell(Text('5', style: kRowStyle)),
+                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 23]}' : '--', style: kRowStyle)),
+                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 22]}' : '--', style: kRowStyle)),
+                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 21]}' : '--', style: kRowStyle)),
+                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 20]}' : '--', style: kRowStyle)),
+                    ]
+                ),
+                DataRow(
+                    cells: [
+                      DataCell(Text('6', style: kRowStyle)),
+                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 27]}' : '--', style: kRowStyle)),
+                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 26]}' : '--', style: kRowStyle)),
+                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 25]}' : '--', style: kRowStyle)),
+                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 24]}' : '--', style: kRowStyle)),
+                    ]
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+
+
+/*
+Column(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Row(
+              children: <Widget>[
+                Text(
+                  'Memory Segment:',
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
+                    fontSize: 14.0,
+                    color: Color(0xFF02143D),
+                  ),
+                ),
+                SizedBox(width: 10.0),
+                Container(
+                  height: 30.0,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5.0),
+                    border: Border.all(
+                      color: Color(0xFF02143D),
+                      width: 1.0,
+                    ),
+                  ),
+                  child: DropdownButton<String>(
+                    value: dropdownValue,
+                    dropdownColor: Color(0xFFCDE6F5),
+                    icon: Icon(Icons.arrow_downward),
+                    iconSize: 20,
+                    elevation: 16,
+                    style: TextStyle(
+                      fontFamily: 'Poppins',
+                      fontSize: 14.0,
+                      color: Color(0xFF02143D),
+                    ),
+                    underline: Container(
+                      height: 0,
+                      color: Color(0xFF02143D),
+                    ),
+                    onChanged: (String newValue) {
+                      setState(() {
+                        dropdownValue = newValue;
+                      });
+                    },
+                    items: <String>[' Text', ' Data', ' Heap', ' Stack']
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
+                ),
+                SizedBox(width: 90.0),
+                Container(
+                  height: 30.0,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5.0),
+                    border: Border.all(
+                      color: Color(0xFF02143D),
+                      width: 1.0,
+                    ),
+                  ),
+                  child: FlatButton(
+                    onPressed: () {},
+                    color: Color(0xFFCDE6F5),
+                    child: Text(
+                      'Up',
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 14.0,
+                        color: Color(0xFF02143D),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 10.0),
+                Container(
+                  height: 30.0,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5.0),
+                    border: Border.all(
+                      color: Color(0xFF02143D),
+                      width: 1.0,
+                    ),
+                  ),
+                  child: FlatButton(
+                    onPressed: () {},
+                    color: Color(0xFFCDE6F5),
+                    child: Text(
+                      'Down',
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 14.0,
+                        color: Color(0xFF02143D),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Expanded(
+              child: DataTable(
+                columns: [
+                  DataColumn(
+                    label: Text(
+                      'Address',
+                      style: kColumnStyle,
+                    ),
+                  ),
+                  DataColumn(
+                    label: Text(
+                      '+3',
+                      style: kColumnStyle,
+                    ),
+                  ),
+                  DataColumn(
+                    label: Text(
+                      '+2',
+                      style: kColumnStyle,
+                    ),
+                  ),
+                  DataColumn(
+                    label: Text(
+                      '+1',
+                      style: kColumnStyle,
+                    ),
+                  ),
+                  DataColumn(
+                    label: Text(
+                      '+0',
+                      style: kColumnStyle,
+                    ),
+                  ),
+                ],
+                rows: [
+                  DataRow(
+                    cells: [
+                      DataCell(Text('Dale', style: kRowStyle)),
+                      DataCell(Text('Porra', style: kRowStyle)),
+                      DataCell(Text('Dale', style: kRowStyle)),
+                      DataCell(Text('Porra', style: kRowStyle)),
+                      DataCell(Text('Dale', style: kRowStyle)),
+                    ]
+                  ),
+                  DataRow(
+                      cells: [
+                        DataCell(Text('Dale', style: kRowStyle)),
+                        DataCell(Text('Porra', style: kRowStyle)),
+                        DataCell(Text('Dale', style: kRowStyle)),
+                        DataCell(Text('Porra', style: kRowStyle)),
+                        DataCell(Text('Dale', style: kRowStyle)),
+                      ]
+                  ),
+                  DataRow(
+                      cells: [
+                        DataCell(Text('Dale', style: kRowStyle)),
+                        DataCell(Text('Porra', style: kRowStyle)),
+                        DataCell(Text('Dale', style: kRowStyle)),
+                        DataCell(Text('Porra', style: kRowStyle)),
+                        DataCell(Text('Dale', style: kRowStyle)),
+                      ]
+                  ),
+                  DataRow(
+                      cells: [
+                        DataCell(Text('Dale', style: kRowStyle)),
+                        DataCell(Text('Porra', style: kRowStyle)),
+                        DataCell(Text('Dale', style: kRowStyle)),
+                        DataCell(Text('Porra', style: kRowStyle)),
+                        DataCell(Text('Dale', style: kRowStyle)),
+                      ]
+                  ),
+                  DataRow(
+                      cells: [
+                        DataCell(Text('Dale', style: kRowStyle)),
+                        DataCell(Text('Porra', style: kRowStyle)),
+                        DataCell(Text('Dale', style: kRowStyle)),
+                        DataCell(Text('Porra', style: kRowStyle)),
+                        DataCell(Text('Dale', style: kRowStyle)),
+                      ]
+                  ),
+                  DataRow(
+                      cells: [
+                        DataCell(Text('Dale', style: kRowStyle)),
+                        DataCell(Text('Porra', style: kRowStyle)),
+                        DataCell(Text('Dale', style: kRowStyle)),
+                        DataCell(Text('Porra', style: kRowStyle)),
+                        DataCell(Text('Dale', style: kRowStyle)),
+                      ]
+                  ),
+                  DataRow(
+                      cells: [
+                        DataCell(Text('Dale', style: kRowStyle)),
+                        DataCell(Text('Porra', style: kRowStyle)),
+                        DataCell(Text('Dale', style: kRowStyle)),
+                        DataCell(Text('Porra', style: kRowStyle)),
+                        DataCell(Text('Dale', style: kRowStyle)),
+                      ]
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      );
+
+ */
+
+
+
