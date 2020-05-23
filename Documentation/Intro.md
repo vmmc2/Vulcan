@@ -24,6 +24,9 @@
 ## Mais Vantagens do RISC-V
 * O fato de possuir uma ISA modular simples e pequena faz com que o tamanho dos processadores que implementam essa ISA seja reduzido quando comparado a outras ISAs.
 * Ademais, o fato de apresentar uma ISA simples faz com que o custo de documentação seja reduzido e facilita o processo de aprendizado dos clientes sobre como usar adequadamente as instruções da ISA.
+* Outra vantagem que o RISC-V apresenta diz respeito a quantidade de registradores disponíveis para o uso. O acesso aos dados presentes em registradores é muito mais rápido do que o acesso aos dados que estão presentes na memória. Isso faz com que a tarefa de alocar os registradores (realizada pelo compilador) seja crucial para um bom desempenho de programa. Obviamente, essa tarefa se torna mais fácil a medida que o número de registradores aumenta. Nesse aspecto, o Intel x86-32 possui apenas 8 registradores, o ARM-32 possui 16 registradores enquanto que o RISC-V apresenta 32 registradores inteiros (um número bem generoso quando comparado com seus concorrentes).
+* No que diz respeito à velocidade de código, o RISC-V se destaca pelo fato de que, normalmente, a execução de suas instruções leva no máximo 1 ciclo de clock (ignorando a ocorrência de cache miss na cache de instruções).
+* Por fim, o RISC-V se destaca nesse aspecto de velocidade de execução de código por exigir nas suas instruções que todos os operandos estejam em registradores (não podem existir operandos na memória). Isso melhora a velocidade de acesso aos dados e, consequentemente, melhora o desempenho de execução do programa.
 
 ## Diferença entre Arquitetura e Implementação
 * Muitas pessoas acabam confundindo esses dois conceitos. E, por consequência, acabam usando tais termos intercambiavelmente. Entretanto, existem diferenças cruciais entre eles.
