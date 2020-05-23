@@ -13,3 +13,4 @@
   * Tipo S: Contém instruções para execução de stores.
   * Tipo U: Contém instruções para lidar com valores imediatos longos.
   * Tipo B: Contém instruções para execução de desvios condicionais.
+* Consequências: O tamanho fixo das instruções (32 bits) aliado à pequena quantidade de formatos diferentes (6) facilita o processo de decodificação das instruções e melhora o desempenho de custo.
