@@ -30,7 +30,7 @@
 * No que diz respeito à velocidade de código, o RISC-V se destaca pelo fato de que, normalmente, a execução de suas instruções leva no máximo 1 ciclo de clock (ignorando a ocorrência de cache miss na cache de instruções).
 * Por fim, o RISC-V se destaca nesse aspecto de velocidade de execução de código por exigir nas suas instruções que todos os operandos estejam em registradores (não podem existir operandos na memória). Isso melhora a velocidade de acesso aos dados e, consequentemente, melhora o desempenho de execução do programa.
 
-## Diferença entre Arquitetura e Implementação
+## Diferenças entre Arquitetura e Implementação
 * Muitas pessoas acabam confundindo esses dois conceitos. E, por consequência, acabam usando tais termos intercambiavelmente. Entretanto, existem diferenças cruciais entre eles.
 * A arquitetura diz respeito ao conhecimento que o programador de linguagem Assembly deve possuir para desenvolver/escrever um programa correto (no que diz respeito à sintaxe), sem se preocupar com o desempenho/eficiência do programa escrito. Cabe à implementação lidar com o desempenho dos programas escritos em Assembly. Quando estamos analisando esse aspecto, vemos que exigem diferentes estratégias de implementação, como por exemplo: Ciclo Simples, Multi-Ciclo, Pipeline, Superescalar (que executa mais de uma instrução por ciclo de clock), entre outras.
 * Fazendo uma analogia, podemos enxergar a arquitetura como um blueprint/esboço/ideia e a implementação como uma estratégia/metodologia para executar tal ideia.
