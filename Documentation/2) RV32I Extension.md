@@ -2,8 +2,9 @@
 * Nesse arquivo, faremos uma introdução sobre quais são todas as instruções presentes no módulo base/core do RISC-V: O RV32I. Além disso, veremos detalhadamente qual a sintaxe de cada uma das instruções e como ocorre a sua execução no código Assembly.
 * Para exemplos de código mostrando o uso real dessas instruções em código Assembly favor visitar a pasta Examples (presente no diretório Documentation).
 
-## Tamanho de Instrução
+## Considerações Gerais
 * Todas as instruções da extensão base do RISC-V (RV32I) possuem tamanho de 32 bits (4 bytes = 1 word).
+* Na ISA do RISC-V temos uma característica muito importante que favorece sua legibilidade e sua simplicidade (para a decodificação por exemplo): Todas as instruções apresentam 3 operandos. Isso é diferente do que acontece com as ISA do Intel x86-32, que apresenta um campo compartilhado para origem e destino.
 
 ## Formatos de Instrução
 * A extensão base do RISC-V (RV32I) apresenta 6 formatos diferentes para suas instruções. São eles:
