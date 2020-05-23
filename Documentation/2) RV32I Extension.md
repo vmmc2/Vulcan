@@ -31,4 +31,5 @@
 * Até o vigente momento, o Vulcan apenas suporta o uso dos registradores se eles forem nomeados seguindo as normas da ABI. (x0 - x31)
 * Como é possível ver na imagem abaixo, a ISA do RISC-V possui 32 registradores, nomeados (segundo a ABI) de x0 ate x31.
 * __O registrador x0 sempre irá possuir o valor 0 dentro de si. Esse valor é inalterado. (Funciona como uma constante).__
+* Dedicar um registrador a zero foi uma decisão de arquitetura muito simples mas que foi uma fator surpreendentemente grande na simplificação da ISA do RISC-V. Como é possível checar em exemplos de operações que são instruções nativas no ARM-32 e x86-32, que não possuem um registrador zero, mas podem ser sintetizadas a partir das instruções do RV32I simplesmente utilizando o registrador zero como um operando.
 * Por fim, fora os 32 registradores mencionados acima, o RISC-V apresenta um registrador especial chamado PC (Program Counter) ao qual o programador não tem acesso. O PC é o registrador responsável por indicar qual a próxima instrução que deve ser executada no nosso código. Alterá-lo pode desencadear efeitos colaterais imprevisíveis.
