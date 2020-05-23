@@ -8,7 +8,7 @@
 ## Formatos de Instrução
 * A extensão base do RISC-V (RV32I) apresenta 6 formatos diferentes para suas instruções. São eles:
   * Tipo R: Contém instruções para operações de registradores.
-  * Tipo I: Contém instruções para execução de loads e valores imediatos curtos.
+  * Tipo I: Contém instruções para execução de loads e para lidar com valores imediatos curtos.
   * Tipo J: Contém instruções para execução de saltos incondicionais.
   * Tipo S: Contém instruções para execução de stores.
   * Tipo U: Contém instruções para lidar com valores imediatos longos.
