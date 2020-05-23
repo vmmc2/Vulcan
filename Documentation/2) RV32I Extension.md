@@ -11,6 +11,7 @@
 * Quando uma operação possui naturalmente três operandos distintos, mas a ISA fornece apenas uma instrução de dois operandos, o compilador ou o programador de linguagem Assembly deve utilizar uma instrução de movimentação extra para preservar o operando de destino.
 * Vale destacar que no RISC-V os especificadores dos registradores a serem lidos e escritos estão sempre no mesmo local em todas as instruções, o que significa que os acessos ao registradores podem começar antes do hardware iniciar a decodificação da instrução.
 * Ademais, os campos imediatos nesses formatos são sempre com sinal, e o bit de sinal é sempre o bit mais significativo da instrução. Esta decisão significa que a extensão de sinal do imediato, que também pode estar em um caminho de cronometragem crítico, pode prosseguir antes de decodificar a instrução.
+* Para ajudar os programadores, um padrão de bits preenchido por zeros é uma instrução ilegal no RV32I. Assim, saltos errôneos em regiões de memória zeradas serão imediatamente interceptados, ajudando a depuração.
 
 ## Formatos de Instrução
 * A extensão base do RISC-V (RV32I) apresenta 6 formatos diferentes para suas instruções. São eles:
