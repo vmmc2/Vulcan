@@ -5,6 +5,8 @@
   * O livro acima funciona mais como uma introdução e uma referência para o RISC-V. Recomenda-se que a pessoa já esteja familiarizada com alguma ISA previamente antes de lê-lo.
 * RISC-V: Computer Organization and Design RISC-V Edition: The Hardware Software Interface.
   * O livro acima serve para aprender sobre Arquitetura de Computadores no geral. O ideal é começar por ele.
+* Cartão de Referência do RISC-V (RISC-V Green Card)
+  * Basicamente, trata-se de um folheto que contém todas as instruções presentes na ISA do RISC-V bem como a sintaxe de cada uma delas. Pode ser facilmente encontrada no Google.
 
 ## Considerações Iniciais e Histórico:
 * O RISC-V se trata de uma arquitetura de conjunto de instruções (ISA) open-source criada em 2011 e que se destaca entre suas concorrentes (ARM, Intel e Mips) por sua elegância e simplicidade.
