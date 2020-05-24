@@ -1,5 +1,5 @@
 # Vulcan
-RISC-V Instruction Set Simulator
+RISC-V Instruction Set Simulator Built For Education
 
 ## Observacoes:
 * O que vai acontecer quando o cara apertar o botao "Simulate" na pagina Editor?
