@@ -33,3 +33,10 @@
 * rd = registrador-destino
 * __Operação Realizada: rd = rs1 & rs2.__
 * Essa instrução é responsável por realizar um AND bit-a-bit entre o conteúdo dos registradores rs1 e rs2 e guardar o resultado dentro do registrador rd.
+
+### 4) or
+* __Síntaxe: or rd, rs1, rs2__
+* rs1, rs2 = registradores-fonte
+* rd = registrador-destino
+* __Operação Realizada: rd = rs1 | rs2.__
+* Essa instrução é responsável por realizar um OR(inclusivo) bit-a-bit entre o conteúdo dos registradores rs1 e rs2 e guardar o resultado dentro do registrador rd.
