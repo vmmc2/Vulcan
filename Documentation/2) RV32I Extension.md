@@ -13,7 +13,7 @@
 * Ademais, os campos imediatos nesses formatos são sempre com sinal, e o bit de sinal é sempre o bit mais significativo da instrução. Esta decisão significa que a extensão de sinal do imediato, que também pode estar em um caminho de cronometragem crítico, pode prosseguir antes de decodificar a instrução.
 * Para ajudar os programadores, um padrão de bits preenchido por zeros é uma instrução ilegal no RV32I. Assim, saltos errôneos em regiões de memória zeradas serão imediatamente interceptados, ajudando a depuração.
 * Pensando no futuro e na adição de outras extensões para a ISA do RISC-V, a extensão RV32I ocupa menos de 1/8 do espaço de codificação para a palavra de instrução de 32 bits.
-* __IMPORTANTE__: __Finalmente, como veremos, os endereços de desvio e salto nos formatos B e J devem ser deslocados para a esquerda 1 bit, de modo a multiplicar os endereços por 2, dando assim desvio e saltos de maior alcance.__
+* __IMPORTANTE__: __Finalmente, como veremos, os endereços de desvio e salto nos formatos B e J devem ser deslocados para a esquerda 1 bit, de modo a multiplicar os endereços por 2, dando assim desvios e saltos de maior alcance.__
 
 ## Formatos de Instrução
 * A extensão base do RISC-V (RV32I) apresenta 6 formatos diferentes para suas instruções. São eles:
