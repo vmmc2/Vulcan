@@ -1,7 +1,7 @@
 # RV32I Extension
 
 ## Introdução
-* Nesse arquivo, faremos uma introdução e discussão sobre quais são todas as instruções presentes no módulo base/core do RISC-V: O RV32I. Além disso, veremos detalhadamente qual a sintaxe de cada uma das instruções e como ocorre a sua execução no código Assembly.
+* Nesse arquivo, faremos uma introdução e discussão detalhada sobre quais são todas as instruções presentes no módulo base/core do RISC-V: O RV32I. Além disso, veremos detalhadamente qual a sintaxe de cada uma das instruções e como ocorre a sua execução no código Assembly.
 * Para exemplos de código mostrando o uso real dessas instruções em código Assembly favor visitar a pasta Examples (presente no diretório Documentation).
 
 ## Considerações Gerais Sobre as Instruções da ISA do RISC-V
