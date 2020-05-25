@@ -9,5 +9,10 @@
 * Todas essas instruções funcionam da seguinte maneira: Elas leem dois valores de 32-bits de registradores-fontes, realizam a operação correspondente à instrução e gravam o resultado de 32-bits no registrador-destino.
 
 ## Instruções Aritméticas
-
 ### 1) add
+* __Sintaxe: add rd, rs1, rs2.__
+* rs1, rs2 = registradores-fonte
+* rd = registrador-destino
+* __Operação Realizada: rd = rs1 + rs2.
+* Essa instrução adiciona o conteúdo do registrador rs1 ao conteúdo do registrador rs2 e guarda o resultado no registrador rd.
+* __O possível overflow aritmético é ignorado.__
