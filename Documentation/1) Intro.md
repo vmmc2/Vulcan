@@ -14,7 +14,7 @@
 ## ISA (Instruction Set Architecture)
 * A ISA é aquilo que define a interface de software em relação ao hardware.
 * A ISA se trata de uma especificação, composta por um conjunto de instruções. Nós a utilizamos para entender como podemos programar o hardware que supostamente deveria implementá-la.
-* Uma única ISA pode apresentar várias implementações de hardware diferentes (Aqui reside a diferença entre os conceitos de arquitetura e implemetação, que serão discutidos com maior profundidade nos tópicos abaixo).
+* Uma única ISA pode apresentar várias implementações diferentes de hardware(Aqui reside a diferença entre os conceitos de arquitetura e implemetação, que serão discutidos com maior profundidade nos tópicos abaixo).
 
 ## ISA Incremental vs. ISA Modular
 * A ISA Incremental se trata da abordagem mais convencional para o desenvolvimento de ISAs. Nela, os novos processadores devem implementar não somente as novas extensões desenvolvidas como também todas as extensões do passado.
