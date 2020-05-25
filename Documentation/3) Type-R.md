@@ -63,7 +63,7 @@
 * __Síntaxe: srl rd, rs1, rs2__
 * rs1, rs2 = registradores-fonte
 * rd = registrador-destino
-* __Operação Realizada: srl = rs1 >>(u) rs2.__
+* __Operação Realizada: rd = rs1 >>(u) rs2.__
 * Essa instrução é responsável por deslocar o conteúdo do registrador rs1 em rs2 unidades para a direita. Os bits vazios decorrentes do deslocamento para a direita são preenchidos com zeros (0) e, por fim, o resultado é gravado no registrador rd.
 * Analogamente ao que acontece quando realizamos um shift left para a esquerda, ao realizarmos um shift left para direita de uma unidade é a mesma coisa que estarmos dividindo o número por 2.
 * Diante disso, podemos enxergar essa operação da seguinte maneira (__se estivermos trabalhando com números sem-sinal__): __rd = (rs1)/(2^(rs2)).__
@@ -72,5 +72,19 @@
 * __Síntaxe: sra rd, rs1, rs2__
 * rs1, rs2 = registradores-fonte
 * rd = registrador-destino
-* __Operação Realizada: sra = rs1 >> rs2.__
+* __Operação Realizada: rd = rs1 >> rs2.__
 * Essa instrução é responsável por deslocar o conteúdo do registrador rs1 em rs2 unidades para a direita. Os bits vazios decorrentes do deslocamento para a direita são preenchidos com cópias do bit mais significativo de rs1 e, por fim, o resultado é gravado no registrador rd.
+
+### 9) slt
+* __Síntaxe: slt rd, rs1, rs2__
+* rs1, rs2 = registradores-fonte
+* rd = registrador-destino
+* __Operação Realizada: rd = rs1 < rs2 ? 1 : 0.__
+* Essa instrução verificar os valores presentes nos registradores rs1 e rs2 (analisando-os como números de complemento de dois), escreve 1 no registrador rd se rs1 < rs2. Caso contrário, escreve 0.
+
+### 10) sltu
+* __Síntaxe: sltu rd, rs1, rs2__
+* rs1, rs2 = registradores-fonte
+* rd = registrador-destino
+* __Operação Realizada: rd = rs1 <(u) rs2 ? 1 : 0.__
+* Essa instrução verificar os valores presentes nos registradores rs1 e rs2 (analisando-os como números sem sinal), escreve 1 no registrador rd se rs1 < rs2. Caso contrário, escreve 0.
