@@ -47,3 +47,14 @@
 * rd = registrador-destino
 * __Operação Realizada: rd = rs1 ^ rs2.__
 * Essa instrução é responsável por realizar um XOR (OR-Exclusivo) bit-a-bit entre o conteúdo dos registradores rs1 e rs2. Por fim, guarda o resultado dentro do registrador rd.
+
+
+## Instruções de Deslocamento
+### 6) sll
+* __Síntaxe: sll rd, rs1, rs2__
+* rs1, rs2 = registradores-fonte
+* rd = registrador-destino
+* __Operação Realizada: rd = rs1 << rs2.__
+* Essa instrução é responsável por deslocar o conteúdo do registrador rs1 em rs2 unidades para a esquerda. Os bits vazios decorrentes do deslocamento são preenchidos com zeros (0) e o resultado é gravado no registrador rd.
+* Lembrando que quando damos um shift left de uma unidade em um valor é a mesma coisa de estarmos multiplicando esse valor por 2.
+ Logo, essa instrução pode ser enxergada da seguinte maneira: __rd = (rs1)*(2^(rs2)).__
