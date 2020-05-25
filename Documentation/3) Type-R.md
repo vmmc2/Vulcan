@@ -6,3 +6,4 @@
   * Instruções Aritméticas: add, sub.
   * Instruções Lógicas: and, or, xor.
   * Instruções de Deslocamento: srl, sra, sll, slt, sltu.
+* Todas essas instruções funcionam da seguinte maneira: Elas leem dois valores de 32-bits de registradores-fontes, realizam a operação correspondente à instrução e gravam o resultado de 32-bits no registrador-destino.
