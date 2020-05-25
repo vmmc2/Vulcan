@@ -16,3 +16,11 @@
 * __Operação Realizada: rd = rs1 + rs2.__
 * Essa instrução adiciona o conteúdo do registrador rs1 ao conteúdo do registrador rs2 e guarda o resultado no registrador rd.
 * __O possível overflow aritmético é ignorado.__
+
+### 2) sub
+* __Sintaxe: sub rd, rs1, rs2.__
+* rs1, rs2 = registradores-fonte
+* rd = registrador-destino
+* __Operação Realizada: rd = rs1 - rs2.__
+* Essa instrução subtraí o conteúdo do registrador rs2 do conteúdo do registrador rs1 e grava o resultado no registrador rd.
+* __O possível overflow aritmético também é ignorado.__
