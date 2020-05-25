@@ -10,7 +10,7 @@
 
 ## Instruções Aritméticas
 ### 1) add
-* __Sintaxe: add rd, rs1, rs2__
+* __Síntaxe: add rd, rs1, rs2__
 * rs1, rs2 = registradores-fonte
 * rd = registrador-destino
 * __Operação Realizada: rd = rs1 + rs2.__
@@ -18,9 +18,18 @@
 * __O possível overflow aritmético é ignorado.__
 
 ### 2) sub
-* __Sintaxe: sub rd, rs1, rs2__
+* __Síntaxe: sub rd, rs1, rs2__
 * rs1, rs2 = registradores-fonte
 * rd = registrador-destino
 * __Operação Realizada: rd = rs1 - rs2.__
 * Essa instrução subtraí o conteúdo do registrador rs2 do conteúdo do registrador rs1 e grava o resultado no registrador rd.
 * __O possível overflow aritmético também é ignorado.__
+
+
+## Instruções Lógicas
+### 1) and
+* __Síntaxe: and rd, rs1, rs2__
+* rs1, rs2 = registradores-fonte
+* rd = registrador-destino
+* __Operação Realizada: rd = rs1 & rs2.__
+* Essa instrução é responsável por realizar um AND bitwise entre o conteúdo dos registradores rs1 e rs2 e guardar o resultado dentro do registrador rd.
