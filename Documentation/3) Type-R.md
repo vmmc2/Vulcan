@@ -40,3 +40,10 @@
 * rd = registrador-destino
 * __Operação Realizada: rd = rs1 | rs2.__
 * Essa instrução é responsável por realizar um OR(inclusivo) bit-a-bit entre o conteúdo dos registradores rs1 e rs2 e guardar o resultado dentro do registrador rd.
+
+### 5) xor
+* __Síntaxe: xor rd, rs1, rs2__
+* rs1, rs2 = registradores-fonte
+* rd = registrador-destino
+* __Operação Realizada: rd = rs1 ^ rs2.__
+* Essa instrução é responsável por realizar um XOR (OR-Exclusivo) bit-a-bit entre o conteúdo dos registradores rs1 e rs2 e guardar o resultado dentro do registrador rd.
