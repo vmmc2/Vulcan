@@ -59,7 +59,7 @@
 * Lembrando que quando damos um shift left de uma unidade em um valor é a mesma coisa de estarmos multiplicando esse valor por 2.
  Logo, essa instrução pode ser enxergada da seguinte maneira: __rd = (rs1)*(2^(rs2)).__
  
- ### 7) srl
+### 7) srl
 * __Síntaxe: srl rd, rs1, rs2__
 * rs1, rs2 = registradores-fonte
 * rd = registrador-destino
@@ -67,3 +67,10 @@
 * Essa instrução é responsável por deslocar o conteúdo do registrador rs1 em rs2 unidades para a direita. Os bits vazios decorrentes do deslocamento para a direita são preenchidos com zeros (0) e, por fim, o resultado é gravado no registrador rd.
 * Analogamente ao que acontece quando realizamos um shift left para a esquerda, ao realizarmos um shift left para direita de uma unidade é a mesma coisa que estarmos dividindo o número por 2.
 * Diante disso, podemos enxergar essa operação da seguinte maneira (__se estivermos trabalhando com números sem-sinal__): __rd = (rs1)/(2^(rs2)).__
+
+### 8) sra
+* __Síntaxe: sra rd, rs1, rs2__
+* rs1, rs2 = registradores-fonte
+* rd = registrador-destino
+* __Operação Realizada: sra = rs1 >> rs2.__
+* Essa instrução é responsável por deslocar o conteúdo do registrador rs1 em rs2 unidades para a direita. Os bits vazios decorrentes do deslocamento para a direita são preenchidos com cópias do bit mais significativo de rs1 e, por fim, o resultado é gravado no registrador rd.
