@@ -10,7 +10,7 @@
 
 ## Instruções Aritméticas
 ### 1) add
-* __Sintaxe: add rd, rs1, rs2.__
+* __Sintaxe: add rd, rs1, rs2__
 * rs1, rs2 = registradores-fonte
 * rd = registrador-destino
 * __Operação Realizada: rd = rs1 + rs2.__
@@ -18,7 +18,7 @@
 * __O possível overflow aritmético é ignorado.__
 
 ### 2) sub
-* __Sintaxe: sub rd, rs1, rs2.__
+* __Sintaxe: sub rd, rs1, rs2__
 * rs1, rs2 = registradores-fonte
 * rd = registrador-destino
 * __Operação Realizada: rd = rs1 - rs2.__
