@@ -7,11 +7,10 @@ addi x13, x0, 24 # x13 = 24
 addi x24, x0, 1 # x24 = 1
 j function1
 
-function1:
-  addi x20, x20, 100 
+function1: 
+  beq x11, x12, function2 #vai dar o branch para a label "function2" quando x11 == 5
+  addi x20, x20, 100
   # o conteudo de x20 fica igual a x9 + x10 = 19
-  beq x11, x12, function2 
-  #vai dar o branch para a label "function2" quando x11 == 5
   addi x11, x11, 1
   j function1
   
