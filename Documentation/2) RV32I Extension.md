@@ -29,6 +29,7 @@
 ## Conjunto de Registradores do RISC-V
 * Registradores são a menor unidade responsável pelo armazenamento de dados. Estão no topo da hierarquia de memória.
 * Como é possível ver na imagem abaixo, temos destacado o conjunto de registradores da arquitetura RISC-V, bem como a nomenclatura de cada um deles conforme determinado pela Interface Binária de Aplicativo (ABI) do RISC-V.
+* A ABI é responsável por criar uma interface entre dois programas binários para que ele possam interoperar.
 * Por questões de simplicidade, nas explicações, nos exemplos usaremos apenas a nomenclatura provida pela ABI.
 * Até o vigente momento, o Vulcan apenas suporta o uso dos registradores se eles forem nomeados seguindo as normas da ABI. (x0 - x31)
 * Como é possível ver na imagem abaixo, a ISA do RISC-V possui 32 registradores, nomeados (segundo a ABI) de x0 até x31.
