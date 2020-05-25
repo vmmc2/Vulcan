@@ -10,4 +10,4 @@
 
 ## Instruções Aritméticas
 
-### add
+### 1) add
