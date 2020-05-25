@@ -27,7 +27,7 @@
 
 
 ## Instruções Lógicas
-### 1) and
+### 3) and
 * __Síntaxe: and rd, rs1, rs2__
 * rs1, rs2 = registradores-fonte
 * rd = registrador-destino
