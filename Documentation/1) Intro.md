@@ -11,6 +11,11 @@
 ## Considerações Iniciais e Histórico:
 * O RISC-V se trata de uma arquitetura de conjunto de instruções (ISA) open-source criada em 2011 e que se destaca entre suas concorrentes (ARM, Intel e Mips) por sua elegância e simplicidade.
 
+## ISA (Instruction Set Architecture)
+* A ISA é aquilo que define a interface de software em relação ao hardware.
+* A ISA se trata de uma especificação, composta por um conjunto de instruções. Nós a utilizamos para entender como podemos programar o hardware que supostamente deveria implementá-la.
+* Uma única ISA pode apresentar várias implementações de hardware diferentes (Aqui reside a diferença entre os conceitos de arquitetura e implemetação, que serão discutidos com maior profundidade nos tópicos abaixo).
+
 ## ISA Incremental vs. ISA Modular
 * A ISA Incremental se trata da abordagem mais convencional para o desenvolvimento de ISAs. Nela, os novos processadores devem implementar não somente as novas extensões desenvolvidas como também todas as extensões do passado.
 * O objetivo dessa prática em ISA Incremental é manter a compatibilidade binária retroativa. Em outras palavras, através dela é possível que versões binárias de programas de décadas passadas possam ser executados sem problema em processadores mais recentes.
