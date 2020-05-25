@@ -8,7 +8,7 @@
 * Cartão de Referência do RISC-V (RISC-V Green Card)
   * Basicamente, trata-se de um folheto que contém todas as instruções presentes na ISA do RISC-V bem como a sintaxe de cada uma delas. Pode ser facilmente encontrado no Google.
 * Tutorial Básico sobre Assembly RISC-V e sua linkagem com código C
-  * <a href="https://www.youtube.com/watch?v=KBvAKHsHBW4&t=405s">Link</a>
+  * <a href="https://www.youtube.com/watch?v=KBvAKHsHBW4&t=405s">Link para o vídeo no YouTube</a>
   * Aúdio: Inglês --- Legendas: Inglês.
 
 ## Considerações Iniciais e Histórico:
