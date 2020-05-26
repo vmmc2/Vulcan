@@ -80,11 +80,11 @@
 * rs1, rs2 = registradores-fonte
 * rd = registrador-destino
 * __Operação Realizada: rd = rs1 < rs2 ? 1 : 0.__
-* Essa instrução verificar os valores presentes nos registradores rs1 e rs2 (analisando-os como números de complemento de dois), escreve 1 no registrador rd se rs1 < rs2. Caso contrário, escreve 0.
+* Essa instrução verificar os valores presentes nos registradores rs1 e rs2 (analisando-os como números de complemento de dois), escreve 1 no registrador rd, se rs1 < rs2. Caso contrário, escreve 0.
 
 ### 10) sltu
 * __Síntaxe: sltu rd, rs1, rs2__
 * rs1, rs2 = registradores-fonte
 * rd = registrador-destino
 * __Operação Realizada: rd = rs1 <(u) rs2 ? 1 : 0.__
-* Essa instrução verificar os valores presentes nos registradores rs1 e rs2 (analisando-os como números sem sinal), escreve 1 no registrador rd se rs1 < rs2. Caso contrário, escreve 0.
+* Essa instrução verificar os valores presentes nos registradores rs1 e rs2 (analisando-os como números sem sinal), escreve 1 no registrador rd, se rs1 < rs2. Caso contrário, escreve 0.
