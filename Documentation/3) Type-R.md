@@ -94,3 +94,6 @@
 * rd = registrador-destino
 * __Operação Realizada: rd = rs1 <(u) rs2 ? 1 : 0.__
 * Essa instrução verificar os valores presentes nos registradores rs1 e rs2 (analisando-os como números sem sinal), escreve 1 no registrador rd, se rs1 < rs2. Caso contrário, escreve 0.
+
+## Observações Finais
+* Como foi visto nas instruções __add__ e __sub__, as instruções de aritmética de inteiros do RISC-V não possuem suporte para a detecção de overflow (também não existem instruções que executem rotações de bits na extensão core RV32I na ISA do RISC-V). Isso pode ser calculado manualmente (como veremos mais para frente).
