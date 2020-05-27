@@ -75,6 +75,8 @@
 * __Operação Realizada: rd = rs1 >> rs2.__
 * Essa instrução é responsável por deslocar o conteúdo do registrador rs1 em rs2 unidades para a direita. Os bits vazios decorrentes do deslocamento para a direita são preenchidos com cópias do bit mais significativo de rs1 e, por fim, o resultado é gravado no registrador rd.
 
+
+## Instruções de Comparação.
 ### 9) slt
 * __Síntaxe: slt rd, rs1, rs2__
 * rs1, rs2 = registradores-fonte
