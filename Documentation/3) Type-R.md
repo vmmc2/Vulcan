@@ -80,6 +80,7 @@
 * Por que existem essas instruções? Porque, frequentemente, escrevemos programas que geram uma saída booleana como resultado de uma comparação entre dois valores. Por esse motivo, as 2 instruções abaixo foram adicionada ao ISA do RISC-V.
 * Como já era de se esperar, existem versões dessa instrução para números com e sem sinal. Para números com sinal, usamos a __slt__. Para número sem sinal, usamos a __sltu__.
 * Existem também versões que trabalham com imediatos (slti, stliu) que veremos mais para frente.
+* O compilador ou programador de linguagem Assembly poderia utilizar slt e as instruções lógicas and, or, xor para resolver expressões condicionais mais elaboradas.
 ### 9) slt
 * __Síntaxe: slt rd, rs1, rs2__
 * rs1, rs2 = registradores-fonte
