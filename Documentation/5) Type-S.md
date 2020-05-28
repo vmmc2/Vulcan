@@ -13,8 +13,17 @@
 * rs1 = registrador auxiliar usado para calcular o endereço de memória.
 * rs2 = registrador-fonte que contém o dado a ser armazenado na memória.
 * __Operação Realizada: memória[rs1 + signalextend(imm[11:0])] = rs2[7:0].__
+* O valor presente no imm funciona como quantidade de bytes. Lembrar que, no RISC-V, a memória é endereçada por byte.
 * Essa instrução pega os 8 bits menos significativos (byte menos significativo) do registrador rs2 e armazena esse valor no endereço de memória calculado pela soma: rs1 + signalextend(imm[11:0]).
 
 ### 2) sh
+* __Significado: Store HalfWord (sh).__
+* __Síntaxe: sh rs2, imm, rs1__
+* imm = valor imediato/constante (com sinal) de 12 bits.
+* rs1 = registrador auxiliar usado para calcular o endereço de memória.
+* rs2 = registrador-fonte que contém o dado a ser armazenado na memória.
+* __Operação Realizada: memória[rs1 + signalextend(imm[11:0])] = rs2[15:0].__
+* O valor presente no imm funciona como quantidade de bytes. Lembrar que, no RISC-V, a memória é endereçada por byte.
+* Essa instrução pega os 16 bits menos significativos (2 bytes menos significativo) do registrador rs2 e armazena esse valor no endereço de memória calculado pela soma: rs1 + signalextend(imm[11:0]).
 
 ### 3) sw
