@@ -12,8 +12,8 @@
 * imm = valor imediato/constante (com sinal) de 12 bits.
 * rs1 = registrador auxiliar usado para calcular o endereço de memória.
 * rs2 = registrador-fonte que contém o dado a ser armazenado na memória.
-* __Operação Realizada: rd = pc + signalextend(immediate[31:12] << 12).__
-* Essa instrução pega o valor imediato (com sinal) de 20 bits. Depois disso, aplica extensao de sinal nele e dá um shift left nele de 12 bits. Por fim, adiciona esse valor de 32 bits ao valor do registrador pc (Program Counter) e o guarda no registrador-destino (rd).
+* __Operação Realizada: memória[rs1 + signalextend(imm[11:0])] = rs2[7:0].__
+* 
 
 ### 2) sh
 
