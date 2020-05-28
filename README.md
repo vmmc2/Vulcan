@@ -1,7 +1,7 @@
 # Vulcan
 RISC-V Instruction Set Simulator Built For Education
 
-## Observacoes:
+## Observações:
 * O que vai acontecer quando o cara apertar o botao "Simulate" na pagina Editor?
   * Primeiro, a gente vai salvar todas as linhas que ele colocou no CodeEditor de alguma forma (Numa lista com as linhas ou algo do tipo).
   * Em seguida, a gente vai passar essa lista como um conjunto de dados para a pagina Simulator. Chegando na pagina do Simulator, a primeira coisa que a gente vai fazer vai ser rodar o Assembler para ver se acha erro. Se achar, ja avisa ao usuario por meio de um AlertDialog() ou coisa do tipo, para ele voltar para a pagina do Editor e reescrever o codigo dele. Se nao achar erro, pega o codigo de maquina obtido depois de chamar o Assembler (no caso o codigo de maquina, que pode ta em hex, bin ou decimal, tanto faz). Carrega ele, seta o PC e a partir dai comeca a executar todas as instrucoes ate acabar as instrucoes que foram carregadas na memoria. Ao final disso tudo, os registradores vao ta com os valores referentes a execucao do codigo, bem como a memoria vai ta com os valores referentes a execucao do codigo.
