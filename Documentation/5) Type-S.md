@@ -3,7 +3,7 @@
 ## Intro
 * As instruções do tipo-S são aquelas instruções que executam stores.
 * Store nada mais é do que uma operação de transferência de dados de um registrador para a memória. Mais especificamente, para um endereço de memória específico.
-* Modo de Endereçamento para instruções de store: Para conseguir obter um endereço de memória para guardar um dado presente em um registrador na memória, a gente que tem que pegar o valor que está em um registrador de nossa escolha e adicionar a esse valor, um imediato de 12 bits (que tenha sofrido sign-extend). Feito isso, o valor resultante será um endereço de memória, que poderá ser utilizado para guardamos nosso dado do registrador.
+* Modo de Endereçamento para instruções de store: Para conseguir obter um endereço de memória para guardar um dado presente em um registrador na memória, a gente tem que pegar o valor que está em um registrador de nossa escolha (rs1) e adicionar a esse valor um imediato de 12 bits (que tenha sofrido sign-extend) (imm). Feito isso, o valor resultante será um endereço de memória, que poderá ser utilizado para guardamos nosso dado do registrador (rs2).
 
 ## Instruções 
 ### 1) sb
