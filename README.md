@@ -7,7 +7,11 @@ RISC-V Instruction Set Simulator Built For Education
   * Em seguida, a gente vai passar essa lista como um conjunto de dados para a pagina Simulator. Chegando na pagina do Simulator, a primeira coisa que a gente vai fazer vai ser rodar o Assembler para ver se acha erro. Se achar, ja avisa ao usuario por meio de um AlertDialog() ou coisa do tipo, para ele voltar para a pagina do Editor e reescrever o codigo dele. Se nao achar erro, pega o codigo de maquina obtido depois de chamar o Assembler (no caso o codigo de maquina, que pode ta em hex, bin ou decimal, tanto faz). Carrega ele, seta o PC e a partir dai comeca a executar todas as instrucoes ate acabar as instrucoes que foram carregadas na memoria. Ao final disso tudo, os registradores vao ta com os valores referentes a execucao do codigo, bem como a memoria vai ta com os valores referentes a execucao do codigo.
   * Ou seja, o usuario nao vai poder mexer manualmente nos registradores e nem na memoria. Pelo menos nao agora. Se quiser alterar, vai ter que deixar tudo indicado no seu codigo. (Talvez eu mude isso depois por questoes de flexibilidade).
   * Outra coisa, o codigo vai ser executado tudo de uma vez na pagina Simulator. Nao vai ficar mostrando a execucao passo a passo nao. Novamente, talvez depois eu mude isso para permitir uma execucao passo a passo para que seja mais facil o usuario debugar seu proprio codigo, mas por enquanto vai ficar assim.
-  
+
+## Sobre a forma como o Vênus lida com instruções de Branch e Jump
+* __Basicamente, a política do Vênus é de permitir Branches e Jumps apenas quando o operando offset é uma label.__ Ou seja, a label tem que tá escrita no código, se não o programa não vai ser executado.
+* É uma abordagem interessante pois evita que o programador faça merda mexendo no PC ao somar constantes a ele. Por outro lado, isso tira um pouco da sua liberdade. Vou ter que refletir sobre como vou implementar essa parte.
+
 ## Como o Vênus lida com loops infinitos?
 * Se a gente tem um código Assembly RISC-V que possui um loop infinito, quando a gente for executar ele no simulador. O Vênus simplesmente vai ficar com um "ícone" de loading, indicando que o código/programa está sendo executado. Vai ficar assim ad. eternum mas o usuário pode intergagir com outras partes do programa sem problemas.
 
