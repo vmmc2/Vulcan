@@ -27,3 +27,11 @@
 * Essa instrução pega os 16 bits menos significativos (2 bytes menos significativo) do registrador rs2 e armazena esse valor no endereço de memória calculado pela soma: rs1 + signalextend(imm[11:0]).
 
 ### 3) sw
+* __Significado: Store Word (sw).__
+* __Síntaxe: sw rs2, imm, rs1__
+* imm = valor imediato/constante (com sinal) de 12 bits.
+* rs1 = registrador auxiliar usado para calcular o endereço de memória.
+* rs2 = registrador-fonte que contém o dado a ser armazenado na memória.
+* __Operação Realizada: memória[rs1 + signalextend(imm[11:0])] = rs2[31:0].__
+* O valor presente no imm funciona como quantidade de bytes. Lembrar que, no RISC-V, a memória é endereçada por byte.
+* Essa instrução pega todos os 32 bits (4 bytes) do registrador rs2 e armazena esse valor no endereço de memória calculado pela soma: rs1 + signalextend(imm[11:0]).
