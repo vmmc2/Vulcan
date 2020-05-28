@@ -23,3 +23,8 @@
 * rd = registrador-destino
 * __Operação Realizada: rd = pc + signalextend(immediate[31:12] << 12).__
 * Essa instrução pega o valor imediato (com sinal) de 20 bits. Depois disso, aplica extensao de sinal nele e dá um shift left nele de 12 bits. Por fim, adiciona esse valor de 32 bits ao valor do registrador pc (Program Counter) e o guarda no registrador-destino (rd).
+
+## Truque para ler o conteúdo do registrador PC.
+* Embora o programador de linguagem Assembly não tenha acesso direto ao registrador PC do RISC-V (diferente do que acontece com o ARM-32), é possível ler o seu conteúdo por meio de um trick usando a instrução "auipc".
+* Para isso, basta fazer: __auipc rd, 0__
+* __Por que funciona?__ No caso acima, o nosso imediato tem o valor 0, mesmo que ele sofra um shift-left de 12 bits e depois seja extendido em sinal, vai continuar sendo 0. Se a gente soma 0 ao valor do registrador PC, a gente (obviamente) vai ter o valor de PC no registrador rd.
