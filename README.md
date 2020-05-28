@@ -1,6 +1,9 @@
 # Vulcan
 RISC-V Instruction Set Simulator Built For Education
 
+## Execução das Instruções:
+* Vou ter que usar C interop por meio da library: Dart:ffi
+
 ## Observações:
 * O que vai acontecer quando o cara apertar o botao "Simulate" na pagina Editor?
   * Primeiro, a gente vai salvar todas as linhas que ele colocou no CodeEditor de alguma forma (Numa lista com as linhas ou algo do tipo).
