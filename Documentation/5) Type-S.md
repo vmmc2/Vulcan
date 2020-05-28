@@ -7,7 +7,7 @@
 
 ## Instruções 
 ### 1) sb
-* __Significado: Store Byte (auipc).__
+* __Significado: Store Byte (sb).__
 * __Síntaxe: sb rs2, imm, rs1__
 * imm = valor imediato/constante (com sinal) de 12 bits.
 * rs1 = registrador auxiliar usado para calcular o endereço de memória.
