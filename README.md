@@ -8,7 +8,8 @@ RISC-V Instruction Set Simulator Built For Education
   * Ou seja, o usuario nao vai poder mexer manualmente nos registradores e nem na memoria. Pelo menos nao agora. Se quiser alterar, vai ter que deixar tudo indicado no seu codigo. (Talvez eu mude isso depois por questoes de flexibilidade).
   * Outra coisa, o codigo vai ser executado tudo de uma vez na pagina Simulator. Nao vai ficar mostrando a execucao passo a passo nao. Novamente, talvez depois eu mude isso para permitir uma execucao passo a passo para que seja mais facil o usuario debugar seu proprio codigo, mas por enquanto vai ficar assim.
   
-
+## Como o Vênus lida com loops infinitos?
+* Se a gente tem um código Assembly RISC-V que possui um loop infinito, quando a gente for executar ele no simulador. O Vênus simplesmente vai ficar com um "ícone" de loading, indicando que o código/programa está sendo executado. Vai ficar assim ad. eternum mas o usuário pode intergagir com outras partes do programa sem problemas.
 
 ## Etapa Dificil: Conectar o CodeMirror com o Flutter Web
 * No momento em que estou fazendo o projeto, a API do CodeMirror (ou o que quer que seja aquilo) ta disponivel apenas para Dart:HTML. Nao tem um package ou plugin ou qualquer coisa do tipo para gente plugar no nosso aplicativo Flutter Web. Ou seja, vamo ter que fazer todo esse procedimento na tora.
