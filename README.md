@@ -11,6 +11,7 @@ RISC-V Instruction Set Simulator Built For Education
 ## Sobre a forma como o Vênus lida com instruções de Branch e Jump
 * __Basicamente, a política do Vênus é de permitir Branches e Jumps apenas quando o operando offset é uma label.__ Ou seja, a label tem que tá escrita no código, se não o programa não vai ser executado.
 * É uma abordagem interessante pois evita que o programador faça merda mexendo no PC ao somar constantes a ele. Por outro lado, isso tira um pouco da sua liberdade. Vou ter que refletir sobre como vou implementar essa parte.
+* __Observação/Atualização: Depois de dar uma olhada em exemplos de código presentes no livro RISC-V Atlas, dá pra ver essa é a convenção mesmo (tem que usar as labels como offset para impedir o programador de fazer merda no código).__
 
 ## Como o Vênus lida com loops infinitos?
 * Se a gente tem um código Assembly RISC-V que possui um loop infinito, quando a gente for executar ele no simulador. O Vênus simplesmente vai ficar com um "ícone" de loading, indicando que o código/programa está sendo executado. Vai ficar assim ad. eternum mas o usuário pode interagir com outras partes do programa sem problemas.
