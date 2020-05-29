@@ -76,6 +76,8 @@
 * __Operação Realizada: rd = rs1 >> rs2.__
 * Essa instrução é responsável por deslocar o conteúdo do registrador rs1 em rs2 unidades para a direita. Os bits vazios decorrentes do deslocamento para a direita são preenchidos com cópias do bit mais significativo de rs1 e, por fim, o resultado é gravado no registrador rd.
 
+### Adendo
+* Pelo que eu testei por meio de alguns códigos no Venus, se rs2 for um número negativo, a gente dá um cast nele para unsigned e executa o shift-left ou shift-right normalmente. Até porque não faz sentido a gente aplicar um shift usando um número negativo como segundo operando.
 
 ## Instruções de Comparação.
 * Por que existem essas instruções? Porque, frequentemente, escrevemos programas que geram uma saída booleana como resultado de uma comparação entre dois valores. Por esse motivo, as 2 instruções abaixo foram adicionada ao ISA do RISC-V.
