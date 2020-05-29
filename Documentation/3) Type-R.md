@@ -77,26 +77,26 @@
 * Essa instrução é responsável por deslocar o conteúdo do registrador rs1 em rs2 unidades para a direita. Os bits vazios decorrentes do deslocamento para a direita são preenchidos com cópias do bit mais significativo de rs1 e, por fim, o resultado é gravado no registrador rd.
 
 ### Adendo
-* Pelo que eu testei por meio de alguns códigos no Venus, se rs2 for um número negativo, a gente dá um cast nele para unsigned e executa o shift-left ou shift-right normalmente. Até porque não faz sentido a gente aplicar um shift usando um número negativo como segundo operando.
+* Pelo que eu testei por meio de alguns códigos no Venus, se rs2 for um número negativo, a convenção é dar um cast nele para __unsigned__ e executar o shift-left ou shift-right normalmente. Até porque não faz sentido aplicar um shift usando um número negativo como segundo operando.
 
 ## Instruções de Comparação.
-* Por que existem essas instruções? Porque, frequentemente, escrevemos programas que geram uma saída booleana como resultado de uma comparação entre dois valores. Por esse motivo, as 2 instruções abaixo foram adicionada ao ISA do RISC-V.
-* Como já era de se esperar, existem versões dessa instrução para números com e sem sinal. Para números com sinal, usamos a __slt__. Para número sem sinal, usamos a __sltu__.
-* Existem também versões que trabalham com imediatos (slti, stliu) que veremos mais para frente.
-* O compilador ou programador de linguagem Assembly poderia utilizar slt e as instruções lógicas and, or, xor para resolver expressões condicionais mais elaboradas.
+* Por que existem essas instruções? Porque, frequentemente, escrevemos programas que geram uma saída booleana como resultado de uma comparação entre dois valores. Por esse motivo, as 2 instruções abaixo foram adicionada à ISA do RISC-V.
+* Como já era de se esperar, existem versões dessa instrução para números com e sem sinal. Para números com sinal (usando a notação de complemento a dois), usamos a __slt__. Para número sem sinal, usamos a __sltu__.
+* Existem também versões que trabalham com imediatos (slti, stliu), que veremos mais adiante.
+* O compilador ou programador de linguagem Assembly poderia utilizar slt/sltu em conjunto com as instruções lógicas and/or/xor para resolver expressões condicionais mais elaboradas.
 ### 9) slt
 * __Síntaxe: slt rd, rs1, rs2__
 * rs1, rs2 = registradores-fonte
 * rd = registrador-destino
 * __Operação Realizada: rd = rs1 < rs2 ? 1 : 0.__
-* Essa instrução verificar os valores presentes nos registradores rs1 e rs2 (analisando-os como números de complemento de dois), escreve 1 no registrador rd, se rs1 < rs2. Caso contrário, escreve 0.
+* Essa instrução verifica os valores presentes nos registradores rs1 e rs2 (analisando-os como números de complemento de dois) e escreve 1 no registrador rd, se rs1 < rs2. Caso contrário, escreve 0.
 
 ### 10) sltu
 * __Síntaxe: sltu rd, rs1, rs2__
 * rs1, rs2 = registradores-fonte
 * rd = registrador-destino
 * __Operação Realizada: rd = rs1 <(u) rs2 ? 1 : 0.__
-* Essa instrução verificar os valores presentes nos registradores rs1 e rs2 (analisando-os como números sem sinal), escreve 1 no registrador rd, se rs1 < rs2. Caso contrário, escreve 0.
+* Essa instrução verifica os valores presentes nos registradores rs1 e rs2 (analisando-os como números sem sinal) e escreve 1 no registrador rd, se rs1 <(u) rs2. Caso contrário, escreve 0.
 
 ## Observações Finais
 * Como foi visto nas instruções __add__ e __sub__, as instruções de aritmética de inteiros do RISC-V não possuem suporte para a detecção de overflow (também não existem instruções que executem rotações de bits na extensão core RV32I na ISA do RISC-V). Isso pode ser calculado manualmente (como veremos mais para frente).
