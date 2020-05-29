@@ -11,6 +11,7 @@
 
 ## Instruções Aritméticas
 ### 1) add
+* __Significado: Addition (add).__
 * __Síntaxe: add rd, rs1, rs2__
 * rs1, rs2 = registradores-fonte
 * rd = registrador-destino
