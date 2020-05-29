@@ -4,7 +4,7 @@
 * As instruções Type-J são aquelas que executam saltos incondicionais para outras partes do código.
 * A única instrução do Type-J é a: __jal (jump and link).__
 * __Essa instrução é muito utilizada para lidar com chamadas e retornos de função em Assembly(tem que explicar isso melhor dps).__
-* __Do mesmo jeito que aconteceu com as instruções de Branch, na instrução "jal" a gente deveria trabalhar com labels ao invés de trabalhar com offsets. (Tem que também como eu vou implementar isso).__
+* __Do mesmo jeito que aconteceu com as instruções de Branch, na instrução "jal" a gente deveria trabalhar com labels ao invés de trabalhar com offsets. (Tem que ver também como eu vou implementar isso).__
 
 ## Instruções
 ### 1) jal
