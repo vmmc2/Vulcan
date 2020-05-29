@@ -20,6 +20,7 @@
 * __O possível overflow aritmético é ignorado.__
 
 ### 2) sub
+* __Significado: Subtraction (sub).__
 * __Síntaxe: sub rd, rs1, rs2__
 * rs1, rs2 = registradores-fonte
 * rd = registrador-destino
@@ -30,6 +31,7 @@
 
 ## Instruções Lógicas
 ### 3) and
+* __Significado: And Bit-a-Bit (and).__
 * __Síntaxe: and rd, rs1, rs2__
 * rs1, rs2 = registradores-fonte
 * rd = registrador-destino
@@ -37,6 +39,7 @@
 * Essa instrução é responsável por realizar um AND bit-a-bit entre o conteúdo dos registradores rs1 e rs2 e guardar o resultado dentro do registrador rd.
 
 ### 4) or
+* __Significado: Or Bit-a-Bit (or).__
 * __Síntaxe: or rd, rs1, rs2__
 * rs1, rs2 = registradores-fonte
 * rd = registrador-destino
@@ -44,6 +47,7 @@
 * Essa instrução é responsável por realizar um OR (inclusivo) bit-a-bit entre o conteúdo dos registradores rs1 e rs2 e guardar o resultado dentro do registrador rd.
 
 ### 5) xor
+* __Significado: Xor Bit-a-Bit (xor).__
 * __Síntaxe: xor rd, rs1, rs2__
 * rs1, rs2 = registradores-fonte
 * rd = registrador-destino
@@ -53,6 +57,7 @@
 
 ## Instruções de Deslocamento
 ### 6) sll
+* __Significado: Shift-Left Logical (sll).__
 * __Síntaxe: sll rd, rs1, rs2__
 * rs1, rs2 = registradores-fonte
 * rd = registrador-destino
@@ -62,6 +67,7 @@
  Logo, essa instrução pode ser enxergada da seguinte maneira: __rd = (rs1)*(2^(rs2)).__
  
 ### 7) srl
+* __Significado: Shift-Right Logical (srl).__
 * __Síntaxe: srl rd, rs1, rs2__
 * rs1, rs2 = registradores-fonte
 * rd = registrador-destino
@@ -71,6 +77,7 @@
 * Diante disso, podemos enxergar essa operação da seguinte maneira (__se estivermos trabalhando com números sem-sinal__): __rd = (rs1)/(2^(rs2)).__
 
 ### 8) sra
+* __Significado: Shift-Right Arithmetic (sra).__
 * __Síntaxe: sra rd, rs1, rs2__
 * rs1, rs2 = registradores-fonte
 * rd = registrador-destino
@@ -86,6 +93,7 @@
 * Existem também versões que trabalham com imediatos (slti, stliu), que veremos mais adiante.
 * O compilador ou programador de linguagem Assembly poderia utilizar slt/sltu em conjunto com as instruções lógicas and/or/xor para resolver expressões condicionais mais elaboradas.
 ### 9) slt
+* __Significado: Set If Less Than (slt).__
 * __Síntaxe: slt rd, rs1, rs2__
 * rs1, rs2 = registradores-fonte
 * rd = registrador-destino
@@ -93,6 +101,7 @@
 * Essa instrução verifica os valores presentes nos registradores rs1 e rs2 (analisando-os como números de complemento de dois) e escreve 1 no registrador rd, se rs1 < rs2. Caso contrário, escreve 0.
 
 ### 10) sltu
+* __Significado: Set If Less Than Unsigned (sltu).__
 * __Síntaxe: sltu rd, rs1, rs2__
 * rs1, rs2 = registradores-fonte
 * rd = registrador-destino
