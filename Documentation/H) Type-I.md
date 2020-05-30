@@ -4,16 +4,58 @@
 
 ## Instruções 
 ### 1) lb
+* __Significado: Load Byte (lb).__
+* __Síntaxe: lb rd, offset, rs1__
+* rs1 = registrador-fonte
+* offset = offset de 12 bits (com sinal, seguindo a convenção de complemento a 2)
+* rd = registrador-destino
+* __Operação Realizada: rd = signalextend(memória[rs1 + signalextend(offset)][7:0]).__
+* Essa instrução funciona da seguinte maneira. O primeiro passo é calcular o endereço de memória: pegamos o valor do immediato de 12 bits com sinal e aplicamos uma extensão de sinal nele para 32 bits. Feito isso, somamos esse valor ao conteúdo do registrador rs1. Obtemos assim o endereço de memória desejado. Após isso, vamos até aquele endereço e carregamos 1 byte dele (O byte menos significativo, seguindo a convenção Little-Endian). Depois disso, aplicamos uma extensão de sinal nesse byte e o armazenamos no registrador-destino rd.
 
 ### 2) lh
+* __Significado: Load HalfWord (lh).__
+* __Síntaxe: lh rd, offset, rs1__
+* rs1 = registrador-fonte
+* offset = offset de 12 bits (com sinal, seguindo a convenção de complemento a 2)
+* rd = registrador-destino
+* __Operação Realizada: rd = signalextend(memória[rs1 + signalextend(offset)][15:0]).__
+* Essa instrução funciona da seguinte maneira. O primeiro passo é calcular o endereço de memória: pegamos o valor do immediato de 12 bits com sinal e aplicamos uma extensão de sinal nele para 32 bits. Feito isso, somamos esse valor ao conteúdo do registrador rs1. Obtemos assim o endereço de memória desejado. Após isso, vamos até aquele endereço e carregamos 2 bytes (1 halfword) dele (Os 2 bytes menos significativos, seguindo a convenção Little-Endian). Depois disso, aplicamos uma extensão de sinal nessa halfword e a armazenamos no registrador-destino rd.
 
 ### 3) lw
+* __Significado: Load Word (lw).__
+* __Síntaxe: lw rd, offset, rs1__
+* rs1 = registrador-fonte
+* offset = offset de 12 bits (com sinal, seguindo a convenção de complemento a 2)
+* rd = registrador-destino
+* __Operação Realizada: rd = signalextend(memória[rs1 + signalextend(offset)][31:0]).__
+* Essa instrução funciona da seguinte maneira. O primeiro passo é calcular o endereço de memória: pegamos o valor do immediato de 12 bits com sinal e aplicamos uma extensão de sinal nele para 32 bits. Feito isso, somamos esse valor ao conteúdo do registrador rs1. Obtemos assim o endereço de memória desejado. Após isso, vamos até aquele endereço e carregamos os 4 bytes (1 word) dele (Os 4 bytes menos significativos, seguindo a convenção Little-Endian). Depois disso, aplicamos uma extensão de sinal nessa word e a armazenamos no registrador-destino rd.
 
 ### 4) lbu
+* __Significado: Load Byte Unsigned (lbu).__
+* __Síntaxe: lbu rd, offset, rs1__
+* rs1 = registrador-fonte
+* offset = offset de 12 bits (com sinal, seguindo a convenção de complemento a 2)
+* rd = registrador-destino
+* __Operação Realizada: rd = signalextend(memória[rs1 + signalextend(offset)][7:0]).__
+* Essa instrução funciona da seguinte maneira. O primeiro passo é calcular o endereço de memória: pegamos o valor do immediato de 12 bits com sinal e aplicamos uma extensão de sinal nele para 32 bits. Feito isso, somamos esse valor ao conteúdo do registrador rs1. Obtemos assim o endereço de memória desejado. Após isso, vamos até aquele endereço e carregamos 1 byte dele (O byte menos significativo, seguindo a convenção Little-Endian). Depois disso, aplicamos uma extensão de zero (0) nesse byte e o armazenamos no registrador-destino rd.
 
 ### 5) lhu
+* __Significado: Load HalfWord Unsigned (lhu).__
+* __Síntaxe: lhu rd, offset, rs1__
+* rs1 = registrador-fonte
+* offset = offset de 12 bits (com sinal, seguindo a convenção de complemento a 2)
+* rd = registrador-destino
+* __Operação Realizada: rd = signalextend(memória[rs1 + signalextend(offset)][15:0]).__
+* Essa instrução funciona da seguinte maneira. O primeiro passo é calcular o endereço de memória: pegamos o valor do immediato de 12 bits com sinal e aplicamos uma extensão de sinal nele para 32 bits. Feito isso, somamos esse valor ao conteúdo do registrador rs1. Obtemos assim o endereço de memória desejado. Após isso, vamos até aquele endereço e carregamos 2 bytes (1 halfword) dele (Os 2 bytes menos significativos, seguindo a convenção Little-Endian). Depois disso, aplicamos uma extensão de zero (0) nessa halfword e a armazenamos no registrador-destino rd.
 
 ### 6) jalr
+* __Significado: Jump and Link Register (jalr).__
+* __Síntaxe: jalr rd, offset, rs1__
+* rs1 = registrador-fonte
+* offset = offset de 12 bits (com sinal, seguindo a convenção de complemento a 2)
+* rd = registrador-destino
+* __Operação Realizada:  .__
+* 
 
 ### 7) addi
 * __Significado: Addition Immediate (addi).__
