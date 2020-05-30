@@ -26,7 +26,7 @@
 * __O overflow aritmético é ignorado.__
 
 ### 8) andi
-* __Significado: AND Bit-a-Bit Immediate (andi).__
+* __Significado: And Bit-a-Bit Immediate (andi).__
 * __Síntaxe: andi rd, rs1, imm__
 * rs1 = registrador-fonte
 * imm = imediato de 12 bits (com sinal, seguindo a convenção de complemento a 2)
@@ -35,7 +35,7 @@
 * Essa instrução pega o valor imediato com sinal de 12 bits, aplica uma extensão de sinal nele para 32 bits. Depois disso, aplica um AND Bit-a-Bit entre esse valor extendido do imediato e o conteúdo do registrador rs1 e guarda o resultado no registrador-destino rd.
 
 ### 9) ori
-* __Significado: OR Bit-a-Bit Immediate (ori).__
+* __Significado: Or Bit-a-Bit Immediate (ori).__
 * __Síntaxe: ori rd, rs1, imm__
 * rs1 = registrador-fonte
 * imm = imediato de 12 bits (com sinal, seguindo a convenção de complemento a 2)
@@ -44,7 +44,7 @@
 * Essa instrução pega o valor imediato com sinal de 12 bits, aplica uma extensão de sinal nele para 32 bits. Depois disso, aplica um OR (Ou Inclusivo) Bit-a-Bit entre esse valor extendido do imediato e o conteúdo do registrador rs1 e guarda o resultado no registrador-destino rd.
 
 ### 10) xori
-* __Significado: XOR Bit-a-Bit Immediate (xori).__
+* __Significado: Xor Bit-a-Bit Immediate (xori).__
 * __Síntaxe: xori rd, rs1, imm__
 * rs1 = registrador-fonte
 * imm = imediato de 12 bits (com sinal, seguindo a convenção de complemento a 2)
