@@ -54,8 +54,8 @@
 * rs1 = registrador-fonte
 * offset = offset de 12 bits (com sinal, seguindo a convenção de complemento a 2)
 * rd = registrador-destino
-* __Operação Realizada:  .__
-* 
+* __Operação Realizada: t = pc + 4 ; pc = (rs1 + signalextend(offset))&~1 ; rd = t.__
+* Essa instrução copia o registrador pc para rs1 + signalextend(offset), mascarando o bit mais significativo do endereço calculado, então grava o valor anterior do pc + 4 no registrador-destino rd. Se rd for omitido, x1 é assumido.
 
 ### 7) addi
 * __Significado: Addition Immediate (addi).__
