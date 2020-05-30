@@ -13,3 +13,5 @@
 * Sem instruções de multiplicação e divisão (Tais instruções fazem parte da extensão RV32M).
 * No que diz respeito as instruções de Load, podemos executar load em words (com sinal apenas) e em bytes/halfwords (com ou sem sinal).
 * Opção envolvendo imediatos para todas as instruções aritméticas (addi), lógicas (andi, ori, xori), de deslocamento (slli, srli, srai) e de comparação (slti, sltiu).
+* Apresenta um modo de endereçamento de dados (registrador + imediato) e de desvio relativo ao pc.
+* Uma instrução para carregar um imediato na parte superior de um registrador, de modo que uma constante de 32 bits leve apenas 2 instruções.
