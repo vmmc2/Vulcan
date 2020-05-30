@@ -1,4 +1,4 @@
-# Informações Adicionais
+# Extra Info
 
 ## Instruções de Registradores de Status de Controle
 * As instruções de Registradores de Status de Controle (csrrc, csrrs, csrrw, csrrci, csrrsi, csrrwi) fornecem acesso aos registradores de controle, que são responsáveis por medir o desempenho do programa (do código).
