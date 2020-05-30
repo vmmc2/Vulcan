@@ -83,6 +83,19 @@
 * __Para o RV32I, essa instrução só é permitida quando shamt[5] = 0.__
 
 ### 14) slti
+* __Significado: Set If Less Than Immediate (slti).__
+* __Síntaxe: slti rd, rs1, imm__
+* rs1 = registrador-fonte
+* imm = imediato de 12 bits (com sinal, seguindo a convenção de complemento a 2).
+* rd = registrador-destino
+* __Operação Realizada: rd = rs1 <(s) signalextend(imm) ? 1 : 0.__
+* Essa instrução checa se o valor no registrador rs1 é menor do que o valor do immediato imm (depois de ele ter sofrido extensão de sinal) (analisando ambos os valores como números com sinal, seguindo o formato de complemento a 2). Se isso for verdade, seta o valor do registrador-destino rd para 1. Caso contrário, seta ele para 0.
 
 ### 15) sltiu
-
+* __Significado: Set If Less Than Immediate Unsigned (sltiu).__
+* __Síntaxe: sltiu rd, rs1, imm__
+* rs1 = registrador-fonte
+* imm = imediato de 12 bits (com sinal, seguindo a convenção de complemento a 2).
+* rd = registrador-destino
+* __Operação Realizada: rd = rs1 <(u) signalextend(imm) ? 1 : 0.__
+* Essa instrução checa se o valor no registrador rs1 é menor do que o valor do immediato imm (depois de ele ter sofrido extensão de sinal) (analisando ambos os valores como números sem sinal). Se isso for verdade, seta o valor do registrador-destino rd para 1. Caso contrário, seta ele para 0.
