@@ -1,4 +1,4 @@
-# Recap e Considerações Finais
+# Recap
 
 ## Intro
 * Nessa seção, faremos uma breve recapitulação sobre os aspectos e características mais importantes da RV32I.
