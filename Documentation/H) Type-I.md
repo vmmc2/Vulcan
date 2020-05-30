@@ -16,7 +16,7 @@
 ### 6) jalr
 
 ### 7) addi
-* __Significado: Addition Immediate(addi).__
+* __Significado: Addition Immediate (addi).__
 * __Síntaxe: addi rd, rs1, imm__
 * rs1 = registradores-fonte
 * imm = imediato de 12 bits (com sinal, seguindo a convenção de complemento a 2)
