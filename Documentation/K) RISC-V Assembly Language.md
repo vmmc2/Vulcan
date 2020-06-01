@@ -17,3 +17,4 @@
   5. Colocar o valor do resultado da função onde o programa de chamada possa acessá-lo, restaurar qualquer registrador e liberar quaisquer recursos de armazenamento local.
   6. Levando em conta que uma função pode ser chamada de vários pontos em um programa, retornar o controle para seu respectivo ponto de origem, executando a instrução __ret__.
 * Por questões de desempenho, é aconselhavel guardar as variáveis nos registradores ao invés de armazená-las na memória (isso porque o acesso aos registradores é mais rápido do que o acesso à memória). Entretanto, evite ficar acessando a memória constantemente para salvar e restaurar o conteúdo dos registradores.
+![[registers](https://http://riscv.org/)](saved registers.png)
