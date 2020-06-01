@@ -63,3 +63,9 @@ entry_label:
 * Para MS-DOS, as entradas são arquivos com o sufixo .OBJ ou .LIB e a saída é um arquivo .EXE.
 * __A figura abaixo indica os endereços dos segmentos de memória mais comuns em um típico programa RISC-V (inclui os segmentos de memória alocados para código e dados):__
 ![[memorysegments](https://http://riscv.org/)](memorysegments.png)
+* __Observação:__ Se a gente pegar os endereços acima e converter de hexadecimal para decimal, vamos ter o seguinte:
+Segmento de Memória | Endereço Hexadecimal | Endereço Decimal
+------------------- | -------------------- | ----------------
+Reservado           |  0                   |  0
+Texto (Código)      |  00010000            |  65536
+Dados Estáticos     |  10000000            |  268435456
