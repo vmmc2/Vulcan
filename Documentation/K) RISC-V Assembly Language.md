@@ -51,3 +51,4 @@ entry_label:
 ## Diretivas
 * Diretivas são os comandos que iniciam com um ponto "."
 * __De maneira mais detalhada, as diretivas são comandos específicos para o assembler, e não código para ser traduzido por ele.__
+* __Tais diretivas informam ao Assembler onde colocar código e dados, especificam constantes de código e dados para uso no programa e assim por diante.__
