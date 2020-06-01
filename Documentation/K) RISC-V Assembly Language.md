@@ -6,6 +6,7 @@
   * Assembler (ou Montador).
   * Linker.
   * Loader.
+![[registers](https://http://riscv.org/)](steps.png)
   
 ## Convenção de Chamada
 * Quando queremos realizar uma chamada de função em nosso código é importante seguir um protócolo, afim de garantir que toda a execução do programa ocorra da forma adequada. Veremos, a seguir, quais são essas etapas que devem ser seguidas.
