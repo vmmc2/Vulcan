@@ -6,3 +6,12 @@
   * Assembler (ou Montador).
   * Linker.
   * Loader.
+  
+## Convenção de Chamada
+* Quando queremos realizar uma chamada de função em nosso código é importante seguir um protócolo, afim de garantir que toda a execução do programa ocorra da forma adequada. Veremos, a seguir, quais são essas etapas que devem ser seguidas.
+  1. Colocar os argumentos onde a função possa acessá-los.
+  2. Saltar para a função (utilizando a instrução __jal__ do RV32I).
+  3. Adquirir os recursos de armazenamento local que a função necessita, salvando registradores conforme necessário.
+  4. Executar a tarefa desejada da função.
+  5. Colocar o valor do resultado da função onde o programa de chamada possa acessá-lo, restaurar qualquer registrador e liberar quaisquer recursos de armazenamento local.
+  6. Levando em conta que uma função pode ser chamada de vários pontos em um programa, retornar o controle para seu respectivo ponto de origem, executando a instrução __ret__.
