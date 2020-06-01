@@ -47,3 +47,7 @@ entry_label:
 * A entrada para essa etapa em sistemas Unix é um arquivo com extensão ".s" como, por exemplo: foo.s
 * Já no caso do MS-DOS a extensão do arquivo é ".asm" como, por exemplo: foo.asm
 * O trabalho realizado na etapa do Assembler não é só produzir código objeto (código em linguagem de máquina/binário) a partir do código em linguagem Assembly. É também trabalho dele estender essas instruções para incluir operações úteis para o programador Assembly ou para o desenvolvedor do compilador. Essa categoria, baseada em configurações inteligentes das instruções regulares, é chamada de pseudoinstruções. __Por enquanto, o Vulcan não tem suporte para as pseudoinstruções.__
+
+## Diretivas
+* Diretivas são os comandos que iniciam com um ponto "."
+* __De maneira mais detalhada, as diretivas são comandos específicos para o assembler, e não código para ser traduzido por ele.__
