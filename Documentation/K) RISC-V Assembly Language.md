@@ -53,7 +53,7 @@ entry_label:
 * __De maneira mais detalhada, as diretivas são comandos específicos para o assembler, e não código para ser traduzido por ele.__
 * __Tais diretivas informam ao Assembler onde colocar código e dados, especificam constantes de código e dados para uso no programa e assim por diante.__
 * Segue abaixo uma tabela com as diretivas de Assembly RISC-V mais comuns:
-
+![[directives](https://http://riscv.org/)](directives.png)
 
 ## Linker
 * Em vez de compilar todo o código-fonte a cada vez que um arquivo é alterado, o Linker (ou ligador) permite que arquivos individuais sejam compilados e montados separadamente.
