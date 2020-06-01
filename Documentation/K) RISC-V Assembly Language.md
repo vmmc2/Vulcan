@@ -35,3 +35,10 @@ entry_label:
   ; salva outro registradores na pilha, caso seja necessário.
   .... ; corpo da função.
 ```
+* Se existirem muitos argumentos e variáveis de função para serem alocados nos registradores, o "prologue" da função aloca espaço na pilha para o seu "frame". Depois que a tarefa da função estiver completa, a posição final ("epilogue") desfaz o stackframe e retorna ao ponto de origem da chamada de função.
+```asm
+; restaura o estado dos registradores da pilha, caso seja necessário.
+  lw ra, framesize - 4, sp ; restaura registrador ra/x1
+  addi sp, sp, framesize ; desaloca o espaço do stackframe
+  ret ; retorna ao ponto de chamada.
+```
