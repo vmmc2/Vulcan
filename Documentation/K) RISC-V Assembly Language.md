@@ -63,10 +63,11 @@ entry_label:
 * Para MS-DOS, as entradas são arquivos com o sufixo .OBJ ou .LIB e a saída é um arquivo .EXE.
 * __A figura abaixo indica os endereços dos segmentos de memória mais comuns em um típico programa RISC-V (inclui os segmentos de memória alocados para código e dados):__
 ![[memorysegments](https://http://riscv.org/)](memorysegments.png)
-* __Observação:__ Se a gente pegar os endereços acima e converter de hexadecimal para decimal, vamos ter o seguinte:
+* __Observação:__ Se a gente pegar os endereços acima e converter de hexadecimal para decimal, vamos ter o seguinte: (Lembrando que a memória no RISC-V é enderçada por byte, percebe-se que não da para simular com software um sistema com 268_435_456 bytes, pois isso extrapola e muito a capacidade de um vetor ou list. No caso, as linguagens escolhidas para implementar o simulador foi Dart/C. Dart possui a estrutura de dados List que suporta no máximo 1_000_000 de endereços (bytes), o mesmo se aplica para C. Então eu tive que reduzir de forma proporcional esses segmentos para puder simulá-los da forma mais adequada possível.
 
-Segmento de Memória | Endereço Hexadecimal | Endereço Decimal |
-------------------- | -------------------- | ---------------- |
-Reservado           |  0                   |  0               |
-Texto (Código)      |  00010000            |  65536           |
-Dados Estáticos     |  10000000            |  268435456       |
+Segmento de Memória | Endereço Hexadecimal | Endereço Decimal | Endereço no Vulcan |
+------------------- | -------------------- | ---------------- | ------------------ |
+Reservado           |  0                   |  0               |  0                 |
+Texto (Código/PC)   |  00010000            |  65536           |  400               |            
+Dados Estáticos     |  10000000            |  268435456       |  200400            |
+Ponteiro de Pilha   |  bffffff0            |  3221225456      |  1000000           |
