@@ -25,4 +25,4 @@
 ## Explicações Extras
 * A ideia do RISC-V é possuir registradores que não tem garantia de serem preservados durante uma chamada de função. Tais registradores são chamados de __registradores temporários (temporary registers).__
 * Por outro lado, outros registradores possuem a garantia de serem preservados durante chamadas de função. Esses registradores são chamados de __registradores salvos (saved registers).__
-* Funções que não realizam chamadas para outras funções são chamadas de __funções leaf.__
+* Funções que não realizam chamadas a outras funções são chamadas de __funções leaf.__
