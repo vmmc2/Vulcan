@@ -68,6 +68,6 @@ entry_label:
 Segmento de Memória | Endereço Hexadecimal | Endereço Decimal | Endereço no Vulcan |
 ------------------- | -------------------- | ---------------- | ------------------ |
 Reservado           |  0                   |  0               |  0                 |
-Texto (Código/PC)   |  00010000            |  65536           |  400               |            
+Texto (Código/pc)   |  00010000            |  65536           |  400               |            
 Dados Estáticos     |  10000000            |  268435456       |  200400            |
-Ponteiro de Pilha   |  bffffff0            |  3221225456      |  1000000           |
+Ponteiro de Pilha (sp/x2)   |  bffffff0            |  3221225456      |  1000000           |
