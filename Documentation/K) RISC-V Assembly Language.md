@@ -26,3 +26,12 @@
 * A ideia do RISC-V é possuir registradores que não tem garantia de serem preservados durante uma chamada de função. Tais registradores são chamados de __registradores temporários (temporary registers).__
 * Por outro lado, outros registradores possuem a garantia de serem preservados durante chamadas de função. Esses registradores são chamados de __registradores salvos (saved registers).__
 * Funções que não realizam chamadas a outras funções são chamadas de __funções leaf.__ Quando uma função leaf possuir apenas alguns argumentos e variavéis locais significa que podemos manter esses dados em registradores, sem ter que derramar nada para a memória. Se tais condições persistirem, o programa não precisará salvar o conteúdo dos registradores na memória. Uma fração significativa de chamadas de função se encontram nessa categoria.
+* A partir das convenções da ABI, é possível observar o código RV32I padrão para a entrada e saída de funções. Observe abaixo:
+```asm
+entry_label: 
+  addi sp, sp, -framesize ; aloca espaço para o stackframe
+                          ; para isso, a gente ajusta o stack pointer (registrador sp/x2)
+  sw ra, framsize - 4, sp ; salva o endereço de retorno (presente no registrador ra/x1)
+  ; salva outro registradores na pilha, caso seja necessário.
+  .... ; corpo da função.
+```
