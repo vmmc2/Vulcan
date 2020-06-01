@@ -17,5 +17,10 @@
   5. Colocar o valor do resultado da função onde o programa de chamada possa acessá-lo, restaurar qualquer registrador e liberar quaisquer recursos de armazenamento local.
   6. Levando em conta que uma função pode ser chamada de vários pontos em um programa, retornar o controle para seu respectivo ponto de origem, executando a instrução __ret__.
 * Por questões de desempenho, é aconselhavel guardar as variáveis nos registradores ao invés de armazená-las na memória (isso porque o acesso aos registradores é mais rápido do que o acesso à memória). Entretanto, evite ficar acessando a memória constantemente para salvar e restaurar o conteúdo dos registradores.
+
 ![[registerss](https://http://riscv.org/)](savedregisters.png)
+
 * Os registradores f0-31 são registradores utilizados nas extensões de ponto-flutuante de precisão simples (RV32F-RV64F) e ponto-flutuante de precisão dupla (RV32D-RV64D).
+
+## Explicações Extras
+* A ideia do RISC-V é possuir registradores que não tem garantia de serem preservados durante uma chamada de função. Tais registradores são chamados de __registradores temporários (temporary registers).__
