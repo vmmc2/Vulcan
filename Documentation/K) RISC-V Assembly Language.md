@@ -62,3 +62,4 @@ entry_label:
 * Em sistemas Unix, a entrada para o linker são arquivos com o sufixo .o (Ex: foo.o , libc.o), e sua saída é um arquivo a.out.
 * Para MS-DOS, as entradas são arquivos com o sufixo .OBJ ou .LIB e a saída é um arquivo .EXE.
 * __A figura abaixo indica os endereços dos segmentos de memória mais comuns em um típico programa RISC-V (inclui os segmentos de memória alocados para código e dados):__
+![[memorysegments](https://http://riscv.org/)](memorysegments.png)
