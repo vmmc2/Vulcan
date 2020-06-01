@@ -58,3 +58,6 @@ entry_label:
 ## Linker
 * Em vez de compilar todo o código-fonte a cada vez que um arquivo é alterado, o Linker (ou ligador) permite que arquivos individuais sejam compilados e montados separadamente.
 * Ele "costura" o novo código objeto junto aos módulos de linguagem de máquina existentes, como bibliotecas.
+* __Seu nome é derivado de uma de suas tarefas, que é editar todos os links das instruções de jump and link no arquivo objeto.__
+* Em sistemas Unix, a entrada para o linker são arquivos com o sufixo .o (Ex: foo.o , libc.o), e sua saída é um arquivo a.out.
+* Para MS-DOS, as entradas são arquivos com o sufixo .OBJ ou .LIB e a saída é um arquivo .EXE.
