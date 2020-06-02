@@ -5,6 +5,10 @@ RISC-V Instruction Set Simulator Built For Education
 * Vou ter que usar C interop por meio da library: Dart:ffi
 * Verificar melhor como essa library funciona...
 
+## Problemas que, infelizmente, nao tem solucao:
+* Se a gente inicializa o editor e clica fora dele. Ou passa o mouse em outros botoes. Ele muda a formatacao por menos de 1 seg e dps volta ao normal.
+* Nao da para usar a tecla "tab" no editor. Apenas espacos.
+
 ## Observações:
 * O que vai acontecer quando o cara apertar o botao "Simulate" na pagina Editor?
   * Primeiro, a gente vai salvar todas as linhas que ele colocou no CodeEditor de alguma forma (Numa lista com as linhas ou algo do tipo).
