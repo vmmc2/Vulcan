@@ -5,6 +5,11 @@ RISC-V Instruction Set Simulator Built For Education
 * Vou ter que usar C interop por meio da library: Dart:ffi
 * Verificar melhor como essa library funciona...
 
+## Update:
+* To tentando utilizar outra ferramenta parecida com o CodeMirror..
+* O nome dela é Rich_Code_Editor.
+* Vamo ver oq sai daí...
+
 ## Problemas que, infelizmente, nao tem solucao:
 * Se a gente inicializa o editor e clica fora dele. Ou passa o mouse em outros botoes. Ele muda a formatacao por menos de 1 seg e dps volta ao normal.
 * Nao da para usar a tecla "tab" no editor. Apenas espacos.
