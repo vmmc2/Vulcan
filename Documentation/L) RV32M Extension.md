@@ -14,3 +14,4 @@
 
 ## Notas sobre as instruções de Multiplicação
 * A instrução de multiplicação é mais complicada do que a de divisão (no que se refere ao tamamho dos operandos envolvidos na operação). No caso da multiplicação, o tamanho do produto é a soma dos tamanhos do multiplicador e do multiplicando. Portanto, a multiplicação de dois números de 32 bits gera um produto de 64 bits.
+* Para produzir um produto de 64 bits devidamente com ou sem sinal, o RISC-V possui 4 instruções de multiplicação. Para obter o produto inteiro de 32 bits -- os 32 bits inferiores do produto completo -- utilize a instrução __mul.__ Caso queira obter os 32 bits superiores do produto de 64 bits, utilize __mulh__ se ambos os operandos estiverem na representação com sinal. Utilize __mulhu__ se ambos os operandos estiverem na representação sem sinal. Por fim, utilize __mulhsu__ se um operando estiver com sinal, mas o outro não.
