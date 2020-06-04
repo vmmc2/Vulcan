@@ -8,3 +8,6 @@
 ![[rv32m](https://http://riscv.org/)](rv32m.png)
 * __A figura abaixo se trata de um mapa contendo os campos: opcode, funct3 e funct7 para todas as instruções da extensão RV32M do RISC-V.__
 ![[opcodemap](https://http://riscv.org/)](mapaopcoderv32m.png)
+* __Não custa lembrar que as equações envolvendo divisão e multiplicação funcionam da seguinte maneira:
+  * __Divisão:__ Dividendo = (Divisor * Quociente) + Resto
+  * __Multiplicação:__ Produto = (Multiplicador * Multiplicando)
