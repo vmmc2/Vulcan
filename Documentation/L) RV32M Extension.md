@@ -6,3 +6,5 @@
 * De forma menos frequente, os programadores podem querer o resto de uma divisão ao invés do quociente. Tendo isso em mente, a extensão RV32M oferece as instruções: remainder (rem) e remainder unsigned (remu), que gravam o resto da divisão em vez do quociente no registrador-destino.
 * __A figura abaixo é uma listagem de todas as instruções disponíveis na extensão RV32M:__
 ![[rv32m](https://http://riscv.org/)](rv32m.png)
+* __A figura abaixo se trata de um mapa contendo os campos: opcode, funct3 e funct7 para todas as instruções da enxtensão RV32M do RISC-V.
+![[opcodemap](https://http://riscv.org/)](mapaopcoderv32m.png)
