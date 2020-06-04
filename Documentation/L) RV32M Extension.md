@@ -13,3 +13,4 @@
   * __Multiplicação:__ Produto = (Multiplicador * Multiplicando)
 
 ## Notas sobre as instruções de Multiplicação
+* A instrução de multiplicação é mais complicada do que a de divisão (no que se refere ao tamamho dos operandos envolvidos na operação). No caso da multiplicação, o tamanho do produto é a soma dos tamanhos do multiplicador e do multiplicando. Portanto, a multiplicação de dois números de 32 bits gera um produto de 64 bits.
