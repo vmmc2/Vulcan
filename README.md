@@ -5,6 +5,10 @@ RISC-V Instruction Set Simulator Built For Education
 * Vou ter que usar C interop por meio da library: Dart:ffi
 * Verificar melhor como essa library funciona...
 
+## Representacao de Inteiros:
+* Dart aparentemente eh meio bugado para conseguir representar numeros inteiros... (Digo, os bits dos numeros inteiros).
+* Vou ter que ver como fazer isso.
+
 ## Update:
 * Usei um widget TextField() mesmo. Pode não ser a melhor opção, mas é o que tem para a janta.
 
