@@ -18,6 +18,12 @@
 
 ## Instruções
 ### 1) mul
+* __Significado: Multiply (mul).__
+* __Síntaxe: mul rd, rs1, rs2__
+* rs1/rs2 = registradores-fonte
+* rd = registrador-destino
+* __Operação Realizada: rd = rs1 * rs2.__
+* Essa instrução funciona da seguinte maneira. Calcula o produto do conteúdo dos registradores de 32-bits rs1 e rs2. Esse produto possui 64 bits. Essa instrução grava os 32-bits menos significativos do resultado no registrador-destino rd. __Em outras palavras, essa instrução ignora o overflow aritmético.__
 
 ### 2) mulh
 
