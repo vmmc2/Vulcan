@@ -38,9 +38,28 @@
 ### 4) mulhsu
 
 ### 5) div
+* __Significado: Divide (div).__
+* __Síntaxe: div rd, rs1, rs2__
+* rs1/rs2 = registradores-fonte
+* rd = registrador-destino
+* __Operação Realizada: rd = (rs1 /(s) rs2).__
+* Essa instrução funciona da seguinte maneira: Realiza a divisão de rs1 por rs2, arredondando para 0, tratando os valores como números com sinal, seguindo a convenção de complemento a 2. Por fim, armazena o quociente da divisão no registrador-destino rd. 
 
 ### 6) divu
+* __Significado: Divide Unsigned (divu).__
+* __Síntaxe: divu rd, rs1, rs2__
+* rs1/rs2 = registradores-fonte
+* rd = registrador-destino
+* __Operação Realizada: rd = (rs1 /(u) rs2).__
+* Essa instrução funciona da seguinte maneira: Realiza a divisão de rs1 por rs2, arredondando para 0, tratando os valores como números sem sinal. Por fim, armazena o quociente da divisão no registrador-destino rd. 
 
 ### 7) rem
+* __Significado: Remainder (rem).__
+* __Síntaxe: rem rd, rs1, rs2__
+* rs1/rs2 = registradores-fonte
+* rd = registrador-destino
+* __Operação Realizada: rd = (rs1 %(s) rs2).__
+* Essa instrução funciona da seguinte maneira. Realiza a divisão de rs1 por rs2, arredondando para 0, tratando os valores como números com sinal, seguindo a convenção de complemento a 2. Por fim, armazena o resto da divisão no registrador-destino rd. 
+* __Tem que dar uma olhada para ver como outros simuladores (Venus, Jupiter, Ripes) implementaram isso. Tem uma treta com resto de divisão envolvendo números negativos.__
 
 ### 8) remu
