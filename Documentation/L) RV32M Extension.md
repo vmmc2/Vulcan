@@ -26,6 +26,12 @@
 * Essa instrução funciona da seguinte maneira. Calcula o produto do conteúdo dos registradores de 32-bits rs1 e rs2. Esse produto possui 64 bits. Essa instrução grava os 32-bits menos significativos do resultado no registrador-destino rd. __Em outras palavras, essa instrução ignora o overflow aritmético.__
 
 ### 2) mulh
+* __Significado: Multiply High (mulh).__
+* __Síntaxe: mulh rd, rs1, rs2__
+* rs1/rs2 = registradores-fonte
+* rd = registrador-destino
+* __Operação Realizada: rd = ((rs1(s) * rs2(s)) >>(s) 32).__
+* Essa instrução funciona da seguinte maneira. Calcula o produto do conteúdo dos registradores de 32-bits rs1 e rs2 (Tratando ambos os números como números com sinal, seguindo a convenção de complemento a 2). Esse produto possui 64 bits. Essa instrução grava os 32-bits mais significativos do resultado no registrador-destino rd (Ela grava dando um shift-right que preserva o sinal).
 
 ### 3) mulhu
 
