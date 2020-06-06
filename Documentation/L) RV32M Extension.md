@@ -23,7 +23,7 @@
 * rs1/rs2 = registradores-fonte
 * rd = registrador-destino
 * __Operação Realizada: rd = rs1 * rs2.__
-* Essa instrução funciona da seguinte maneira. Calcula o produto do conteúdo dos registradores de 32-bits rs1 e rs2. Esse produto possui 64 bits. Essa instrução grava os 32-bits menos significativos do resultado no registrador-destino rd. __Em outras palavras, essa instrução ignora o overflow aritmético.__
+* Essa instrução funciona da seguinte maneira: Calcula o produto do conteúdo dos registradores de 32-bits rs1 e rs2. Esse produto possui 64 bits. Essa instrução grava os 32-bits menos significativos do resultado no registrador-destino rd. __Em outras palavras, essa instrução ignora o overflow aritmético.__
 
 ### 2) mulh
 * __Significado: Multiply High (mulh).__
@@ -31,7 +31,7 @@
 * rs1/rs2 = registradores-fonte
 * rd = registrador-destino
 * __Operação Realizada: rd = ((rs1(s) * rs2(s)) >>(s) 32).__
-* Essa instrução funciona da seguinte maneira. Calcula o produto do conteúdo dos registradores de 32-bits rs1 e rs2 (Tratando ambos os números como números com sinal, seguindo a convenção de complemento a 2). Esse produto possui 64 bits. Essa instrução grava os 32-bits mais significativos do resultado no registrador-destino rd (Ela grava dando um shift-right que preserva o sinal).
+* Essa instrução funciona da seguinte maneira: Calcula o produto do conteúdo dos registradores de 32-bits rs1 e rs2 (Tratando ambos os números como números com sinal, seguindo a convenção de complemento a 2). Esse produto possui 64 bits. Essa instrução grava os 32-bits mais significativos do resultado no registrador-destino rd (Ela grava dando um shift-right que preserva o sinal).
 
 ### 3) mulhu
 
@@ -59,7 +59,13 @@
 * rs1/rs2 = registradores-fonte
 * rd = registrador-destino
 * __Operação Realizada: rd = (rs1 %(s) rs2).__
-* Essa instrução funciona da seguinte maneira. Realiza a divisão de rs1 por rs2, arredondando para 0, tratando os valores como números com sinal, seguindo a convenção de complemento a 2. Por fim, armazena o resto da divisão no registrador-destino rd. 
+* Essa instrução funciona da seguinte maneira: Realiza a divisão de rs1 por rs2, arredondando para 0, tratando os valores como números com sinal, seguindo a convenção de complemento a 2. Por fim, armazena o resto da divisão no registrador-destino rd. 
 * __Tem que dar uma olhada para ver como outros simuladores (Venus, Jupiter, Ripes) implementaram isso. Tem uma treta com resto de divisão envolvendo números negativos.__
 
 ### 8) remu
+* __Significado: Remainder Unsigned (remu).__
+* __Síntaxe: remu rd, rs1, rs2__
+* rs1/rs2 = registradores-fonte
+* rd = registrador-destino
+* __Operação Realizada: rd = (rs1 %(u) rs2).__
+* Essa instrução funciona da seguinte maneira: Realiza a divisão de rs1 por rs2, arredondando para 0, tratando os valores como números sem sinal. Por fim, armazena o resto da divisão no registrador-destino rd. 
