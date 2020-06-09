@@ -13,7 +13,7 @@
 * __Operação Realizada: rd = signalextend(immediate[31:12] << 12).__
 * Essa instrução pega o valor imediato presente na instrução (esse imediato pode ter no maximo 20 bits) e lembrando que é um imediato com sinal. Logo o seu range vai de: -2^19 ate (2^19) - 1.
 * Depois de pegar esse imediato, ele vai deslocá-lo de 12 bits para a esquerda , preenchendo os bits vazios com 0. Depois disso, aplico o signalextend() no valor e o armazeno no registrador-destino (rd).
-* __Tenho que refletir se devo deixar o usuário colocar uma constante maior que 2^19 - 1 ou menor que -2^19 ou não...__
+* __A constante tem que estar no range: [0, (2^20) - 1].__
 
 
 ### 2) auipc
@@ -23,6 +23,7 @@
 * rd = registrador-destino
 * __Operação Realizada: rd = pc + signalextend(immediate[31:12] << 12).__
 * Essa instrução pega o valor imediato (com sinal) de 20 bits. Depois disso, aplica extensao de sinal nele e dá um shift left nele de 12 bits. Por fim, adiciona esse valor de 32 bits ao valor do registrador pc (Program Counter) e o guarda no registrador-destino (rd).
+* __A constante tem que estar no range: [0, (2^20) - 1].__
 
 ## Truque para ler o conteúdo do registrador PC.
 * Embora o programador de linguagem Assembly não tenha acesso direto ao registrador PC do RISC-V (diferente do que acontece com o ARM-32), é possível ler o seu conteúdo por meio de um trick usando a instrução "auipc".
