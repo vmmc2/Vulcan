@@ -1,3 +1,6 @@
+// Vulcan is Software developed by:
+// Victor Miguel de Morais Costa
+// License: MIT
 class Processor{
   //Ponteiros fixados para os segmentos de memoria.
   final int reserved = 0;
