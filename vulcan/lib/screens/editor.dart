@@ -1,3 +1,6 @@
+// Vulcan is Software developed by:
+// Victor Miguel de Morais Costa
+// License: MIT
 import 'package:flutter/material.dart';
 import 'package:codemirror/codemirror.dart';
 import 'package:vulcan/components/responsive_widget.dart';
@@ -5,16 +8,14 @@ import 'package:vulcan/components/top_bar.dart';
 import 'package:vulcan/components/action_bar.dart';
 import 'package:vulcan/components/code_editor.dart';
 import 'package:vulcan/screens/error.dart';
+import 'package:vulcan/screens/simulator.dart';
 import 'dart:html' as html;
 import 'dart:ui' as ui;
 
-class Editor extends StatefulWidget {
-  @override
-  _EditorState createState() => _EditorState();
-}
+//iSSO AQUI era stateful antes
 
-class _EditorState extends State<Editor> {
-  //variaveis de UI do CodeMirror #Fe
+class Editor extends StatelessWidget{
+
   String _editorId = "code-editor";
   html.DivElement _codeContent = html.DivElement();
   CodeMirror _codeMirror;
@@ -30,6 +31,7 @@ class _EditorState extends State<Editor> {
   var _focusNode = FocusNode();
   var _colNumbers = 20;
   var _lineNumbers = 20;
+
   /*
   @override
   void initState() {
@@ -44,10 +46,10 @@ class _EditorState extends State<Editor> {
   }
   */
 
-
-
+  /* ISSO AQUI NAO TAVA COMENTADO ANTES
   handleEditorCreated(CodeMirror mirror) {
     _codeMirror = mirror;
+    //Nao tinha essa linha abaixo.
     _codeMirror.setSize(1300, 580); //width, height
     //O número de linhas de exibição torna inutilizável
     _codeMirror.setLineNumbers(true);
@@ -66,7 +68,10 @@ class _EditorState extends State<Editor> {
         _focusNode.requestFocus();
       });
     });
-  }
+  }*/
+
+  static String content = "";
+  var _controller = TextEditingController(text: content);
 
   @override
   Widget build(BuildContext context) {
@@ -87,35 +92,84 @@ class _EditorState extends State<Editor> {
                       color: Color(0xFF1CFDFC),
                     ),
                   ),
-                  Container(
-                    color: Color(0xFF02143D),
-                    //vou tirar o expanded de cima do code editor. se der bosta, volta dar um wrap no CodeEditor usando o Expanded()
-                    child: CodeEditor(
-                        editorId: _editorId,
-                        height: 550,
+                  Row(
+                    children: <Widget>[
+                      SizedBox(width: 40.0),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Color(0xFFCDE6F5),//Color(0xFF02143D),
+                          borderRadius: BorderRadius.circular(4.0),
+                        ),
                         width: 1300,
-                        initialOptions: _editorOptions,
-                        onEditorCreated: handleEditorCreated,
-                        focusNode: _focusNode
-                    ),
+                        height: 550,
+                        //Vou tentar fazer esse lance do codigo usando o Rich_Code_Editor. Vamo ver oq rola...
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Theme(
+                            data: ThemeData(
+                              primaryColor: Color(0xFF02143D),
+                              primaryColorDark: Color(0xFF02143D),
+                            ),
+                            child: TextField(
+                              controller: _controller,
+                              onChanged: (str) {
+                                content = str;
+                              },
+                              cursorColor: Color(0xFF02143D),
+                              minLines: 21,
+                              maxLines: null,
+                              autofocus: true,
+                              obscureText: false, //Deixa o conteudo digitado visivel
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Color(0xFF02143D)),
+                                ),
+                                labelText: 'Enter your code.',
+                              ),
+                              style: TextStyle(
+                                fontFamily: 'Poppins',
+                                color: Color(0xFF02143D),
+                                fontSize: 16.0,
+                              ),
+                            ),
+                          ),
+                        ),
+
+
+
+                        //O que tem aqui embaixo eh o lance do CodeMirror
+                        /*
+                        child: CodeEditor(
+                            editorId: _editorId,
+                            height: 550,
+                            width: 1300,
+                            initialOptions: _editorOptions,
+                            onEditorCreated: handleEditorCreated,
+                            focusNode: _focusNode
+                        ),
+                        */
+                      ),
+                      SizedBox(width: 40.0),
+                      RaisedButton(
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) => Simulator(codeWritten: _controller.text),
+                          )
+                          );
+                        },
+                        color: Color(0xFF1CFDFC),
+                        child: Text(
+                          "Simulate",
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 14.0,
+                            color: Color(0xFF02143D),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
-              ),
-              floatingActionButton: FloatingActionButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/simulator');
-                  return;
-                },
-                tooltip: 'Simulate',
-                elevation: 20.0,
-                hoverElevation: 5.0,
-                backgroundColor: Color(0xFF00CC7C),
-                hoverColor: Color(0xFF78E0DC),
-                child: Icon(
-                  Icons.play_circle_filled,
-                  size: 50.0,
-                  color: Color(0xFF02143D),
-                ),
               ),
 
               /*
@@ -141,7 +195,6 @@ class _EditorState extends State<Editor> {
       );
   }
 }
-
 
 
 
