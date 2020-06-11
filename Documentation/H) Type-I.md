@@ -98,7 +98,7 @@
 * __Significado: Shift-Left Logical Immediate (slli).__
 * __Síntaxe: slli rd, rs1, shamt__
 * rs1 = registrador-fonte
-* shamt = imediato de 6 bits (com sinal, seguindo a convenção de complemento a 2). Em outras palavras, temos que: shamt[5:0]
+* shamt = imediato de 5 bits (sem sinal). Em outras palavras, temos que: shamt[4:0]
 * rd = registrador-destino
 * __Operação Realizada: rd = rs1 << (shamt).__
 * Essa instrução desloca o conteúdo do registrador-fonte rs1 em shamt posições para a esquerda. Os bits vazios são preenchidos com zeros (0) e o resultado de 32 bits com sinal é armazenado no registrador-destino rd.
@@ -108,7 +108,7 @@
 * __Significado: Shift-Right Logical Immediate (srli).__
 * __Síntaxe: srli rd, rs1, shamt__
 * rs1 = registrador-fonte
-* shamt = imediato de 6 bits (com sinal, seguindo a convenção de complemento a 2). Em outras palavras, temos que: shamt[5:0]
+* shamt = imediato de 5 bits (sem sinal). Em outras palavras, temos que: shamt[4:0]
 * rd = registrador-destino
 * __Operação Realizada: rd = rs1 >>(u) (shamt).__
 * Essa instrução desloca o conteúdo do registrador-fonte rs1 em shamt posições para a direita. Os bits vazios são preenchidos com zeros (0) e o resultado de 32 bits com sinal é armazenado no registrador-destino rd.
@@ -118,7 +118,7 @@
 * __Significado: Shift-Right Arithmetic Immediate (srai).__
 * __Síntaxe: srai rd, rs1, shamt__
 * rs1 = registrador-fonte
-* shamt = imediato de 6 bits (com sinal, seguindo a convenção de complemento a 2). Em outras palavras, temos que: shamt[5:0]
+* shamt = imediato de 5 bits (sem sinal). Em outras palavras, temos que: shamt[4:0]
 * rd = registrador-destino
 * __Operação Realizada: rd = rs1 >>(s) (shamt).__
 * Essa instrução desloca o conteúdo do registrador-fonte rs1 em shamt posições para a direita. Os bits vazios são preenchidos com cópias do bit mais significativo de rs1 e o resultado de 32 bits com sinal é armazenado no registrador-destino rd.
