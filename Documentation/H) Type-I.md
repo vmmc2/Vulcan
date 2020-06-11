@@ -103,6 +103,7 @@
 * __Operação Realizada: rd = rs1 << (shamt).__
 * Essa instrução desloca o conteúdo do registrador-fonte rs1 em shamt posições para a esquerda. Os bits vazios são preenchidos com zeros (0) e o resultado de 32 bits com sinal é armazenado no registrador-destino rd.
 * __Para o RV32I, essa instrução só é permitida quando shamt[5] = 0.__
+* __Não faz sentido o imediato ser negativo. Logo, ele não pode ser negativo.__
 
 ### 12) srli
 * __Significado: Shift-Right Logical Immediate (srli).__
@@ -113,6 +114,7 @@
 * __Operação Realizada: rd = rs1 >>(u) (shamt).__
 * Essa instrução desloca o conteúdo do registrador-fonte rs1 em shamt posições para a direita. Os bits vazios são preenchidos com zeros (0) e o resultado de 32 bits com sinal é armazenado no registrador-destino rd.
 * __Para o RV32I, essa instrução só é permitida quando shamt[5] = 0.__
+* __Não faz sentido o imediato ser negativo. Logo, ele não pode ser negativo.__
 
 ### 13) srai
 * __Significado: Shift-Right Arithmetic Immediate (srai).__
@@ -123,6 +125,7 @@
 * __Operação Realizada: rd = rs1 >>(s) (shamt).__
 * Essa instrução desloca o conteúdo do registrador-fonte rs1 em shamt posições para a direita. Os bits vazios são preenchidos com cópias do bit mais significativo de rs1 e o resultado de 32 bits com sinal é armazenado no registrador-destino rd.
 * __Para o RV32I, essa instrução só é permitida quando shamt[5] = 0.__
+* __Não faz sentido o imediato ser negativo. Logo, ele não pode ser negativo.__
 
 ### 14) slti
 * __Significado: Set If Less Than Immediate (slti).__
