@@ -1,3 +1,7 @@
+// Vulcan is Software developed by:
+// Victor Miguel de Morais Costa
+// License: MIT
+import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:vulcan/components/responsive_widget.dart';
@@ -9,6 +13,8 @@ import 'package:vulcan/components/status_button.dart';
 import 'package:vulcan/components/register_card.dart';
 import 'package:vulcan/components/floating_register_list.dart';
 import 'package:vulcan/components/integer_register_list.dart';
+import 'package:vulcan/utilities/assembler.dart';
+import 'package:vulcan/utilities/processor.dart';
 
 List<String> teste = ['Teste', 'Para', 'Ver', 'Como', 'O', 'List', 'View', 'Funciona', 'Em', 'Detalhes','porra', 'caralho', 'misera','0','1','2','3','4','5','6','7','8','9'];
 int number = 0;
@@ -28,8 +34,14 @@ const kRowStyle = TextStyle(
 //variaveis que serao usadas para controlar o painel de status
 enum MajorStatus{register, memory}
 enum TypeRegister{integer, floating}
+Assembler assembler;
+Processor processor;
 
 class Simulator extends StatefulWidget {
+  String codeWritten; //Lembrando que quando eu crio uma variavel sem atribuir nenhum valor a ela. Ela fica com o valor "null".
+
+  Simulator({this.codeWritten});
+
   @override
   _SimulatorState createState() => _SimulatorState();
 }
@@ -39,11 +51,54 @@ class _SimulatorState extends State<Simulator> {
   TypeRegister cStatus = TypeRegister.integer;
   String dropdownValue = ' Text';
 
+  @override
+  void initState(){
+    super.initState();
+    //Agora vamos criar uma instancia do Assembler para comecar a simulacao
+    assembler = Assembler(inputDocument: widget.codeWritten);
+    //Ja crio uma instancia do processador para executar as instrucoes depois de carrega-las em seu formato binario na memoria do processador.
+    processor = Processor();
+
+    //Aqui dentro do initState() eu vou fazer o processamento do assembler.
+    //Primeira coisa: Checar de onde eu estou vindo quando chego na tela do Simulator
+    if(widget.codeWritten == "" || widget.codeWritten == null){ //Quer dizer que eu nao tava na tela do Editor antes de chegar na tela do Simulator. Logo, nao tem o que simular.
+      
+      return;
+    }else{ //Caso contrario. Eu vim da tela do Editor e de fato tem que coisa para simular.
+
+      //Aqui embaixo, pegamos a String inteira e separamos ela por '\n'.
+      //Dessa forma, a gente obtem uma List de Strings. Na qual cada String representa uma instrucao.
+      List<String> result = assembler.generateInstruction();
+      //Feito. Segunda parte... Remover os elementos da List que sao: Linhas em branco ou linhas que ja comecam com comentarios...
+      result = assembler.eliminateEmptyLinesAndComments(result);
+      for(String line in result){
+        print(line);
+      }
+      print("------------------------------------------------------------------------------------------------------------------");
+      //Terceira Parte: Passar essa lista com apenas as linas de codigo validas, para realizarmos um parsing e um tokenize
+      List<List<String>> tokensPerLine = assembler.tokenize(result);
+      
+      tokensPerLine = assembler.removeEmptyLists(tokensPerLine);
+      tokensPerLine = assembler.removeFirstTab(tokensPerLine);
+      for(int i = 0; i < tokensPerLine.length; i++){
+        print(tokensPerLine[i]);
+      }
+
+      //Agora vamos gerar o codigo de maquina para ser carregado na memoria...
+      List<String> machineCode = assembler.generateMachineCode(tokensPerLine);
+
+      //Feito isso, chegou a hora de carregar o codigo binario (codigo de maquina no processador)
+      processor.loadInstructionsInMemory(machineCode);
+      //Com as instrucoes carregadas, iniciamos a simulacao, execucao.
+      processor.executeInstructions();
+    }
+  }
+
   Widget putData(MajorStatus currentStatus, TypeRegister cStatus){
     if(currentStatus == MajorStatus.memory){
       return MemoryView();
     }else if(currentStatus == MajorStatus.register && cStatus == TypeRegister.integer){
-      return IntegerRegisterList();
+      return IntegerRegisterList(processor.integerRegisters);
     }else if(currentStatus == MajorStatus.register && cStatus == TypeRegister.floating){
       return FloatingRegisterList();
     }
@@ -285,9 +340,9 @@ class MemoryView extends StatefulWidget { //Widget stateful responsavel por most
   int cursor = 0; //vai servir para me guiar na horar de ir mudando de list em list.
   String dropdownValue = ' Text';
   Map memorySegments = <String, int>{
-    ' Text' : 0,
-    ' Data': 45,
-    ' Heap': 12343,
+    ' Text' : 400,
+    ' Data': 200400,
+    ' Heap': 400400,
     ' Stack': 999992,
   };
 
