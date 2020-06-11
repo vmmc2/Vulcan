@@ -1,3 +1,6 @@
+// Vulcan is Software developed by:
+// Victor Miguel de Morais Costa
+// License: MIT
 import 'dart:async';
 import 'dart:js';
 import 'dart:ui' as ui;
@@ -12,7 +15,7 @@ class CodeEditor extends StatefulWidget {
   final Function(CodeMirror) onEditorCreated;
   final double width;
   final double height;
-  final String editorId; //vai ser o ID do editor no arquivo HTML.
+  final String editorId; //vai ser o ID do editor no arquivo HTML
   final Map initialOptions; //Configuaracao do editor
   final FocusNode focusNode;
 
@@ -31,7 +34,7 @@ class CodeEditor extends StatefulWidget {
 
 class _CodeEditorState extends State<CodeEditor> with AfterLayoutMixin {
   DivElement _codeContent = DivElement(); //Serve para armazenamento
-  CodeMirror _codeMirror; //Vai servir para o retorno da chamada
+  CodeMirror _codeMirror;//Vai servir para o retorno da chamada. Tinha um: CodeMirror _codeMirror aqui
 
   //Para poder usar o plug-in de HTML nativo no Flutter Web eh necessario
   //usar o suporte ao componente HtmlElementView abaixo
@@ -44,6 +47,7 @@ class _CodeEditorState extends State<CodeEditor> with AfterLayoutMixin {
 
   @override
   void initState() {
+    print("IAE CARAIO");
     //Aqui a gente tem que registrar e gerar o HtmlElementView
     super.initState();
     //Abaixo a gente ta fazendo o registro do componente HtmlElementView
@@ -75,11 +79,39 @@ class _CodeEditorState extends State<CodeEditor> with AfterLayoutMixin {
     return RawKeyboardListener(
       autofocus: true,
       focusNode: widget.focusNode,
-      child: Container(
-        color: Color(0xFF02143D),
-        width: widget.width,
-        height: widget.height,
-        child: _codeView,
+      child: Row(
+        children: <Widget>[
+          SizedBox(width: 10.0),
+          Container(
+            color: Color(0xFF02143D),
+            width: widget.width,
+            height: widget.height,
+            child: _codeView,
+          ),
+          SizedBox(width: 40.0),
+          RaisedButton(
+            onPressed: () {
+              setState(() {
+                String linesOfCode = _codeMirror.getDoc().getValue("\n");
+                print(linesOfCode);
+                Navigator.pushNamed(context, '/simulator');
+              });
+              return;
+            },
+            elevation: 20.0,
+            hoverElevation: 5.0,
+            color: Color(0xFF00CC7C),
+            hoverColor: Color(0xFF78E0DC),
+            child: Text(
+              'Simulate',
+              style: TextStyle(
+                fontFamily: 'Poppins',
+                fontSize: 15.0,
+                color: Color(0xFF02143D),
+              ),
+            ),
+          ),
+        ],
       ),
       onKey: (RawKeyEvent event) {
         if (event.runtimeType == RawKeyDownEvent /* &&
