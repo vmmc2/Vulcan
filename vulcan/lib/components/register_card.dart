@@ -1,9 +1,13 @@
+// Vulcan is Software developed by:
+// Victor Miguel de Morais Costa
+// License: MIT
 import 'package:flutter/material.dart';
 
 class RegisterCard extends StatefulWidget {
   final String name;
   final String secondName;
-  RegisterCard({@required this.name, @required this.secondName});
+  final String value;
+  RegisterCard({@required this.name, @required this.secondName, @required this.value});
 
   @override
   _RegisterCardState createState() => _RegisterCardState();
@@ -50,7 +54,15 @@ class _RegisterCardState extends State<RegisterCard> {
           ),
           Expanded(
             flex: 4,
-            child: TextField(),
+            child: Text(
+              widget.value,
+              textAlign: TextAlign.end,
+              style: TextStyle(
+                fontFamily: 'Poppins',
+                fontSize: 15.0,
+                color: Color(0xFF02143D),
+              ),
+            ),
           ),
           SizedBox(width: 20.0),
         ],
