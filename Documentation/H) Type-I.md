@@ -56,6 +56,8 @@
 * rd = registrador-destino
 * __Operação Realizada: t = pc + 4 ; pc = (rs1 + signalextend(offset))&~1 ; rd = t.__
 * Essa instrução copia o registrador pc para rs1 + signalextend(offset), mascarando o bit mais significativo do endereço calculado, então grava o valor anterior do pc + 4 no registrador-destino rd. Se rd for omitido, x1 é assumido.
+* Explicando de uma outra maneira: A instrução acima pega o de pc atual (antes da execução) soma mais 4 e guarda o valor no registrador rd. Por fim, ela atualiza o registrador pc setando o seu valor para a soma offset + conteudo de rs1. Lembrando que o endereçamento no RISC-V é feito por byte.
+* Essa instrução é muito útil para realizar chamadas de função.
 
 ### 7) addi
 * __Significado: Addition Immediate (addi).__
