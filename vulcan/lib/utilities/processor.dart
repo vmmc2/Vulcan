@@ -260,7 +260,12 @@ class Processor{
       }
     }
     else if(instruction.substring(25) == '1100111'){ //TYPE-I INSTRUCTIONS: jalr.
-  
+      int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+      int rd = int.parse(instruction.substring(20, 25), radix: 2);
+      int immediate = getNumberFromBinaryTwoComplement(instruction.substring(0, 12));
+      integerRegisters[rd] = pc + 4;
+      pc = immediate + integerRegisters[rs1] + 400;
+      print("pc dps da execucao do jalr: -------- $pc ------ imediato: $immediate");
     }
 
     /////////////////////////
@@ -400,6 +405,18 @@ class Processor{
           pc = pc + 4;
         }
       }
+    }
+
+    /////////////////////////
+    // TYPE-J INSTRUCTIONS //
+    /////////////////////////
+    else if(instruction.substring(25) == '1101111'){ //TYPE-J INSTRUCTIONS: jal.
+      //Nao precisa de filtragem, so tem uma instrucao do tipo-J.
+      int rd = int.parse(instruction.substring(20, 25), radix: 2);
+      String imm = instruction[0] + instruction.substring(12, 20) + instruction[11] + instruction.substring(1, 11);
+      int immediate = getNumberFromBinaryTwoComplement(imm);
+      integerRegisters[rd] = pc + 4;
+      pc = immediate;
     }
     return;
   }
