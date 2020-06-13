@@ -166,6 +166,13 @@ class Assembler{
     'bltu' : '110',
     'bgeu' : '111',
   };
+  //////////
+  //J-TYPE//
+  //////////
+  Map<String,String> jTypeInstructionsOpCodeString = {
+    'jal' : '1101111',
+  };
+  //Instrucao do tipo-J nao tem funct3. Apenas tem o opcode.
 
 
   //Cada Set abaixo ta representando um formato/tipo de instrucao do RV32I
@@ -174,6 +181,7 @@ class Assembler{
   Set<String> iTypeInstructions = {'addi', 'slti', 'sltiu', 'xori', 'ori', 'andi', 'slli', 'srli', 'srai', 'lb', 'lh', 'lw', 'lbu', 'lhu', 'jalr'};
   Set<String> sTypeInstructions = {'sb', 'sh', 'sw'};
   Set<String> bTypeInstructions = {'beq', 'bne', 'bge', 'blt', 'bgeu', 'bltu'};
+  Set<String> jTypeInstructions = {'jal'};
   Set<String> iTypeImmInstructions = {'addi', 'slti', 'sltiu', 'xori', 'ori', 'andi'};
   Set<String> iTypeShiftInstructions = {'slli', 'srli', 'srai'};
   Set<String> iTypeLoadInstructions = {'lb', 'lh', 'lw', 'lbu', 'lhu'};
@@ -377,7 +385,16 @@ class Assembler{
             machineCode.add(instruction);
           }
           else if(iTypeJumpInstructions.contains(currentInstruction[0]) == true){ // jalr.
-            //TO DO
+            String rs1 = registerNames[currentInstruction[3]];
+            String funct3 = iTypeInstructionsFunct3String[currentInstruction[0]];
+            String rd = registerNames[currentInstruction[1]];
+            String opcode = iTypeInstructionsOpCodeString[currentInstruction[0]];
+            String immediate = get12bits2ComplementImm(currentInstruction[2] , 12);
+            String instruction = immediate + rs1 + funct3 + rd + opcode;
+            //O valor que vai no immediate + o valor de rs1 eh o valor do novo pc pos-salto.
+            //rd recebe pc + 4 (pre-salto).
+            print(instruction);
+            machineCode.add(instruction);
           }
         }
         else if(sTypeInstructions.contains(currentInstruction[0]) == true){ //Tenho certeza que eh uma instrucao do tipo S: sb, sh, sw.
@@ -425,9 +442,34 @@ class Assembler{
           machineCode.add(instruction);
         }
       }
-      else if(currentInstruction.length == 3){ //Pode ser do tipo U
+      else if(currentInstruction.length == 3){ //Pode ser do tipo U ou J
         if(uTypeInstructions.contains(currentInstruction[0]) == true){ //Tenho certeza que eh uma instrucao do tipo U.
           String instruction = generate20bitImmediate(currentInstruction[2]) + registerNames[currentInstruction[1]] + uTypeInstructionsOpCodeString[currentInstruction[0]];
+          print(instruction);
+          machineCode.add(instruction);
+        }
+        else if(jTypeInstructions.contains(currentInstruction[0]) == true){ //Tenho certeza que eh uma instrucao do tipo J. (jal)
+          String rd = registerNames[currentInstruction[1]];
+          print(rd);
+          String opcode = jTypeInstructionsOpCodeString[currentInstruction[0]];
+          print(opcode);
+          int offset;
+          try{
+          offset = labelsAddress[currentInstruction[2] + ":"];
+          }catch(e){
+            print("errou miseravi!!!");
+          }
+          print("offset: $offset");
+          String instruction = "";
+          String immediate = BigInt.from(offset).toUnsigned(20).toRadixString(2);
+          if(immediate.length == 20){ //deu imediato negativo.
+            //hora de montar a instruction.
+            instruction = immediate[0] + immediate.substring(10, 20) + immediate[9] + immediate.substring(1, 9) + rd + opcode;
+          }else if(immediate.length < 20){ //deu imediato positivo.
+            immediate = ('0' * (20 - immediate.length)) + immediate;
+            //hora de montar a instruction.
+            instruction = immediate[0] + immediate.substring(10, 20) + immediate[9] + immediate.substring(1, 9) + rd + opcode;
+          }
           print(instruction);
           machineCode.add(instruction);
         }
