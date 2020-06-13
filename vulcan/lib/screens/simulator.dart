@@ -62,7 +62,6 @@ class _SimulatorState extends State<Simulator> {
     //Aqui dentro do initState() eu vou fazer o processamento do assembler.
     //Primeira coisa: Checar de onde eu estou vindo quando chego na tela do Simulator
     if(widget.codeWritten == "" || widget.codeWritten == null){ //Quer dizer que eu nao tava na tela do Editor antes de chegar na tela do Simulator. Logo, nao tem o que simular.
-      
       return;
     }else{ //Caso contrario. Eu vim da tela do Editor e de fato tem que coisa para simular.
 
@@ -71,11 +70,13 @@ class _SimulatorState extends State<Simulator> {
       List<String> result = assembler.generateInstruction();
       //Feito. Segunda parte... Remover os elementos da List que sao: Linhas em branco ou linhas que ja comecam com comentarios...
       result = assembler.eliminateEmptyLinesAndComments(result);
+      /*
       for(String line in result){
         print(line);
       }
+      */
       print("------------------------------------------------------------------------------------------------------------------");
-      //Terceira Parte: Passar essa lista com apenas as linas de codigo validas, para realizarmos um parsing e um tokenize
+      //Quarta Parte: Passar essa lista com apenas as linas de codigo validas, para realizarmos um parsing e um tokenize
       List<List<String>> tokensPerLine = assembler.tokenize(result);
       
       tokensPerLine = assembler.removeEmptyLists(tokensPerLine);
@@ -84,13 +85,18 @@ class _SimulatorState extends State<Simulator> {
         print(tokensPerLine[i]);
       }
 
-      //Agora vamos gerar o codigo de maquina para ser carregado na memoria...
-      List<String> machineCode = assembler.generateMachineCode(tokensPerLine);
+      //A gente agora vai identificar o enderenco de todas as labels.
+      Map<String,int> labelsAddress = assembler.findLabelsAddress(tokensPerLine);
+      //print(labelsAddress);
+      //Ate aqui em cima tudo ok.
 
-      //Feito isso, chegou a hora de carregar o codigo binario (codigo de maquina no processador)
+      //Quinta Parte: Agora vamos gerar o codigo de maquina para ser carregado na memoria...
+      List<String> machineCode = assembler.generateMachineCode(tokensPerLine, labelsAddress); //O PROBLEMA TA AQUI.
+
+      //Sexta Parte: Feito isso, chegou a hora de carregar o codigo binario (codigo de maquina no processador)
       processor.loadInstructionsInMemory(machineCode);
-      //Com as instrucoes carregadas, iniciamos a simulacao, execucao.
-      processor.executeInstructions();
+      //Setima Parte: Com as instrucoes carregadas, iniciamos a simulacao, execucao.
+      processor.executeInstructions(labelsAddress);
     }
   }
 
