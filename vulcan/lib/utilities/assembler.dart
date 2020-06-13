@@ -147,12 +147,33 @@ class Assembler{
     'sh' : '001',
     'sw' : '010',
   };
+  //////////
+  //B-TYPE//
+  //////////
+  Map<String,String> bTypeInstructionsOpCodeString = {
+    'beq' : '1100011',
+    'bne' : '1100011',
+    'blt' : '1100011',
+    'bge' : '1100011',
+    'bltu' : '1100011',
+    'bgeu' : '1100011',
+  };
+  Map<String,String> bTypeInstructionsFunct3String = {
+    'beq' : '000',
+    'bne' : '001',
+    'blt' : '100',
+    'bge' : '101',
+    'bltu' : '110',
+    'bgeu' : '111',
+  };
+
 
   //Cada Set abaixo ta representando um formato/tipo de instrucao do RV32I
   Set<String> rTypeInstructions = {'add', 'sub', 'and', 'or', 'xor', 'sll', 'slt', 'sltu', 'srl', 'sra'};
   Set<String> uTypeInstructions = {'lui', 'auipc'};
   Set<String> iTypeInstructions = {'addi', 'slti', 'sltiu', 'xori', 'ori', 'andi', 'slli', 'srli', 'srai', 'lb', 'lh', 'lw', 'lbu', 'lhu', 'jalr'};
   Set<String> sTypeInstructions = {'sb', 'sh', 'sw'};
+  Set<String> bTypeInstructions = {'beq', 'bne', 'bge', 'blt', 'bgeu', 'bltu'};
   Set<String> iTypeImmInstructions = {'addi', 'slti', 'sltiu', 'xori', 'ori', 'andi'};
   Set<String> iTypeShiftInstructions = {'slli', 'srli', 'srai'};
   Set<String> iTypeLoadInstructions = {'lb', 'lh', 'lw', 'lbu', 'lhu'};
@@ -285,10 +306,26 @@ class Assembler{
     return output;
   }
 
-  //Sexta funcao. Vai ser responsavel por gerar o codigo binario para cada instrucao. No caso, para cada instrucao, eu vou gerar uma String binario de tamanho 32
+  //Sexta funcao. Vai receber como input a List<List<String>> com os tokens e vai ser responsavel por achar todas as labels dentro do codigo e os seus respectivos enderecos
+  //, retornando tudo como um map.
+  Map<String,int> findLabelsAddress(List<List<String>> input){
+    Map<String,int> output = {};
+    int pc = 400;
+    for(int i = 0; i < input.length; i++){
+      List<String> current = input[i];
+      if(current.length == 1 && current[0].endsWith(":") == true){
+        output[current[0]] = pc;
+      }else{
+        pc = pc + 4;
+      }
+    }
+    return output;
+  }
+
+  //Setima funcao. Vai ser responsavel por gerar o codigo binario para cada instrucao. No caso, para cada instrucao, eu vou gerar uma String binario de tamanho 32
   //Lembrando que cada instrucao tem 32 bits e que cada posicao da minha string representa 1 bit.
   //POR ENQUANTO EU SO TENHO INSTRUCOES DO TIPO R e U
-  List<String> generateMachineCode(List<List<String>> input){
+  List<String> generateMachineCode(List<List<String>> input, Map<String,int> labelsAddress){
     //Tenho que fazer esse processo para cada instrucao.
     List<String> machineCode = []; //Essa List contem Strings binarias que representam o codigo de maquina correspondente as instrucoes em Assembly.
     for(int i = 0; i < input.length; i++){
@@ -344,7 +381,48 @@ class Assembler{
           }
         }
         else if(sTypeInstructions.contains(currentInstruction[0]) == true){ //Tenho certeza que eh uma instrucao do tipo S: sb, sh, sw.
-
+          // sb rs2, imm, rs1
+          String immediate = get12bits2ComplementImm(currentInstruction[2], 12);
+          String imm115 = immediate.substring(0, 7); 
+          String imm40 = immediate.substring(7, 12);
+          String rs2 = registerNames[currentInstruction[1]];
+          String rs1 = registerNames[currentInstruction[3]];
+          String funct3 = sTypeInstructionsFunct3String[currentInstruction[0]];
+          String opcode = sTypeInstructionsOpCodeString[currentInstruction[0]];
+          String instruction = imm115 + rs2 + rs1 + funct3 + imm40 + opcode;
+          print(instruction);
+          machineCode.add(instruction);
+        }
+        else if(bTypeInstructions.contains(currentInstruction[0]) == true){ //Tenho certeza que eh uma instrucao do tipo B: beq, bne, blt, bge, bltu, bgeu.
+          // beq rs1, rs2, label
+          String rs1;
+          String rs2;
+          String funct3;
+          String opcode;
+          int offset;
+          String immediate;
+          String instruction;
+          ///
+          rs2 = registerNames[currentInstruction[2]];
+          rs1 = registerNames[currentInstruction[1]];
+          funct3 = bTypeInstructionsFunct3String[currentInstruction[0]];
+          opcode = bTypeInstructionsOpCodeString[currentInstruction[0]];
+          
+          offset = labelsAddress[currentInstruction[3] + ":"];
+          
+          
+          immediate = BigInt.from(offset).toUnsigned(12).toRadixString(2);
+          instruction = "";
+          if(immediate.length == 12){ //deu imediato negativo.
+            //hora de montar a instruction.
+            instruction = immediate[0] + immediate.substring(2, 8) + rs2 + rs1 + funct3 + immediate.substring(8, 12) + immediate[11] + opcode;
+          }else if(immediate.length < 12){ //deu imediato positivo.
+            immediate = ('0' * (12 - immediate.length)) + immediate;
+            //hora de montar a instruction.
+            instruction = immediate[0] + immediate.substring(2, 8) + rs2 + rs1 + funct3 + immediate.substring(8, 12) + immediate[11] + opcode;
+          }
+          print(instruction);
+          machineCode.add(instruction);
         }
       }
       else if(currentInstruction.length == 3){ //Pode ser do tipo U
