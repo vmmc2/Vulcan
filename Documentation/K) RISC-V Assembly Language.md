@@ -70,7 +70,7 @@ Segmento de Memória | Endereço Hexadecimal | Endereço Decimal | Endereço no 
 Reservado           |  0                   |  0               |  0                 |
 Texto (Código/pc)   |  00010000            |  65536           |  400               |            
 Dados Estáticos     |  10000000            |  268435456       |  200400            |
-Ponteiro de Pilha (sp/x2)   |  bffffff0            |  3221225456      |  1000000           |
+Ponteiro de Pilha (sp/x2)   |  bffffff0            |  3221225456      |  999986           |
 
 ## Loader
 * __Um programa nada mais é do que um arquivo executável armazenado no computador. Quando esse deve ser executado, o trabalho do Loader é carregá-lo na memória e pular para o endereço inicial.__
