@@ -1,6 +1,8 @@
 # Vulcan
 RISC-V Instruction Set Simulator Built For Education
 
+## RESOLVER O TEXTO APRESENTADO NO DROPDOWN BUTTON LOGO QUANDO VOU PARA A MEMORIA APOS UMA SIMULACAO.
+
 ## Execução das Instruções:
 * Vou ter que usar C interop por meio da library: Dart:ffi
 * Verificar melhor como essa library funciona...
