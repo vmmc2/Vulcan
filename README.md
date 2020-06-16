@@ -26,7 +26,7 @@ flutter run -d chrome
 * Then you can use it as you please.
 
 ### Web usage
-* To do
+* Currently working on it. Probably going to use GitHub Pages to deploy the application.
 
 ## Screenshots
 ### Home Page
