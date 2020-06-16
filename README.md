@@ -9,7 +9,7 @@ RISC-V Instruction Set Simulator Built For Education.
 - [x] Single precision floating-point registers visualization.
 - [x] Memory visualization.
 
-## To do (in a near future).
+## To do (In a near future).
 - [ ] RV32M Extension.
 - [ ] Include syntax error alert dialog.
 - [ ] RV32F Extension.
