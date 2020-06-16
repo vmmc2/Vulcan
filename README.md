@@ -14,6 +14,13 @@ RISC-V Instruction Set Simulator Built For Education.
 - [ ] Include syntax error alert dialog.
 - [ ] RV32F Extension.
 
+## Usage
+### Local Usage
+* You must install Flutter
+
+### Web usage
+* To do
+
 ## Screenshots
 ### Home Page
 ![[homepage](https://http://riscv.org/)](vulcan_homepage.png)
