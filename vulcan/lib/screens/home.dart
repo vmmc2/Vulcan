@@ -1,6 +1,6 @@
-// Vulcan is Software developed by:
-// Victor Miguel de Morais Costa
-// License: MIT
+// Vulcan is a software developed by:
+// Victor Miguel de Morais Costa.
+// License: MIT.
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:vulcan/components/responsive_widget.dart';
