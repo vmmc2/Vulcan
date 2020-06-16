@@ -1,24 +1,26 @@
-// Vulcan is Software developed by:
-// Victor Miguel de Morais Costa
-// License: MIT
+// Vulcan is a software developed by:
+// Victor Miguel de Morais Costa.
+// License: MIT.
 class Processor{
   //Ponteiros fixados para os segmentos de memoria.
   final int reserved = 0;
   final int text = 400;
   final int staticData = 200400;
   final int heap = 400400;
-  final int initialStack = 999992;
+  final int initialStack = 999986;
 
   //Registradores e memoria.
   List<int> integerRegisters = [];  //List de tamanho 32. Cada elemento da lista representa um dos 32 registradores inteiros do RISC-V.
+  List<double> floatingpointRegisters = []; //List de tamanho 32. Cada elemento da lista representa um dos 32 registradores de ponto-flutuante do RISC-V.
   List<String> memory; //List de tamanho 999_992. Cada elemento eh uma string de tamanho 8 (8 bits = 1 byte). Isso acontece pq a memoria eh enderacada por byte.
   int pc = 400;
 
   //Construtor da Classe
   Processor(){
     this.integerRegisters = List<int>.filled(32, 0, growable: false);
-    this.memory = List<String>.filled(999992, '00000000', growable: false);
-    this.integerRegisters[2] = 1000000; //registrador x2(sp) funciona como o ponteiro de pilha.
+    this.floatingpointRegisters = List<double>.filled(32, 0.0, growable: false);
+    this.memory = List<String>.filled(999987, '00000000', growable: false); //999_992
+    this.integerRegisters[2] = 999986; //registrador x2(sp) funciona como o ponteiro de pilha.
     this.integerRegisters[3] = 200400; //registrador x3 aponta para os dados estaticos (static data).
   }
 
