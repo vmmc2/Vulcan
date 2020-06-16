@@ -10,6 +10,7 @@ RISC-V Instruction Set Simulator Built For Education.
 
 ## To do (in a near future).
 - [ ] RV32M Extension.
+- [ ] Include syntax error alert dialog.
 - [ ] RV32F Extension.
 
 ## Screenshots
