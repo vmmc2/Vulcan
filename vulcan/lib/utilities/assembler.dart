@@ -1,6 +1,6 @@
-// Vulcan is Software developed by:
-// Victor Miguel de Morais Costa
-// License: MIT
+// Vulcan is a software developed by:
+// Victor Miguel de Morais Costa.
+// License: MIT.
 import 'package:flutter/material.dart';
 
 class Assembler{
@@ -477,6 +477,39 @@ class Assembler{
       }
     }
     return machineCode;
+  }
+
+  //Oitava funcao: Responsavel por pegar a lista de strings e pegar apenas as instrucoes... (sem considerar as labels).
+  List<String> getInstructionsList(List<List<String>> tokensPerLine){
+    List<String> output = [];
+    for(int i = 0; i < tokensPerLine.length; i++){
+      List<String> current = tokensPerLine[i];
+      if(current.length == 1){
+        continue;
+      }else if(current.length > 1){
+        String finale = "";
+        for(int j = 0; j < current.length; j++){
+          if(j > 0 && j != current.length - 1) {
+            finale += current[j] + ", ";
+          }else{
+            finale += current[j] + " ";
+          }
+        }
+        output.add(finale);
+      }
+    }
+    return output;
+  }
+
+  //Nona funcao: Pega os PCs de todas as instrucoes. Menos os das labels
+  List<String> getPcs(List<String> dpInstructions){
+    List<String> output = [];
+    int pc = 400;
+    for(String element in dpInstructions) {
+      output.add("$pc");
+      pc += 4;
+    }
+    return output;
   }
 
 }
