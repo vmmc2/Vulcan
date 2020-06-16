@@ -15,5 +15,14 @@ RISC-V Instruction Set Simulator Built For Education.
 - [ ] RV32F Extension.
 
 ## Screenshots
-
+### Home Page
+![[homepage](https://http://riscv.org/)](vulcan_homepage.png)
+### Editor Page
+![[editorpage](https://http://riscv.org/)](vulcan_editorpage.png)
+### Simulator Page 1
+![[simpage1](https://http://riscv.org/)](vulcan_simulatorpage1.png)
+### Simulator Page 2
+![[simpage2](https://http://riscv.org/)](vulcan_simulatorpage2.png)
+### Simulator Page 3
+![[simpage3](https://http://riscv.org/)](vulcan_simulatorpage3.png)
 
