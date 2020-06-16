@@ -8,7 +8,7 @@ RISC-V Instruction Set Simulator Built For Education.
 - [x] Integer registers visualization.
 - [x] Memory visualization.
 
-## To do
+## To do (in a near future).
 - [ ] RV32M Extension.
 - [ ] RV32F Extension.
 
