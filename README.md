@@ -16,7 +16,14 @@ RISC-V Instruction Set Simulator Built For Education.
 
 ## Usage
 ### Local Usage
-* You must install Flutter
+* First of all, you must install the Dart SDK in your computer: https://dart.dev/
+* Then, you need to install the Flutter framework: https://flutter.dev/
+* Since Vulcan is a Flutter WebApp, you must install the Web extension. More info can be found here: https://flutter.dev/docs/get-started/web
+* After that, you can download this repository as a zip folder. Extract it in your machine. In the command line, get inside it and finally run the following command:
+```
+flutter run -d chrome
+```
+* Then you can use it as you please.
 
 ### Web usage
 * To do
