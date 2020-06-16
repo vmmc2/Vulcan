@@ -1,4 +1,4 @@
-// Vulcan is Software developed by:
+// Vulcan is a software developed by:
 // Victor Miguel de Morais Costa.
 // License: MIT.
 
