@@ -1,6 +1,6 @@
-// Vulcan is Software developed by:
-// Victor Miguel de Morais Costa
-// License: MIT
+// Vulcan is a software developed by:
+// Victor Miguel de Morais Costa.
+// License: MIT.
 import 'package:flutter/material.dart';
 
 class TopBar extends StatelessWidget with PreferredSizeWidget {
