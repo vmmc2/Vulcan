@@ -1,6 +1,6 @@
-// Vulcan is Software developed by:
-// Victor Miguel de Morais Costa
-// License: MIT
+// Vulcan is a software developed by:
+// Victor Miguel de Morais Costa.
+// License: MIT.
 import 'package:flutter/material.dart';
 import 'package:codemirror/codemirror.dart';
 import 'package:vulcan/components/responsive_widget.dart';
@@ -85,7 +85,7 @@ class Editor extends StatelessWidget{
                 children: <Widget>[
                   ActionBar(),
                   Text(
-                    'To start coding wait for the editor to be loaded and then click on it.  Please make sure to use the app in full screen.',
+                    'To start coding, click on the editor.  Please make sure to use the app in full screen.',
                     style: TextStyle(
                       fontFamily: 'Poppins',
                       fontSize: 15.0,
