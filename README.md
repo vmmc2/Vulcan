@@ -26,7 +26,7 @@ flutter run -d chrome
 * Then you can use it as you please.
 
 ### Web usage
-* Currently working on it. Probably going to use GitHub Pages to deploy the application.
+* You can use Vulcan online by the following link: https://vmmc2.github.io/vulcan
 
 ## Screenshots
 ### Home Page
