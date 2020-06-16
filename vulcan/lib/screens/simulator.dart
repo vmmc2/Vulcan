@@ -1,6 +1,6 @@
-// Vulcan is Software developed by:
-// Victor Miguel de Morais Costa
-// License: MIT
+// Vulcan is a software developed by:
+// Victor Miguel de Morais Costa.
+// License: MIT.
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +16,6 @@ import 'package:vulcan/components/integer_register_list.dart';
 import 'package:vulcan/utilities/assembler.dart';
 import 'package:vulcan/utilities/processor.dart';
 
-List<String> teste = ['Teste', 'Para', 'Ver', 'Como', 'O', 'List', 'View', 'Funciona', 'Em', 'Detalhes','porra', 'caralho', 'misera','0','1','2','3','4','5','6','7','8','9'];
 int number = 0;
 
 const kColumnStyle = TextStyle(
@@ -47,9 +46,37 @@ class Simulator extends StatefulWidget {
 }
 
 class _SimulatorState extends State<Simulator> {
+  List<InstructionCard> displayedInstructions = [];
   MajorStatus currentStatus = MajorStatus.register;
   TypeRegister cStatus = TypeRegister.integer;
   String dropdownValue = ' Text';
+
+  Map<String,String> convertBinToHex = {
+    '0000' : '0' ,
+    '0001' : '1',
+    '0010' : '2',
+    '0011' : '3',
+    '0100' : '4',
+    '0101' : '5',
+    '0110' : '6',
+    '0111' : '7',
+    '1000' : '8',
+    '1001' : '9',
+    '1010' : 'a',
+    '1011' : 'b',
+    '1100' : 'c',
+    '1101' : 'd',
+    '1110' : 'e',
+    '1111' : 'f',
+  };
+
+  String getHexFrom8Bits(String input){
+    String almost1;
+    String almost2;
+    almost1 = convertBinToHex[input.substring(0, 4)];
+    almost2 = convertBinToHex[input.substring(4, 8)];
+    return (almost1 + almost2);
+  }
 
   @override
   void initState(){
@@ -91,22 +118,38 @@ class _SimulatorState extends State<Simulator> {
       //Ate aqui em cima tudo ok.
 
       //Quinta Parte: Agora vamos gerar o codigo de maquina para ser carregado na memoria...
-      List<String> machineCode = assembler.generateMachineCode(tokensPerLine, labelsAddress); //O PROBLEMA TA AQUI.
+      List<String> machineCode = assembler.generateMachineCode(tokensPerLine, labelsAddress);
 
       //Sexta Parte: Feito isso, chegou a hora de carregar o codigo binario (codigo de maquina no processador)
       processor.loadInstructionsInMemory(machineCode);
       //Setima Parte: Com as instrucoes carregadas, iniciamos a simulacao, execucao.
       processor.executeInstructions(labelsAddress);
+
+      //Oitava Parte: Gerar a lista para printar na tela do Simulator.
+      List<String> dpInstructions = assembler.getInstructionsList(tokensPerLine);
+      List<String> programmingCounter = assembler.getPcs(dpInstructions);
+
+      for (int i = 0; i < dpInstructions.length; i++) {
+        print("${programmingCounter[i]} ------- ${machineCode[i]} ------- ${dpInstructions[i]}");
+        try {
+          displayedInstructions.add(InstructionCard(pc: programmingCounter[i],
+              machineCode: getHexFrom8Bits(machineCode[i].substring(0, 8)) + getHexFrom8Bits(machineCode[i].substring(8, 16)) + getHexFrom8Bits(machineCode[i].substring(16, 24)) + getHexFrom8Bits(machineCode[i].substring(24, 32)),
+              originalCode: dpInstructions[i]));
+        }catch(e){
+          print("i que deu merdaa: $i");
+        }
+      }
     }
   }
 
   Widget putData(MajorStatus currentStatus, TypeRegister cStatus){
     if(currentStatus == MajorStatus.memory){
-      return MemoryView();
+      print("conteudo da memoria: ${processor.memory[12]}");
+      return MemoryView(processor.memory);
     }else if(currentStatus == MajorStatus.register && cStatus == TypeRegister.integer){
       return IntegerRegisterList(processor.integerRegisters);
     }else if(currentStatus == MajorStatus.register && cStatus == TypeRegister.floating){
-      return FloatingRegisterList();
+      return FloatingRegisterList(processor.floatingpointRegisters);
     }
   }
 
@@ -203,32 +246,63 @@ class _SimulatorState extends State<Simulator> {
                                       thickness: 2.0,
                                     ),
                                   ),
-                                  Expanded( //Por algum motivo, para usar ListView ou ListView.builder dentro de um widget sem ser Scaffold tem que por ela dentro de um Expanded() antes.
-                                    child: ListView.builder(
-                                      padding: const EdgeInsets.all(8.0),
-                                      itemCount: teste.length,
-                                      itemBuilder: (BuildContext context, int index){
-                                        return GestureDetector(
-                                          onLongPress: () {},
-                                          child: Container(
-                                            margin: EdgeInsets.all(3.0),
-                                            height: 50.0,
-                                            decoration: BoxDecoration(
-                                              color: index < 7 ? Colors.red : Color(0xFF00C4A7),
-                                              borderRadius: BorderRadius.circular(8.0),
-                                            ),
-                                            child: Text(
-                                              '${teste[index]}',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontFamily: 'Poppins',
-                                                fontSize: 14.0,
+                                  Container(
+                                    child: Expanded( //Por algum motivo, para usar ListView ou ListView.builder dentro de um widget sem ser Scaffold tem que por ela dentro de um Expanded() antes.
+                                      child: ListView.builder(
+                                        padding: const EdgeInsets.all(8.0),
+                                        itemCount: displayedInstructions.length,
+                                        itemBuilder: (BuildContext context, int index){
+                                          return GestureDetector(
+                                            onLongPress: () {},
+                                            child: Container(
+                                              margin: EdgeInsets.all(3.0),
+                                              height: 50.0,
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(5.0),
+                                                border: Border.all(
+                                                  color: Color(0xFF02143D),
+                                                  width: 2.0,
+                                                ),
+                                                color: Color(0xFFCDE6F5),
+                                              ),
+                                              child: Row(
+                                                children: <Widget>[
+                                                  SizedBox(width: 50.0),
+                                                  Text(
+                                                    '${displayedInstructions[index].pc}',
+                                                    textAlign: TextAlign.start,
+                                                    style: TextStyle(
+                                                      color: Color(0xFF02143D),
+                                                      fontFamily: 'Poppins',
+                                                      fontSize: 14.0,
+                                                    ),
+                                                  ),
+                                                  SizedBox(width: 340.0),
+                                                  Text(
+                                                    '${displayedInstructions[index].machineCode}',
+                                                    textAlign: TextAlign.start,
+                                                    style: TextStyle(
+                                                      color: Color(0xFF02143D),
+                                                      fontFamily: 'Poppins',
+                                                      fontSize: 14.0,
+                                                    ),
+                                                  ),
+                                                  SizedBox(width: 300.0),
+                                                  Text(
+                                                    '${displayedInstructions[index].originalCode}',
+                                                    textAlign: TextAlign.start,
+                                                    style: TextStyle(
+                                                      color: Color(0xFF02143D),
+                                                      fontFamily: 'Poppins',
+                                                      fontSize: 14.0,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                             ),
-                                          ),
-                                        );
-                                      }
+                                          );
+                                        }
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -342,15 +416,50 @@ class _SimulatorState extends State<Simulator> {
 }
 
 class MemoryView extends StatefulWidget { //Widget stateful responsavel por mostrar o status da memoria e por se movimentar atraves dela...
-  List<int> memory = new List<int>.generate(1000000, (int index) => index); //inicializar e memoria como privada porque nao tem logica o cara se capaz de mudar ela diretamente...
-  int cursor = 0; //vai servir para me guiar na horar de ir mudando de list em list.
+  List<String> memory = List<String>.filled(999988, '00000000', growable: false); //inicializar e memoria como privada porque nao tem logica o cara se capaz de mudar ela diretamente...
+  int cursor = 400; //vai servir para me guiar na horar de ir mudando de list em list.
+  int address = 400;
   String dropdownValue = ' Text';
   Map memorySegments = <String, int>{
     ' Text' : 400,
     ' Data': 200400,
     ' Heap': 400400,
-    ' Stack': 999992,
+    ' Stack': 999959,
   };
+  Map<String,String> convertBinToHex = {
+    '0000' : '0' ,
+    '0001' : '1',
+    '0010' : '2',
+    '0011' : '3',
+    '0100' : '4',
+    '0101' : '5',
+    '0110' : '6',
+    '0111' : '7',
+    '1000' : '8',
+    '1001' : '9',
+    '1010' : 'a',
+    '1011' : 'b',
+    '1100' : 'c',
+    '1101' : 'd',
+    '1110' : 'e',
+    '1111' : 'f',
+  };
+
+  String getHexFrom8Bits(String input){
+    String almost1;
+    String almost2;
+    almost1 = convertBinToHex[input.substring(0, 4)];
+    almost2 = convertBinToHex[input.substring(4, 8)];
+    return (almost1 + almost2);
+  }
+
+  //Construtor da Classe.
+  MemoryView(List<String> input){
+    for(int i = 0; i < input.length; i++){
+      //IDEIA MELHOR: FAZER UM MAP DE TAMANHO DE 16 DE NUMEROS BINARIOS (4 BITS) PARA HEXADECIMAIS (2 CASAS).
+      memory[i] = getHexFrom8Bits(input[i]);
+    }
+  }
 
   @override
   _MemoryViewState createState() => _MemoryViewState();
@@ -405,8 +514,12 @@ class _MemoryViewState extends State<MemoryView> {
                   ),
                   onChanged: (String newValue) {
                     setState(() {
+
                       widget.dropdownValue = newValue;
                       widget.cursor = widget.memorySegments[widget.dropdownValue];
+                      widget.address = widget.memorySegments[widget.dropdownValue];
+                      print("widget.address = ${widget.address}");
+                      print("widget.cursor = ${widget.cursor}");
                     });
                   },
                   items: <String>[' Text', ' Data', ' Heap', ' Stack']
@@ -433,10 +546,13 @@ class _MemoryViewState extends State<MemoryView> {
                     if(widget.cursor == 0) return;
                     else{
                       setState(() {
-                        if(widget.cursor - 28 < 0){
+                        if (widget.cursor - 28 < 0) {
                           widget.cursor = 0;
-                        } else {
+                          widget.address = 0;
+                        }
+                        else {
                           widget.cursor -= 28;
+                          widget.address -= 28;
                         }
                       });
                     }
@@ -464,14 +580,18 @@ class _MemoryViewState extends State<MemoryView> {
                 ),
                 child: FlatButton(
                   onPressed: () {
-                    if(widget.cursor == 999992) return;
+                    if(widget.cursor >= 999987) return;
                     else{
                       setState(() {
-                        if(widget.cursor + 28 > 999992){
-                          widget.cursor = 999992;
+                        if(widget.cursor + 28 >= 999987){
+                          widget.cursor = 999959;
+                          widget.address = 999959;
                         }else {
                           widget.cursor += 28;
+                          widget.address += 28;
                         }
+                        print("widget.address = ${widget.address}");
+                        print("widget.cursor = ${widget.cursor}");
                       });
                     }
                   },
@@ -489,108 +609,105 @@ class _MemoryViewState extends State<MemoryView> {
             ],
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(6.0),
-          child: Expanded(
-            child: DataTable(
-              columns: [
-                DataColumn(
-                  label: Text(
-                    'Address',
-                    style: kColumnStyle,
-                  ),
+        Expanded(
+          child: DataTable(
+            columns: [
+              DataColumn(
+                label: Text(
+                  'Address',
+                  style: kColumnStyle,
                 ),
-                DataColumn(
-                  label: Text(
-                    '+3',
-                    style: kColumnStyle,
-                  ),
+              ),
+              DataColumn(
+                label: Text(
+                  '+3',
+                  style: kColumnStyle,
                 ),
-                DataColumn(
-                  label: Text(
-                    '+2',
-                    style: kColumnStyle,
-                  ),
+              ),
+              DataColumn(
+                label: Text(
+                  '+2',
+                  style: kColumnStyle,
                 ),
-                DataColumn(
-                  label: Text(
-                    '+1',
-                    style: kColumnStyle,
-                  ),
+              ),
+              DataColumn(
+                label: Text(
+                  '+1',
+                  style: kColumnStyle,
                 ),
-                DataColumn(
-                  label: Text(
-                    '+0',
-                    style: kColumnStyle,
-                  ),
+              ),
+              DataColumn(
+                label: Text(
+                  '+0',
+                  style: kColumnStyle,
                 ),
-              ],
-              rows: [
-                DataRow(
-                    cells: [
-                      DataCell(Text('0', style: kRowStyle)),
-                      DataCell(Text('${widget.memory[widget.cursor + 3]}', style: kRowStyle)),
-                      DataCell(Text('${widget.memory[widget.cursor + 2]}', style: kRowStyle)),
-                      DataCell(Text('${widget.memory[widget.cursor + 1]}', style: kRowStyle)),
-                      DataCell(Text('${widget.memory[widget.cursor + 0]}', style: kRowStyle)),
-                    ]
-                ),
-                DataRow(
-                    cells: [
-                      DataCell(Text('1', style: kRowStyle)),
-                      DataCell(Text('${widget.memory[widget.cursor + 7]}', style: kRowStyle)),
-                      DataCell(Text('${widget.memory[widget.cursor + 6]}', style: kRowStyle)),
-                      DataCell(Text('${widget.memory[widget.cursor + 5]}', style: kRowStyle)),
-                      DataCell(Text('${widget.memory[widget.cursor + 4]}', style: kRowStyle)),
-                    ]
-                ),
-                DataRow(
-                    cells: [
-                      DataCell(Text('2', style: kRowStyle)),
-                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 11]}' : '--', style: kRowStyle)),
-                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 10]}' : '--', style: kRowStyle)),
-                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 9]}' : '--', style: kRowStyle)),
-                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 8]}' : '--', style: kRowStyle)),
-                    ]
-                ),
-                DataRow(
-                    cells: [
-                      DataCell(Text('3', style: kRowStyle)),
-                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 15]}' : '--', style: kRowStyle)),
-                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 14]}' : '--', style: kRowStyle)),
-                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 13]}' : '--', style: kRowStyle)),
-                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 12]}' : '--', style: kRowStyle)),
-                    ]
-                ),
-                DataRow(
-                    cells: [
-                      DataCell(Text('4', style: kRowStyle)),
-                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 19]}' : '--', style: kRowStyle)),
-                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 18]}' : '--', style: kRowStyle)),
-                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 17]}' : '--', style: kRowStyle)),
-                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 16]}' : '--', style: kRowStyle)),
-                    ]
-                ),
-                DataRow(
-                    cells: [
-                      DataCell(Text('5', style: kRowStyle)),
-                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 23]}' : '--', style: kRowStyle)),
-                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 22]}' : '--', style: kRowStyle)),
-                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 21]}' : '--', style: kRowStyle)),
-                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 20]}' : '--', style: kRowStyle)),
-                    ]
-                ),
-                DataRow(
-                    cells: [
-                      DataCell(Text('6', style: kRowStyle)),
-                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 27]}' : '--', style: kRowStyle)),
-                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 26]}' : '--', style: kRowStyle)),
-                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 25]}' : '--', style: kRowStyle)),
-                      DataCell(Text(widget.cursor != 999992 ?'${widget.memory[widget.cursor + 24]}' : '--', style: kRowStyle)),
-                    ]
-                ),
-              ],
-            ),
+              ),
+            ],
+            rows: [
+              DataRow(
+                  cells: [
+                    DataCell(Text(widget.address <= 999987 ? '${widget.address}': '--', style: kRowStyle)),
+                    DataCell(Text(widget.cursor <= 999987 ?'${widget.memory[widget.cursor + 3]}' : '--', style: kRowStyle)),
+                    DataCell(Text(widget.cursor <= 999987 ?'${widget.memory[widget.cursor + 2]}' : '--', style: kRowStyle)),
+                    DataCell(Text(widget.cursor <= 999987 ?'${widget.memory[widget.cursor + 1]}' : '--', style: kRowStyle)),
+                    DataCell(Text(widget.cursor <= 999987 ?'${widget.memory[widget.cursor + 0]}' : '--', style: kRowStyle)),
+                  ]
+              ),
+              DataRow(
+                  cells: [
+                    DataCell(Text(widget.address <= 999987 ? '${widget.address + 4}': '--', style: kRowStyle)),
+                    DataCell(Text(widget.cursor <= 999987 ?'${widget.memory[widget.cursor + 7]}' : '--', style: kRowStyle)),
+                    DataCell(Text(widget.cursor <= 999987 ?'${widget.memory[widget.cursor + 6]}' : '--', style: kRowStyle)),
+                    DataCell(Text(widget.cursor <= 999987 ?'${widget.memory[widget.cursor + 5]}' : '--', style: kRowStyle)),
+                    DataCell(Text(widget.cursor <= 999987 ?'${widget.memory[widget.cursor + 4]}' : '--', style: kRowStyle)),
+                  ]
+              ),
+              DataRow(
+                  cells: [
+                    DataCell(Text(widget.address <= 999987 ? '${widget.address + 8}': '--', style: kRowStyle)),
+                    DataCell(Text(widget.cursor <= 999987 ?'${widget.memory[widget.cursor + 11]}' : '--', style: kRowStyle)),
+                    DataCell(Text(widget.cursor <= 999987 ?'${widget.memory[widget.cursor + 10]}' : '--', style: kRowStyle)),
+                    DataCell(Text(widget.cursor <= 999987 ?'${widget.memory[widget.cursor + 9]}' : '--', style: kRowStyle)),
+                    DataCell(Text(widget.cursor <= 999987 ?'${widget.memory[widget.cursor + 8]}' : '--', style: kRowStyle)),
+                  ]
+              ),
+              DataRow(
+                  cells: [
+                    DataCell(Text(widget.address <= 999987 ? '${widget.address + 12}' : '--', style: kRowStyle)),
+                    DataCell(Text(widget.cursor <= 999987 ?'${widget.memory[widget.cursor + 15]}' : '--', style: kRowStyle)),
+                    DataCell(Text(widget.cursor <= 999987 ?'${widget.memory[widget.cursor + 14]}' : '--', style: kRowStyle)),
+                    DataCell(Text(widget.cursor <= 999987 ?'${widget.memory[widget.cursor + 13]}' : '--', style: kRowStyle)),
+                    DataCell(Text(widget.cursor <= 999987 ?'${widget.memory[widget.cursor + 12]}' : '--', style: kRowStyle)),
+                  ]
+              ),
+              DataRow(
+                  cells: [
+                    DataCell(Text(widget.address <= 999987 ? '${widget.address + 16}' : '--', style: kRowStyle)),
+                    DataCell(Text(widget.cursor <= 999987 ?'${widget.memory[widget.cursor + 19]}' : '--', style: kRowStyle)),
+                    DataCell(Text(widget.cursor <= 999987 ?'${widget.memory[widget.cursor + 18]}' : '--', style: kRowStyle)),
+                    DataCell(Text(widget.cursor <= 999987 ?'${widget.memory[widget.cursor + 17]}' : '--', style: kRowStyle)),
+                    DataCell(Text(widget.cursor <= 999987 ?'${widget.memory[widget.cursor + 16]}' : '--', style: kRowStyle)),
+                  ]
+              ),
+              DataRow(
+                  cells: [
+                    DataCell(Text(widget.address <= 999987 ? '${widget.address + 20}' : '--', style: kRowStyle)),
+                    DataCell(Text(widget.cursor <= 999987 ?'${widget.memory[widget.cursor + 23]}' : '--', style: kRowStyle)),
+                    DataCell(Text(widget.cursor <= 999987 ?'${widget.memory[widget.cursor + 22]}' : '--', style: kRowStyle)),
+                    DataCell(Text(widget.cursor <= 999987 ?'${widget.memory[widget.cursor + 21]}' : '--', style: kRowStyle)),
+                    DataCell(Text(widget.cursor <= 999987 ?'${widget.memory[widget.cursor + 20]}' : '--', style: kRowStyle)),
+                  ]
+              ),
+              DataRow(
+                  cells: [
+                    DataCell(Text(widget.address <= 999987 ? '${widget.address + 24}' : '--', style: kRowStyle)),
+                    DataCell(Text(widget.cursor <= 999987 ?'${widget.memory[widget.cursor + 27]}' : '--', style: kRowStyle)),
+                    DataCell(Text(widget.cursor <= 999987 ?'${widget.memory[widget.cursor + 26]}' : '--', style: kRowStyle)),
+                    DataCell(Text(widget.cursor <= 999987 ?'${widget.memory[widget.cursor + 25]}' : '--', style: kRowStyle)),
+                    DataCell(Text(widget.cursor <= 999987 ?'${widget.memory[widget.cursor + 24]}' : '--', style: kRowStyle)),
+                  ]
+              ),
+            ],
           ),
         ),
       ],
@@ -814,4 +931,3 @@ Column(
 
 
 
-//
