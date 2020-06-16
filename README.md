@@ -1,22 +1,7 @@
 # Vulcan
 RISC-V Instruction Set Simulator Built For Education
 
-## RESOLVER O TEXTO APRESENTADO NO DROPDOWN BUTTON LOGO QUANDO VOU PARA A MEMORIA APOS UMA SIMULACAO.
 
-## Execução das Instruções:
-* Vou ter que usar C interop por meio da library: Dart:ffi
-* Verificar melhor como essa library funciona...
-
-## Representacao de Inteiros:
-* Dart aparentemente eh meio bugado para conseguir representar numeros inteiros... (Digo, os bits dos numeros inteiros).
-* Vou ter que ver como fazer isso.
-
-## Update:
-* Usei um widget TextField() mesmo. Pode não ser a melhor opção, mas é o que tem para a janta.
-
-## Problemas que, infelizmente, nao tem solucao:
-* Se a gente inicializa o editor e clica fora dele. Ou passa o mouse em outros botoes. Ele muda a formatacao por menos de 1 seg e dps volta ao normal.
-* Nao da para usar a tecla "tab" no editor. Apenas espacos.
 
 ## Observações:
 * O que vai acontecer quando o cara apertar o botao "Simulate" na pagina Editor?
