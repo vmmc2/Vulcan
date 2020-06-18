@@ -15,6 +15,9 @@ RISC-V Instruction Set Simulator Built For Education.
 - [ ] RV32F Extension.
 
 ## Usage
+### How to use it?
+* You must be familiar with RISC-V Assembly in order to use Vulcan properly. If you want to learn about it, you can check the documentation folder inside this repository.
+
 ### Local Usage
 * First of all, you must install the Dart SDK in your computer: https://dart.dev/
 * Then, you need to install the Flutter framework: https://flutter.dev/
