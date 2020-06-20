@@ -28,9 +28,11 @@ RISC-V Instruction Set Simulator Built For Education.
 flutter run -d chrome
 ```
 * Then you can use it as you please.
+* __This is the version 1.0 (not the final).__
 
 ### Web usage
 * You can use Vulcan online by the following link: https://vmmc2.github.io/vulcan
+* __This is the version 1.0 (not the final).__
 
 ## Screenshots
 ### Home Page
