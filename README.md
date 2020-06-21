@@ -10,8 +10,8 @@ RISC-V Instruction Set Simulator Built For Education.
 - [x] Memory visualization.
 
 ## To do (In a near future).
-- [ ] Include Syntax Error Alert Analysis.
-- [ ] RV32M Extension.
+- [x] Include Syntax Error Alert Analysis.
+- [ ] RV32M Extension. (Working on it...)
 - [ ] Add Suport to Assembly Directives.
 - [ ] RV32F Extension.
 
@@ -45,4 +45,5 @@ flutter run -d chrome
 ![[simpage2](https://http://riscv.org/)](vulcan_simulatorpage2.png)
 ### Simulator Page 3
 ![[simpage3](https://http://riscv.org/)](vulcan_simulatorpage3.png)
+### Simulator Page 4
 
