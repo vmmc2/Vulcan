@@ -473,8 +473,8 @@ class Assembler{
           print(instruction);
           machineCode.add(instruction);
         }
-
       }
+
     }
     return machineCode;
   }
@@ -508,6 +508,307 @@ class Assembler{
     for(String element in dpInstructions) {
       output.add("$pc");
       pc += 4;
+    }
+    return output;
+  }
+
+  //Decima funcao: Responsavel por receber a List<List<String>> tokensPerLine e retorna uma lista de strings contendo possiveis erros de sintaxe
+  List<String> findSyntaxErrors(List<List<String>> tokensPerLine, Map<String,int> labelsAddress){
+    List<String> output = [];
+    for(List<String> element in tokensPerLine){
+      if(element.length != 3 && element.length != 4){
+        output.add("Invalid instruction: " + element.join(' '));
+      }
+      else{ // O tamanho da instrucao eh valido (3 ou 4). Mas a instrucao pode ser invalida
+        //Primeiro teste: Verificar se o nome da instrucao eh invalido.
+        if(rTypeInstructions.contains(element[0]) == false && iTypeInstructions.contains(element[0]) == false && jTypeInstructions.contains(element[0]) == false && sTypeInstructions.contains(element[0]) == false && uTypeInstructions.contains(element[0]) == false && bTypeInstructions.contains(element[0]) == false){
+          output.add("Invalid instruction: " + element.join(' '));
+        }
+        //Segundo teste: Verificar se tem nome de registrador invalido na instrucao.
+        if(element.length == 4 && rTypeInstructions.contains(element[0]) == true){ //tem que checar se os registradores das instrucoes type-R estao Ok.
+          if(registerNames.containsKey(element[1]) == false || registerNames.containsKey(element[2]) == false || registerNames.containsKey(element[3]) == false){
+            List<String> answer = [];
+            for(int i = 0; i < element.length; i++){
+              if(i == element.length - 1 || i == 0){
+                answer.add(element[i]);
+              }else{
+                answer.add(element[i] + ",");
+              }
+            }
+            output.add("Invalid register at instruction: " + answer.join(' '));
+          }
+        }
+        if(element.length == 4 && sTypeInstructions.contains(element[0]) == true){ //checando por possiveis erros em instrucoes type-S: registradores invalidos ou immediato fora de range.
+          if(registerNames.containsKey(element[1]) == false || registerNames.containsKey(element[3]) == false){ //registrador invalido
+            List<String> answer = [];
+            for(int i = 0; i < element.length; i++){
+              if(i == element.length - 1 || i == 0){
+                answer.add(element[i]);
+              }else{
+                answer.add(element[i] + ",");
+              }
+            }
+            output.add("Invalid register at instruction: " + answer.join(' '));
+          }
+          try{ //checando por immediatos invalidos: nas instrucoes type-S os immediatos devem estar dentro do range: [-2048, 2047]
+            int valorImm = int.parse(element[2], radix: 10);
+            if(valorImm < -2048 || valorImm > 2047){
+              List<String> answer = [];
+              for(int i = 0; i < element.length; i++){
+                if(i == element.length - 1 || i == 0){
+                  answer.add(element[i]);
+                }else{
+                  answer.add(element[i] + ",");
+                }
+              }
+              output.add("Invalid immediate (out of range) at instruction: " + answer.join(' '));
+            }
+          }catch(e){
+            List<String> answer = [];
+            for(int i = 0; i < element.length; i++){
+              if(i == element.length - 1 || i == 0){
+                answer.add(element[i]);
+              }else{
+                answer.add(element[i] + ",");
+              }
+            }
+            output.add("Invalid immediate (not a number) at instruction: " + answer.join(' '));
+          }
+        }
+        if(element.length == 3 && uTypeInstructions.contains(element[0]) == true){ //checando por possiveis erros em instrucoes type-U: registradores invalidos ou immediatos fora do range
+          if(registerNames.containsKey(element[1]) == false){ //registrador invalido
+            List<String> answer = [];
+            for(int i = 0; i < element.length; i++){
+              if(i == element.length - 1 || i == 0){
+                answer.add(element[i]);
+              }else{
+                answer.add(element[i] + ",");
+              }
+            }
+            output.add("Invalid register at instruction: " + answer.join(' '));
+          }
+          try{ //checando por immediatos invalidos: nas instrucoes type-U os immediatos devem estar dentro do range: [0, 1048575]
+            int valorImm = int.parse(element[2], radix: 10);
+            if(valorImm < 0 || valorImm > 1048575){
+              List<String> answer = [];
+              for(int i = 0; i < element.length; i++){
+                if(i == element.length - 1 || i == 0){
+                  answer.add(element[i]);
+                }else{
+                  answer.add(element[i] + ",");
+                }
+              }
+              output.add("Invalid immediate (out of range) at instruction: " + answer.join(' '));
+            }
+          }catch(e){
+            List<String> answer = [];
+            for(int i = 0; i < element.length; i++){
+              if(i == element.length - 1 || i == 0){
+                answer.add(element[i]);
+              }else{
+                answer.add(element[i] + ",");
+              }
+            }
+            output.add("Invalid immediate (not a number) at instruction: " + answer.join(' '));
+          }
+        }
+        if(element.length == 3 && jTypeInstructions.contains(element[0]) == true){ //checando por possiveis erros em instrucoes type-J: registradores invalidos ou labels inexistentes
+          if(registerNames.containsKey(element[1]) == false){ //registrador invalido
+            List<String> answer = [];
+            for(int i = 0; i < element.length; i++){
+              if(i == element.length - 1 || i == 0){
+                answer.add(element[i]);
+              }else{
+                answer.add(element[i] + ",");
+              }
+            }
+            output.add("Invalid register at instruction: " + answer.join(' '));
+          }
+          if(labelsAddress.containsKey(element[2] + ":") == false){ //Estou tentando pular para uma label que nao existe no codigo. ERRO.
+            List<String> answer = [];
+            for(int i = 0; i < element.length; i++){
+              if(i == element.length - 1 || i == 0){
+                answer.add(element[i]);
+              }else{
+                answer.add(element[i] + ",");
+              }
+            }
+            output.add("Invalid label at instruction: " + answer.join(' '));
+          }
+        }
+        if(element.length == 4 && bTypeInstructions.contains(element[0]) == true){ //checando por possiveis erros em instrucoes type-B: registradores invalidos ou labels inexistentes.
+          if(registerNames.containsKey(element[1]) == false || registerNames.containsKey(element[2]) == false){
+            List<String> answer = [];
+            for(int i = 0; i < element.length; i++){
+              if(i == element.length - 1 || i == 0){
+                answer.add(element[i]);
+              }else{
+                answer.add(element[i] + ",");
+              }
+            }
+            output.add("Invalid register at instruction: " + answer.join(' '));
+          }
+          if(labelsAddress.containsKey(element[3] + ":") == false){ //Estou tentando pular para uma label que nao existe no codigo. ERRO.
+            List<String> answer = [];
+            for(int i = 0; i < element.length; i++){
+              if(i == element.length - 1 || i == 0){
+                answer.add(element[i]);
+              }else{
+                answer.add(element[i] + ",");
+              }
+            }
+            output.add("Invalid label at instruction: " + answer.join(' '));
+          }
+        }
+        if(element.length == 4 && iTypeInstructions.contains(element[0]) == true){ //checando por possiveis erros em instrucoes type-I: registradores invalidos ou labels inexistentes.
+          //Tem que filtrar mais as instrucoes do type-I
+          if(iTypeImmInstructions.contains(element[0])){ //addi, slti, sltiu, xori, ori, andi
+            if(registerNames.containsKey(element[1]) == false || registerNames.containsKey(element[2]) == false){ //testando registradores invalidos
+              List<String> answer = [];
+              for(int i = 0; i < element.length; i++){
+                if(i == element.length - 1 || i == 0){
+                  answer.add(element[i]);
+                }else{
+                  answer.add(element[i] + ",");
+                }
+              }
+              output.add("Invalid register at instruction: " + answer.join(' '));
+            }
+            try{ //checando por immediatos invalidos: nessas instrucoes, os immediatos devem estar dentro do range: [-2048 , 2047]
+              int valorImm = int.parse(element[3], radix: 10);
+              if(valorImm < -2048 || valorImm > 2047){
+                List<String> answer = [];
+                for(int i = 0; i < element.length; i++){
+                  if(i == element.length - 1 || i == 0){
+                    answer.add(element[i]);
+                  }else{
+                    answer.add(element[i] + ",");
+                  }
+                }
+                output.add("Invalid immediate (out of range) at instruction: " + answer.join(' '));
+              }
+            }catch(e){
+              List<String> answer = [];
+              for(int i = 0; i < element.length; i++){
+                  if(i == element.length - 1 || i == 0){
+                    answer.add(element[i]);
+                  }else{
+                    answer.add(element[i] + ",");
+                  }
+                }
+              output.add("Invalid immediate (not a number) at instruction: " + answer.join(' '));
+            }
+          }else if(iTypeShiftInstructions.contains(element[0])){ //slli, srli, srai
+            if(registerNames.containsKey(element[1]) == false || registerNames.containsKey(element[2]) == false){ //testando registradores invalidos
+              List<String> answer = [];
+              for(int i = 0; i < element.length; i++){
+                  if(i == element.length - 1 || i == 0){
+                    answer.add(element[i]);
+                  }else{
+                    answer.add(element[i] + ",");
+                  }
+                }
+              output.add("Invalid register at instruction: " + answer.join(' '));
+            }
+            try{ //checando por immediatos invalidos: nessas instrucoes, os immediatos devem estar dentro do range: [0 , 31]
+              int valorImm = int.parse(element[3], radix: 10);
+              if(valorImm < 0 || valorImm > 31){
+                List<String> answer = [];
+                for(int i = 0; i < element.length; i++){
+                  if(i == element.length - 1 || i == 0){
+                    answer.add(element[i]);
+                  }else{
+                    answer.add(element[i] + ",");
+                  }
+                }
+                output.add("Invalid immediate (out of range) at instruction: " + answer.join(' '));
+              }
+            }catch(e){
+              List<String> answer = [];
+              for(int i = 0; i < element.length; i++){
+                if(i == element.length - 1 || i == 0){
+                  answer.add(element[i]);
+                }else{
+                  answer.add(element[i] + ",");
+                }
+              }
+              output.add("Invalid immediate (not a number) at instruction: " + answer.join(' '));
+            }
+          }else if(iTypeLoadInstructions.contains(element[0])){ //lb, lh, lw, lbu, lhu
+            if(registerNames.containsKey(element[1]) == false || registerNames.containsKey(element[3]) == false){ //testando registradores invalidos
+              List<String> answer = [];
+              for(int i = 0; i < element.length; i++){
+                if(i == element.length - 1 || i == 0){
+                  answer.add(element[i]);
+                }else{
+                  answer.add(element[i] + ",");
+                }
+              }
+              output.add("Invalid register at instruction: " + answer.join(' '));
+            }
+            try{ //checando por immediatos invalidos: nessas instrucoes, os immediatos devem estar dentro do range: [-2048 , 2047]
+              int valorImm = int.parse(element[2], radix: 10);
+              if(valorImm < -2048 || valorImm > 2047){
+                List<String> answer = [];
+                for(int i = 0; i < element.length; i++){
+                  if(i == element.length - 1 || i == 0){
+                    answer.add(element[i]);
+                  }else{
+                    answer.add(element[i] + ",");
+                  }
+                }
+                output.add("Invalid immediate (out of range) at instruction: " + answer.join(' '));
+              }
+            }catch(e){
+              List<String> answer = [];
+              for(int i = 0; i < element.length; i++){
+                if(i == element.length - 1 || i == 0){
+                  answer.add(element[i]);
+                }else{
+                  answer.add(element[i] + ",");
+                }
+              }
+              output.add("Invalid immediate (not a number) at instruction: " + answer.join(' '));
+            }
+          }else if(iTypeJumpInstructions.contains(element[0])){ //jalr
+            if(registerNames.containsKey(element[1]) == false || registerNames.containsKey(element[3]) == false){ //testando registradores invalidos
+              List<String> answer = [];
+              for(int i = 0; i < element.length; i++){
+                if(i == element.length - 1 || i == 0){
+                  answer.add(element[i]);
+                }else{
+                  answer.add(element[i] + ",");
+                }
+              }
+              output.add("Invalid register at instruction: " + answer.join(' '));
+            }
+            try{ //checando por immediatos invalidos: nessas instrucoes, os immediatos devem estar dentro do range: [-2048 , 2047]
+              int valorImm = int.parse(element[2], radix: 10);
+              if(valorImm < -2048 || valorImm > 2047){
+                List<String> answer = [];
+                for(int i = 0; i < element.length; i++){
+                  if(i == element.length - 1 || i == 0){
+                    answer.add(element[i]);
+                  }else{
+                  answer.add(element[i] + ",");
+                  }
+                }
+                output.add("Invalid immediate (out of range) at instruction: " + answer.join(' '));
+              }
+            }catch(e){
+              List<String> answer = [];
+              for(int i = 0; i < element.length; i++){
+                if(i == element.length - 1 || i == 0){
+                  answer.add(element[i]);
+                }else{
+                  answer.add(element[i] + ",");
+                }
+              }
+              output.add("Invalid immediate (not a number) at instruction: " + answer.join(' '));
+            }
+          }
+        }
+      }
     }
     return output;
   }
