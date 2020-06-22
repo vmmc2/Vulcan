@@ -497,7 +497,7 @@ class Processor{
     print("Iniciando a simulacao!!!");
     while(true){
       String instruction = fetchInstruction(pc);
-      if(instruction == '00000000000000000000000000000000'){ //VAMO TER QUE MUDAR ESSA CONDICAO DE PARADA DA SIMULACAO. A MEMORIA NAO PODE SER INICIALIZADA DESSE JEITO.
+      if(instruction == '00000000000000000000000000000000'){
         break; //Cheguei ao fim da simulacao
       }
       print(instruction);
