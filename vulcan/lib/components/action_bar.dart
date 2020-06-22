@@ -2,6 +2,7 @@
 // Victor Miguel de Morais Costa.
 // License: MIT.
 import 'package:flutter/material.dart';
+import 'dart:html' as html;
 
 class ActionBar extends StatelessWidget {
   const ActionBar({
@@ -133,14 +134,7 @@ class ActionBar extends StatelessWidget {
                   SizedBox(width: 15.0),
                   RaisedButton.icon(
                     onPressed: () {
-                      var rout = ModalRoute.of(context);
-                      if(rout != null){
-                        if(rout.settings.name == '/reference') return;
-                        else{
-                          Navigator.pushNamed(context, '/reference');
-                          return;
-                        };
-                      }
+                      html.window.open('https://github.com/vmmc2/Vulcan/tree/master/Documentation', 'Reference');
                     },
                     elevation: 15.0,
                     icon: Icon(
@@ -169,3 +163,4 @@ class ActionBar extends StatelessWidget {
     );
   }
 }
+//
