@@ -8,6 +8,7 @@ import 'package:vulcan/screens/error.dart';
 import 'package:vulcan/components/top_bar.dart';
 import 'package:vulcan/components/bottom_button.dart';
 import 'package:path/path.dart';
+import 'dart:html' as html;
 
 const List<Color> orangeGradients = [
   Color(0xFFFF9844),
@@ -135,14 +136,7 @@ class _HomeState extends State<Home> {
                           SizedBox(width: 15.0),
                           RaisedButton.icon(
                             onPressed: () {
-                              var rout = ModalRoute.of(context);
-                              if(rout != null){
-                                if(rout.settings.name == '/reference') return;
-                                else{
-                                  Navigator.pushNamed(context, '/reference');
-                                  return;
-                                };
-                              }
+                              html.window.open('https://github.com/vmmc2/Vulcan/tree/master/Documentation', 'Reference');
                             },
                             elevation: 15.0,
                             icon: Icon(
