@@ -23,7 +23,7 @@ RISC-V Instruction Set Simulator Built For Education.
 * You must be familiar with RISC-V Assembly in order to use Vulcan properly. If you want to learn about it, you can check the documentation folder inside this repository.
 
 ### How to simulate my RISC-V Assembly code?
-* You must go to the "Editor" tab and write your code inside the editor. When you are done, presse the "Simulate" button.
+* You must go to the "Editor" tab and write your code inside the editor. When you are done, press the "Simulate" button.
 
 ### Local Usage
 * First of all, you must install the Dart SDK in your computer: https://dart.dev/
