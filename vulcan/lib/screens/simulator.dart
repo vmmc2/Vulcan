@@ -35,6 +35,7 @@ enum MajorStatus{register, memory}
 enum TypeRegister{integer, floating}
 Assembler assembler;
 Processor processor;
+List<String> errorsToBeDisplayed = ["Simulation Failed"];
 
 class Simulator extends StatefulWidget {
   String codeWritten; //Lembrando que quando eu crio uma variavel sem atribuir nenhum valor a ela. Ela fica com o valor "null".
@@ -81,6 +82,7 @@ class _SimulatorState extends State<Simulator> {
   @override
   void initState(){
     super.initState();
+    errorsToBeDisplayed = ["Simulation Failed"];
     //Agora vamos criar uma instancia do Assembler para comecar a simulacao
     assembler = Assembler(inputDocument: widget.codeWritten);
     //Ja crio uma instancia do processador para executar as instrucoes depois de carrega-las em seu formato binario na memoria do processador.
@@ -112,10 +114,24 @@ class _SimulatorState extends State<Simulator> {
         print(tokensPerLine[i]);
       }
 
+
       //A gente agora vai identificar o enderenco de todas as labels.
       Map<String,int> labelsAddress = assembler.findLabelsAddress(tokensPerLine);
       //print(labelsAddress);
       //Ate aqui em cima tudo ok.
+      print(labelsAddress);
+
+      //Chegou a hora de comecar a busca por erros de sintaxe...
+      List<String> errors = assembler.findSyntaxErrors(tokensPerLine, labelsAddress);
+      for(String error in errors){
+        print(error);
+      }
+      if(errors.length > 0){
+        for(String element in errors){
+          errorsToBeDisplayed.add(element);
+        }
+        return;
+      }
 
       //Quinta Parte: Agora vamos gerar o codigo de maquina para ser carregado na memoria...
       List<String> machineCode = assembler.generateMachineCode(tokensPerLine, labelsAddress);
@@ -248,7 +264,7 @@ class _SimulatorState extends State<Simulator> {
                                   ),
                                   Container(
                                     child: Expanded( //Por algum motivo, para usar ListView ou ListView.builder dentro de um widget sem ser Scaffold tem que por ela dentro de um Expanded() antes.
-                                      child: ListView.builder(
+                                      child: errorsToBeDisplayed.length == 1 ? ListView.builder(
                                         padding: const EdgeInsets.all(8.0),
                                         itemCount: displayedInstructions.length,
                                         itemBuilder: (BuildContext context, int index){
@@ -295,6 +311,38 @@ class _SimulatorState extends State<Simulator> {
                                                       color: Color(0xFF02143D),
                                                       fontFamily: 'Poppins',
                                                       fontSize: 14.0,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                      ) : ListView.builder(
+                                        padding: const EdgeInsets.all(8.0),
+                                        itemCount: errorsToBeDisplayed.length,
+                                        itemBuilder: (BuildContext context, int index){
+                                          return GestureDetector(
+                                            onLongPress: () {},
+                                            child: Container(
+                                              margin: EdgeInsets.all(3.0),
+                                              height: 70.0,
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(5.0),
+                                                color: Color(0xFFFF3860),
+                                              ),
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: <Widget>[
+                                                  Center(
+                                                    child: Text(
+                                                      index == 0 ? '${errorsToBeDisplayed[index]} with ${errorsToBeDisplayed.length - 1} error(s)!' : '${errorsToBeDisplayed[index]}',
+                                                      textAlign: TextAlign.center,
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontFamily: 'Poppins',
+                                                        fontSize: index == 0 ? 24.0 : 16.0,
+                                                      ),
                                                     ),
                                                   ),
                                                 ],
