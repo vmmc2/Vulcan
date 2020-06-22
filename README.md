@@ -15,9 +15,15 @@ RISC-V Instruction Set Simulator Built For Education.
 - [ ] Add Suport to Assembly Directives.
 - [ ] RV32F Extension.
 
+## Limitations
+* Unfortunately, by the time that I did the initial version, Flutter Web does not support responsive web apps. Because of it, one must use Vulcan in fullscreen mode. Otherwise, the app will throw overflow exceptions.
+
 ## Usage
 ### How to use it?
 * You must be familiar with RISC-V Assembly in order to use Vulcan properly. If you want to learn about it, you can check the documentation folder inside this repository.
+
+### How to simulate my RISC-V Assembly code?
+* You must go to the "Editor" tab and write your code inside the editor. When you are done, presse the "Simulate" button.
 
 ### Local Usage
 * First of all, you must install the Dart SDK in your computer: https://dart.dev/
@@ -33,6 +39,9 @@ flutter run -d chrome
 ### Web usage
 * You can use Vulcan online by the following link: https://vmmc2.github.io/vulcan
 * __This is the version 1.0 (not the final).__
+
+## Bugs and Errors
+* __If you find any bugs, errors or strange behavior, feel free to open an issue. The only thing that I ask is to provide a detailed explanation of the bug/error/strange behavior. If possible, provide a screenshot.__
 
 ## Screenshots
 ### Home Page
