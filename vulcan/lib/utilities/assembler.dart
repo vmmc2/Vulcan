@@ -516,7 +516,15 @@ class Assembler{
   List<String> findSyntaxErrors(List<List<String>> tokensPerLine, Map<String,int> labelsAddress){
     List<String> output = [];
     for(List<String> element in tokensPerLine){
-      if(element.length != 3 && element.length != 4){
+      if(element.length == 1){ //Pode ser uma label...
+        if(element[0].endsWith(':') == true){
+          // Eh uma label..
+          print("entrei");
+        }else{
+          output.add("Invalid instruction: " + element.join(' '));
+        }
+      }
+      else if(element.length != 3 && element.length != 4){
         output.add("Invalid instruction: " + element.join(' '));
       }
       else{ // O tamanho da instrucao eh valido (3 ou 4). Mas a instrucao pode ser invalida
