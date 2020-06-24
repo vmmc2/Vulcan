@@ -19,6 +19,11 @@ RISC-V Instruction Set Simulator Built For Education.
 * Unfortunately, by the time that I did the initial version, Flutter Web does not support responsive web apps. Because of it, one must use Vulcan in fullscreen mode. Otherwise, the app will throw overflow exceptions.
 
 ## Usage
+### Web Browser Status
+- [x] Google Chrome
+- [ ] Mozilla Firefox
+- [ ] Microsoft Edge
+
 ### How to use it?
 * You must be familiar with RISC-V Assembly in order to use Vulcan properly. If you want to learn about it, you can check the documentation folder inside this repository.
 
