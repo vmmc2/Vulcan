@@ -97,9 +97,9 @@ class Processor{
           //A funcao sra realiza uma divisao por 2^n (mesmo o dividendo sendo positivo ou negativo).
           int rs1 = integerRegisters[int.parse(instruction.substring(12, 17), radix: 2)];
           int rs2 = integerRegisters[int.parse(instruction.substring(7, 12), radix: 2)];
-          if(rs1 < 0){
-            rs1 = rs1 * (-1);
-            int almost = rs1 >> rs2;
+          if(integerRegisters[rs1] < 0){
+            integerRegisters[rs1] = integerRegisters[rs1] * (-1);
+            int almost = integerRegisters[rs1] >> integerRegisters[rs2];
             integerRegisters[int.parse(instruction.substring(20, 25), radix: 2)] = almost * (-1);
           }else{
             integerRegisters[int.parse(instruction.substring(20, 25), radix: 2)] = integerRegisters[int.parse(instruction.substring(12, 17), radix: 2)] >> integerRegisters[int.parse(instruction.substring(7, 12), radix: 2)];
@@ -160,7 +160,7 @@ class Processor{
           int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
           int rd = int.parse(instruction.substring(20, 25), radix: 2);
           int immediate = getNumberFromBinaryTwoComplement(instruction.substring(0, 12));
-          if(BigInt.from(rs1).toUnsigned(12) < BigInt.from(immediate).toUnsigned(12)){
+          if(BigInt.from(integerRegisters[rs1]).toUnsigned(12) < BigInt.from(immediate).toUnsigned(12)){
             integerRegisters[rd] = 1;
           }else{
             integerRegisters[rd] = 0;
@@ -192,7 +192,11 @@ class Processor{
           int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
           int rd = int.parse(instruction.substring(20, 25), radix: 2);
           int immediate = int.parse(instruction.substring(7, 12), radix: 2);
-          integerRegisters[rd] = (integerRegisters[rs1] << immediate);
+          if(immediate >= 0){
+            integerRegisters[rd] = (integerRegisters[rs1] << immediate);
+          }else{
+            integerRegisters[rd] = 0;
+          }
           pc = pc + 4;
         }
         else if(instruction.substring(17, 20) == '101'){ //srli ou srai --> SO TRABALHA COM IMEDIATOS NAO-NEGATIVOS
@@ -201,14 +205,22 @@ class Processor{
             int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
             int rd = int.parse(instruction.substring(20, 25), radix: 2);
             int immediate = int.parse(instruction.substring(7, 12), radix: 2);
-            integerRegisters[rd] = ((integerRegisters[rs1]).toUnsigned(32) >> immediate);
+            if(immediate >= 0){
+              integerRegisters[rd] = ((integerRegisters[rs1]).toUnsigned(32) >> immediate);
+            }else{
+              integerRegisters[rd] = 0;
+            }
             pc = pc + 4;
           }else if(instruction.substring(0, 7) == '0100000'){ //srai
-            //Como o srai faz extensaso de sinal, eu nao preciso me preocupar com a conversao para unsigned. posso deixar do jeito que ta.
+            //Como o srai faz extensao de sinal, eu nao preciso me preocupar com a conversao para unsigned. posso deixar do jeito que ta.
             int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
             int rd = int.parse(instruction.substring(20, 25), radix: 2);
             int immediate = int.parse(instruction.substring(7, 12), radix: 2);
-            integerRegisters[rd] = (integerRegisters[rs1] >> immediate);
+            if(immediate >= 0){
+              integerRegisters[rd] = (integerRegisters[rs1] >> immediate);
+            }else{
+              integerRegisters[rd] = 0;
+            }
             pc = pc + 4;
           }
         }
@@ -220,7 +232,7 @@ class Processor{
         int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
         int rd = int.parse(instruction.substring(20, 25), radix: 2);
         int immediate = getNumberFromBinaryTwoComplement(instruction.substring(0, 12));
-        int address = rs1 + immediate;
+        int address = integerRegisters[rs1] + immediate;
         integerRegisters[rd] = getNumberFromBinaryTwoComplement(getByteFromMemory(address));
         pc = pc + 4;
       }
@@ -229,7 +241,7 @@ class Processor{
         int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
         int rd = int.parse(instruction.substring(20, 25), radix: 2);
         int immediate = getNumberFromBinaryTwoComplement(instruction.substring(0, 12));
-        int address = rs1 + immediate;
+        int address = integerRegisters[rs1] + immediate;
         integerRegisters[rd] = getNumberFromBinaryTwoComplement(getHalfWordFromMemory(address));
         pc = pc + 4;
       }
@@ -238,7 +250,7 @@ class Processor{
         int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
         int rd = int.parse(instruction.substring(20, 25), radix: 2);
         int immediate = getNumberFromBinaryTwoComplement(instruction.substring(0, 12));
-        int address = rs1 + immediate;
+        int address = integerRegisters[rs1] + immediate;
         integerRegisters[rd] = getNumberFromBinaryTwoComplement(getWordFromMemory(address));
         pc = pc + 4;
       }
@@ -247,7 +259,7 @@ class Processor{
         int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
         int rd = int.parse(instruction.substring(20, 25), radix: 2);
         int immediate = getNumberFromBinaryTwoComplement(instruction.substring(0, 12));
-        int address = rs1 + immediate;
+        int address = integerRegisters[rs1] + immediate;
         integerRegisters[rd] = int.parse(getByteFromMemory(address), radix: 2);
         pc = pc + 4;
       }
@@ -256,7 +268,7 @@ class Processor{
         int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
         int rd = int.parse(instruction.substring(20, 25), radix: 2);
         int immediate = getNumberFromBinaryTwoComplement(instruction.substring(0, 12));
-        int address = rs1 + immediate;
+        int address = integerRegisters[rs1] + immediate;
         integerRegisters[rd] = int.parse(getHalfWordFromMemory(address), radix: 2);
         pc = pc + 4;
       }
@@ -280,7 +292,7 @@ class Processor{
         int rs2 = int.parse(instruction.substring(7, 12), radix: 2);
         String imm = instruction.substring(0, 7) + instruction.substring(20, 25);
         int immediate = getNumberFromBinaryTwoComplement(imm);
-        int address = rs1 + immediate;
+        int address = integerRegisters[rs1] + immediate;
         int numberToBeStored = (integerRegisters[rs2] & 0xFF); //pegando o byte.
         String almost = BigInt.from(numberToBeStored).toUnsigned(8).toRadixString(2);
         if(almost.length == 8){
@@ -289,14 +301,13 @@ class Processor{
           memory[address] = ('0' * (8 - almost.length)) + almost;
         }
         pc = pc + 4;
-        //print(memory[0]);
       }
       else if(instruction.substring(17, 20) == "001"){ //sh
         int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
         int rs2 = int.parse(instruction.substring(7, 12), radix: 2);
         String imm = instruction.substring(0, 7) + instruction.substring(20, 25);
         int immediate = getNumberFromBinaryTwoComplement(imm);
-        int address = rs1 + immediate;
+        int address = integerRegisters[rs1] + immediate;
         int numberToBeStored = (integerRegisters[rs2] & 0xFFFF); //pegando a halfword.
         String almost = BigInt.from(numberToBeStored).toUnsigned(16).toRadixString(2);
         if(almost.length == 16){
@@ -315,7 +326,7 @@ class Processor{
         int rs2 = int.parse(instruction.substring(7, 12), radix: 2);
         String imm = instruction.substring(0, 7) + instruction.substring(20, 25);
         int immediate = getNumberFromBinaryTwoComplement(imm);
-        int address = rs1 + immediate;
+        int address = integerRegisters[rs1] + immediate;
         int numberToBeStored = (integerRegisters[rs2] & 0xFFFFFFFF); //pegando a word.
         String almost = BigInt.from(numberToBeStored).toUnsigned(32).toRadixString(2);
         if(almost.length == 32){
