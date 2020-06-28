@@ -170,5 +170,100 @@ soma10:
   addi x6, x6, 1
   jal x0, loop
 
-
 fim1:
+addi x7, x0, 200
+
+# checando a pontuacao do jogador2/string2
+loop2:
+  lb x8, 0, x7  # pegando o caractere da vez na string 2 
+  beq x8, x0, fim2  #cheguei ao fim da string2
+  #checando cada caractere por vez...
+  addi x11, x0, 65   # 'A'
+  beq x8, x11, soma11
+  addi x11, x0, 69   # 'E'
+  beq x8, x11, soma11
+  addi x11, x0, 73   # 'I'
+  beq x8, x11, soma11
+  addi x11, x0, 79   # 'O'
+  beq x8, x11, soma11
+  addi x11, x0, 85  # 'U'
+  beq x8, x11, soma11
+  addi x11, x0, 78  # 'N'
+  beq x8, x11, soma11
+  addi x11, x0, 82  # 'R'
+  beq x8, x11, soma11
+  addi x11, x0, 83  # 'S'
+  beq x8, x11, soma11
+
+  addi x11, x0, 68  # 'D'
+  beq x8, x11, soma22
+  addi x11, x0, 71   # 'G'
+  beq x8, x11, soma22
+  addi x11, x0, 84 # 'T'
+  beq x8, x11, soma22
+ 
+  addi x11, x0, 66  # 'B'
+  beq x8, x11, soma33
+  addi x11, x0, 67  # 'C'
+  beq x8, x11, soma33
+  addi x11, x0, 77  # 'M'
+  beq x8, x11, soma33
+  addi x11, x0, 80  # 'P'
+  beq x8, x11, soma33
+
+  addi x11, x0, 70  # 'F'
+  beq x8, x11, soma44
+  addi x11, x0, 72  # 'H'
+  beq x8, x11, soma44
+  addi x11, x0, 86  # 'V'
+  beq x8, x11, soma44
+  addi x11, x0, 87  # 'W'
+  beq x8, x11, soma44
+  addi x11, x0, 89  # 'Y'
+  beq x8, x11, soma44
+
+ addi x11, x0, 75  # 'K'
+ beq x8, x11, soma55
+
+ addi x11, x0, 74  # 'J'
+ beq x8, x11, soma88
+ addi x11, x0, 76  # 'L'
+ beq x8, x11, soma88
+ addi x11, x0, 88  # 'X'
+ beq x8, x11, soma88
+
+ addi x11, x0, 81  # 'Q'
+ beq x8, x11, soma1010
+ addi x11, x0, 90  # 'Z'
+ beq x8, x11, soma1010
+
+soma11:
+  addi x10, x10, 1
+  addi x7, x7, 1
+  jal x0, loop2
+soma22:
+  addi x10, x10, 2
+  addi x7, x7, 1
+  jal x0, loop2
+soma33:
+  addi x10, x10, 3
+  addi x7, x7, 1
+  jal x0, loop2
+soma44:
+  addi x10, x10, 4
+  addi x7, x7, 1
+  jal x0, loop2
+soma55:
+  addi x10, x10, 5
+  addi x7, x7, 1
+  jal x0, loop2
+soma88:
+  addi x10, x10, 8
+  addi x7, x7, 1
+  jal x0, loop2
+soma1010:
+  addi x10, x10, 10
+  addi x7, x7, 1
+  jal x0, loop2
+
+fim2:
