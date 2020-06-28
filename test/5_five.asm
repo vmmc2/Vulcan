@@ -71,3 +71,49 @@ addi x5, x5, 1
 addi x8, x0, 69   # 'E'
 sb x8, 0, x5
 addi x5, x5, 1
+
+# pontuacao do jogador 1  -->  registrador x9
+# pontuacao do jogador 2 --> registrador x10
+
+#checando a pontuacao do jogador1/string1
+loop:
+  lb x8, 0, x6  # pegando o caractere da vez na string 1
+  beq x8, x0, fim1  #cheguei ao fim da string1
+  #checando cada caractere por vez...
+  addi x11, x0, 65   # 'A'
+  beq x8, x11, soma1
+  addi x11, x0, 69   # 'E'
+  beq x8, x11, soma1
+  addi x11, x0, 73   # 'I'
+  beq x8, x11, soma1
+  addi x11, x0, 79   # 'O'
+  beq x8, x11, soma1
+  addi x11, x0, 85  # 'U'
+  beq x8, x11, soma1
+  addi x11, x0, 78  # 'N'
+  beq x8, x11, soma1
+  addi x11, x0, 82  # 'R'
+  beq x8, x11, soma1
+  addi x11, x0, 83  # 'S'
+  beq x8, x11, soma1
+
+  addi x11, x0, 68  # 'D'
+  beq x8, x11, soma2
+  addi x11, x0, 71   # 'G'
+  beq x8, x11, soma2
+  addi x11, x0, 84 # 'T'
+  beq x8, x11, soma2
+ 
+  addi x11, x0, 66  # 'B'
+  beq x8, x11, soma3
+  addi x11, x0, 67  # 'C'
+
+
+soma1:
+
+soma2:
+
+
+
+
+fim1:
