@@ -14,30 +14,14 @@ add x7, x5, x0   # vai guardar o endereco inicial da string 2 para eu percorrer 
 # string 2  -> "ELEFANTE"
 
 # carregando a string1 na memoria.
-addi x8, x0, 67    #  'C'
+addi x8, x0, 81    #  'Q'
 sb x8, 0, x4
 addi x4, x4, 1
 
-addi x8, x0, 65   #  'A'
+addi x8, x0, 81  # 'Q'
 sb x8, 0, x4
 addi x4, x4, 1
-
-addi x8, x0, 77   # 'M'
-sb x8, 0, x4
-addi x4, x4, 1
-
-addi x8, x0, 69  # 'E'
-sb x8, 0, x4
-addi x4, x4, 1
-
-addi x8, x0, 76  # 'L'
-sb x8, 0, x4
-addi x4, x4, 1
-
-addi x8, x0, 79  # 'O'
-sb x8, 0, x4
-addi x4, x4, 1 
-
+ 
 
 #carregando a string2 na memoria
 addi x8, x0, 69   # 'E'
@@ -266,4 +250,22 @@ soma1010:
   addi x7, x7, 1
   jal x0, loop2
 
+# Resultado  ---> x31
 fim2:
+  beq x9, x10, empate  # pontuacao jogador1 = pontuacao jogador2
+  blt x9, x10, win2  # jogador2 venceu
+  blt x10, x9, win1  # jogador1 venceu
+
+win1:
+  addi x7, x0, 1
+  jal x0, final
+
+win2:
+  addi x7, x0, 2
+  jal x0, final
+
+empate:
+   addi x7, x0, 3
+   jal x0, final
+
+final:
