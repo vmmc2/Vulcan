@@ -1,3 +1,9 @@
+# Observacoes...
+# O resultado vai ser salvo no registrador x7
+# Se x7 = 1, jogador 1 venceu
+# Se x7 = 2, jogador 2 venceu
+# Se x7 = 3, os jogadores 1 e 2 empataram
+
 # primeiro passo: Salvar as frases dos 2 jogadores na memoria.
 # Jogador 1   -> Frase vai ser salva partindo do endereco 0
 # Jogador 2  -> Frase vai ser salva partindo do endereco 200
