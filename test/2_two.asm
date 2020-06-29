@@ -1,6 +1,6 @@
-addi x10, x0, 0      # a = 2
-addi x11, x0, 10       # b = 3
-addi x12, x0, 44      # c = 4
+addi x10, x0, 2      # a = 2
+addi x11, x0, 20       # b = 20
+addi x12, x0, 25      # c = 25
 addi x13, x0, 5      # x = 5
 add x13, x0, x0     # x = 0
 addi x14, x0, 64
