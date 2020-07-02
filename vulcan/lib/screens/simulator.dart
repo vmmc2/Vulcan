@@ -304,15 +304,17 @@ class _SimulatorState extends State<Simulator> {
                                                     ),
                                                   ),
                                                   SizedBox(width: 300.0),
-                                                  Text(
-                                                    '${displayedInstructions[index].originalCode}',
-                                                    textAlign: TextAlign.start,
-                                                    style: TextStyle(
-                                                      color: Color(0xFF02143D),
-                                                      fontFamily: 'Poppins',
-                                                      fontSize: 14.0,
+                                                  Expanded(
+                                                    child: Text(
+                                                      '${displayedInstructions[index].originalCode}',
+                                                      textAlign: TextAlign.start,
+                                                      style: TextStyle(
+                                                        color: Color(0xFF02143D),
+                                                        fontFamily: 'Poppins',
+                                                        fontSize: 14.0,
+                                                      ),
                                                     ),
-                                                  ),
+                                                  )
                                                 ],
                                               ),
                                             ),
