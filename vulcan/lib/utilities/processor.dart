@@ -19,7 +19,7 @@ class Processor{
   Processor(){
     this.integerRegisters = List<int>.filled(32, 0, growable: false);
     this.floatingpointRegisters = List<double>.filled(32, 0.0, growable: false);
-    this.memory = List<String>.filled(999987, '00000000', growable: false); //999_992
+    this.memory = List<String>.filled(999987, '00000000', growable: false); //999_987
     this.integerRegisters[2] = 999986; //registrador x2(sp) funciona como o ponteiro de pilha.
     this.integerRegisters[3] = 200400; //registrador x3 aponta para os dados estaticos (static data).
   }
@@ -55,7 +55,7 @@ class Processor{
     /////////////////////////
     // TYPE-R INSTRUCTIONS //
     /////////////////////////
-    if(instruction.substring(25) == '0110011'){ //TYPE-R Instructions: add, sub, and, or, xor, slt, sltu, srl, sll, sra.
+    if(instruction.substring(25) == '0110011' && (instruction.substring(0, 7) == "0000000" || instruction.substring(0, 7) == "0100000")){ //TYPE-R Instructions: add, sub, and, or, xor, slt, sltu, srl, sll, sra.
       //para diferenciar as instrucoes type-R do RV32I a gente vai usar os campos funct3 e funct7.
       if(instruction.substring(17, 20) == '000'){ //add ou sub
         if(instruction.substring(0, 7) == '0000000'){ //add
@@ -117,6 +117,85 @@ class Processor{
     }
 
     /////////////////////////
+    // RV32M  INSTRUCTIONS //
+    /////////////////////////
+    // mul, mulh, mulhsu, mulhu, div, divu, rem, remu
+    else if(instruction.substring(25) == "0110011" && instruction.substring(0, 7) == "0000001"){
+      if(instruction.substring(17, 20) == "000"){ //mul
+        int rd = int.parse(instruction.substring(20, 25) , radix: 2);
+        int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+        int rs2 = int.parse(instruction.substring(7, 12), radix: 2);
+        integerRegisters[rd] = (integerRegisters[rs1] * integerRegisters[rs2]) & 0xFFFFFFFF;
+        pc = pc + 4;
+      }else if(instruction.substring(17, 20) == "001"){ //mulh
+        int signal = 1;
+        int rd = int.parse(instruction.substring(20, 25) , radix: 2);
+        int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+        int rs2 = int.parse(instruction.substring(7, 12), radix: 2);
+        BigInt almost = BigInt.from(integerRegisters[rs1]) * BigInt.from(integerRegisters[rs2]);
+        almost = almost >> 32;
+        integerRegisters[rd] = almost.toInt();
+        pc = pc + 4;
+      }else if(instruction.substring(17, 20) == "010"){ //mulhsu
+        int rd = int.parse(instruction.substring(20, 25) , radix: 2);
+        int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+        int rs2 = int.parse(instruction.substring(7, 12), radix: 2);
+        BigInt almost = BigInt.from(integerRegisters[rs1]) * BigInt.from(integerRegisters[rs2].toUnsigned(32));
+        almost = almost >> 32;
+        integerRegisters[rd] = almost.toInt();
+        pc = pc + 4;
+      }else if(instruction.substring(17, 20) == "011"){ //mulhu
+        int rd = int.parse(instruction.substring(20, 25) , radix: 2);
+        int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+        int rs2 = int.parse(instruction.substring(7, 12), radix: 2);
+        BigInt almost = BigInt.from(integerRegisters[rs1].toUnsigned(32)) * BigInt.from(integerRegisters[rs2].toUnsigned(32));
+        almost = almost >> 32;
+        integerRegisters[rd] = almost.toInt();
+        pc = pc + 4;
+      }else if(instruction.substring(17, 20) == "100"){ //div
+        int rd = int.parse(instruction.substring(20, 25) , radix: 2);
+        int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+        int rs2 = int.parse(instruction.substring(7, 12), radix: 2);
+        if(integerRegisters[rs2] == 0){ //Divisao por zero nao pode.
+          integerRegisters[rd] = 0;
+        }else{
+          integerRegisters[rd] = integerRegisters[rs1] ~/ integerRegisters[rs2];  //  ~/ -> Simbolo de divisao inteira.
+        }
+        pc = pc + 4;
+      }else if(instruction.substring(17, 20) == "101"){ //divu
+        int rd = int.parse(instruction.substring(20, 25) , radix: 2);
+        int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+        int rs2 = int.parse(instruction.substring(7, 12), radix: 2);
+        if(integerRegisters[rs2] == 0){
+          integerRegisters[rd] = 0;
+        }else {
+          integerRegisters[rd] = (integerRegisters[rs1].toUnsigned(32)) ~/ (integerRegisters[rs2].toUnsigned(32));
+        }
+        pc = pc + 4;
+      }else if(instruction.substring(17, 20) == "110"){ //rem
+        int rd = int.parse(instruction.substring(20, 25) , radix: 2);
+        int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+        int rs2 = int.parse(instruction.substring(7, 12), radix: 2);
+        if(integerRegisters[rs2] == 0){
+          integerRegisters[rd] = 0;
+        }else{
+          integerRegisters[rd] = integerRegisters[rs1] % integerRegisters[rs2];
+        }
+        pc = pc + 4;
+      }else if(instruction.substring(17, 20) == "111"){ //remu
+        int rd = int.parse(instruction.substring(20, 25) , radix: 2);
+        int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+        int rs2 = int.parse(instruction.substring(7, 12), radix: 2);
+        if(integerRegisters[rs2] == 0){
+          integerRegisters[rd] = 0;
+        }else{
+          integerRegisters[rd] = integerRegisters[rs1].toUnsigned(32) % integerRegisters[rs2].toUnsigned(32);
+        }
+        pc = pc + 4;
+      }
+    }
+
+    /////////////////////////
     // TYPE-U INSTRUCTIONS //
     /////////////////////////
     else if(instruction.substring(25) == '0110111' || instruction.substring(25) == '0010111'){ //TYPE-U INSTRUCTIONS: lui e auipc, respectivamente.
@@ -128,7 +207,6 @@ class Processor{
       }else if(instruction.substring(25) == '0010111'){ //auipc
       //Aparentemente a instrucao auipc nao aceita imediatos menores que zero.
       //Os imediatos da instrucao auipc apresentam 20 bits. Eles apresentam o seguinte range: 0, pow(2, 20) - 1.
-        print("pc = ${pc} ------ valor la: ${int.parse(instruction.substring(0, 20), radix: 2) << 12}");
         integerRegisters[int.parse(instruction.substring(20, 25), radix: 2)] = pc + (int.parse(instruction.substring(0, 20), radix: 2) << 12);
         pc = pc + 4;
       }
@@ -192,8 +270,9 @@ class Processor{
           int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
           int rd = int.parse(instruction.substring(20, 25), radix: 2);
           int immediate = int.parse(instruction.substring(7, 12), radix: 2);
+          print("immediate sll: $immediate");
           if(immediate >= 0){
-            integerRegisters[rd] = (integerRegisters[rs1] << immediate);
+            integerRegisters[rd] = (integerRegisters[rs1] << immediate) & 0xFFFFFFFF;
           }else{
             integerRegisters[rd] = 0;
           }
@@ -279,7 +358,6 @@ class Processor{
       int immediate = getNumberFromBinaryTwoComplement(instruction.substring(0, 12));
       integerRegisters[rd] = pc + 4;
       pc = immediate + integerRegisters[rs1] + 400;
-      print("pc dps da execucao do jalr: -------- $pc ------ imediato: $immediate");
     }
 
     /////////////////////////
@@ -355,9 +433,9 @@ class Processor{
         int rs2 = int.parse(instruction.substring(7, 12), radix: 2);
         String imm = instruction[0] + instruction[24] + instruction.substring(1, 7) + instruction.substring(20, 24);
         int immediate = getNumberFromBinaryTwoComplement(imm);
+        print("endereco recebido para o beq: $immediate");
         if(integerRegisters[rs1] == integerRegisters[rs2]){
           pc = immediate;
-          print("pc: $pc  -------- immediate: $immediate");
         }else{
           pc = pc + 4;
         }
@@ -369,7 +447,6 @@ class Processor{
         int immediate = getNumberFromBinaryTwoComplement(imm);
         if(integerRegisters[rs1] != integerRegisters[rs2]){
           pc = immediate;
-          print("pc: $pc  -------- immediate: $immediate");
         }else{
           pc = pc + 4;
         }
@@ -430,6 +507,7 @@ class Processor{
       int immediate = getNumberFromBinaryTwoComplement(imm);
       integerRegisters[rd] = pc + 4;
       pc = immediate;
+      print("pc dps da execucao do jal: ${pc}");
     }
     return;
   }
@@ -506,15 +584,17 @@ class Processor{
 
   void executeInstructions(Map<String,int> labelsAddress){
     print("Iniciando a simulacao!!!");
+    print(labelsAddress);
     while(true){
       String instruction = fetchInstruction(pc);
       if(instruction == '00000000000000000000000000000000'){
         break; //Cheguei ao fim da simulacao
       }
-      print(instruction);
+      //print(instruction);
       decodeAndExecute(instruction, labelsAddress);
       integerRegisters[0] = 0;
     }
     return;
   }  
+
 }
