@@ -169,10 +169,45 @@ class Assembler{
   //////////
   //J-TYPE//
   //////////
+  //Instrucao do tipo-J nao tem funct3. Apenas tem o opcode.
   Map<String,String> jTypeInstructionsOpCodeString = {
     'jal' : '1101111',
   };
-  //Instrucao do tipo-J nao tem funct3. Apenas tem o opcode.
+
+  //////////////////////
+  //RV32M INSTRUCTIONS//
+  //////////////////////
+  Map<String,String> rv32MInstructionsOpCodeString = {
+    'mul' : '0110011' ,
+    'mulh' : '0110011',
+    'mulhsu' : '0110011' ,
+    'mulhu' : '0110011',
+    'div' : '0110011',
+    'divu' : '0110011',
+    'rem' : '0110011',
+    'remu' : '0110011',
+  };
+  Map<String,String> rv32MInstructionsFunct3String = {
+    'mul' : '000' ,
+    'mulh' : '001',
+    'mulhsu' : '010' ,
+    'mulhu' : '011',
+    'div' : '100',
+    'divu' : '101',
+    'rem' : '110',
+    'remu' : '111',
+  };
+  Map<String,String> rv32MInstructionsFunct7String = {
+    'mul' : '0000001' ,
+    'mulh' : '0000001',
+    'mulhsu' : '0000001' ,
+    'mulhu' : '0000001',
+    'div' : '0000001',
+    'divu' : '0000001',
+    'rem' : '0000001',
+    'remu' : '0000001',
+  };
+
 
 
   //Cada Set abaixo ta representando um formato/tipo de instrucao do RV32I
@@ -186,6 +221,9 @@ class Assembler{
   Set<String> iTypeShiftInstructions = {'slli', 'srli', 'srai'};
   Set<String> iTypeLoadInstructions = {'lb', 'lh', 'lw', 'lbu', 'lhu'};
   Set<String> iTypeJumpInstructions = {'jalr'};
+
+  //Cada Set abaixo ta representando um formato/tipo de instrucao do RV32M
+  Set<String> rv32MInstructions = {'mul', 'mulh', 'mulhsu', 'mulhu', 'div', 'divu', 'rem', 'remu'};
 
   //Essa String inicial contem varias substrings separadas por '\n'
   //Cada uma das substrings representa uma linha do meu arquivo Assembly.
@@ -340,10 +378,21 @@ class Assembler{
 
       List<String> currentInstruction = input[i]; //currentInstruction tem a instrucao da vez.
 
-      if(currentInstruction.length == 4){ //Pode ser do tipo R
+      if(currentInstruction.length == 4){ //Pode ser do tipo R ou uma instrucao do RV32M
         if(rTypeInstructions.contains(currentInstruction[0]) == true){ //Tenho certeza que eh uma instrucao do tipo R.
           String instruction = rTypeInstructionsFunct7String[currentInstruction[0]] + registerNames[currentInstruction[3]] + registerNames[currentInstruction[2]] + rTypeInstructionsFunct3String[currentInstruction[0]] + registerNames[currentInstruction[1]] + rTypeInstructionsOpCodeString[currentInstruction[0]];
           print(instruction);
+          machineCode.add(instruction);
+        }
+        else if(rv32MInstructions.contains(currentInstruction[0]) == true){ //Tenho certeza que eh uma instrucao da extensao RV32M: mul, mulh, mulhsu, mulhu, div, divu, rem, remu
+          String instruction = "";
+          String funct7 = rv32MInstructionsFunct7String[currentInstruction[0]];
+          String rs2 = registerNames[currentInstruction[3]];
+          String rs1 = registerNames[currentInstruction[2]];
+          String funct3 = rv32MInstructionsFunct3String[currentInstruction[0]];
+          String rd = registerNames[currentInstruction[1]];
+          String opcode = rv32MInstructionsOpCodeString[currentInstruction[0]];
+          instruction = funct7 + rs2 + rs1 + funct3 + rd + opcode;
           machineCode.add(instruction);
         }
         else if(iTypeInstructions.contains(currentInstruction[0]) == true){ //Tenho certeza que eh uma instrucao do tipo I. Porem tenho que filtrar mais..
@@ -354,7 +403,6 @@ class Assembler{
             String rd = registerNames[currentInstruction[1]];
             String opcode = iTypeInstructionsOpCodeString[currentInstruction[0]];
             String instruction = immediate + rs1 + funct3 + rd + opcode;
-            print(instruction);
             machineCode.add(instruction);
           }
           else if(iTypeShiftInstructions.contains(currentInstruction[0]) == true){ // slli, srli, srai.
@@ -371,7 +419,6 @@ class Assembler{
             }else if(currentInstruction[0] == 'srai'){
               instruction = sraiFirst + shamt + rs1 + funct3 + rd + opcode;
             }
-            print(instruction);
             machineCode.add(instruction);
           }
           else if(iTypeLoadInstructions.contains(currentInstruction[0]) == true){ // lb, lh, lw, lbu, lhu.
@@ -381,7 +428,6 @@ class Assembler{
             String rd = registerNames[currentInstruction[1]];
             String opcode = iTypeInstructionsOpCodeString[currentInstruction[0]];;
             String instruction = immediate + rs1 + funct3 + rd + opcode;
-            print(instruction);
             machineCode.add(instruction);
           }
           else if(iTypeJumpInstructions.contains(currentInstruction[0]) == true){ // jalr.
@@ -393,7 +439,6 @@ class Assembler{
             String instruction = immediate + rs1 + funct3 + rd + opcode;
             //O valor que vai no immediate + o valor de rs1 eh o valor do novo pc pos-salto.
             //rd recebe pc + 4 (pre-salto).
-            print(instruction);
             machineCode.add(instruction);
           }
         }
@@ -407,7 +452,6 @@ class Assembler{
           String funct3 = sTypeInstructionsFunct3String[currentInstruction[0]];
           String opcode = sTypeInstructionsOpCodeString[currentInstruction[0]];
           String instruction = imm115 + rs2 + rs1 + funct3 + imm40 + opcode;
-          print(instruction);
           machineCode.add(instruction);
         }
         else if(bTypeInstructions.contains(currentInstruction[0]) == true){ //Tenho certeza que eh uma instrucao do tipo B: beq, bne, blt, bge, bltu, bgeu.
@@ -427,39 +471,35 @@ class Assembler{
           
           offset = labelsAddress[currentInstruction[3] + ":"];
           
-          
           immediate = BigInt.from(offset).toUnsigned(12).toRadixString(2);
+          print("endereco da label ${currentInstruction[3]}: $offset");
           instruction = "";
           if(immediate.length == 12){ //deu imediato negativo.
             //hora de montar a instruction.
-            instruction = immediate[0] + immediate.substring(2, 8) + rs2 + rs1 + funct3 + immediate.substring(8, 12) + immediate[11] + opcode;
+            instruction = immediate[0] + immediate.substring(2, 8) + rs2 + rs1 + funct3 + immediate.substring(8, 12) + immediate[1] + opcode;
           }else if(immediate.length < 12){ //deu imediato positivo.
             immediate = ('0' * (12 - immediate.length)) + immediate;
             //hora de montar a instruction.
-            instruction = immediate[0] + immediate.substring(2, 8) + rs2 + rs1 + funct3 + immediate.substring(8, 12) + immediate[11] + opcode;
+            instruction = immediate[0] + immediate.substring(2, 8) + rs2 + rs1 + funct3 + immediate.substring(8, 12) + immediate[1] + opcode;
           }
-          print(instruction);
           machineCode.add(instruction);
         }
       }
       else if(currentInstruction.length == 3){ //Pode ser do tipo U ou J
         if(uTypeInstructions.contains(currentInstruction[0]) == true){ //Tenho certeza que eh uma instrucao do tipo U.
           String instruction = generate20bitImmediate(currentInstruction[2]) + registerNames[currentInstruction[1]] + uTypeInstructionsOpCodeString[currentInstruction[0]];
-          print(instruction);
           machineCode.add(instruction);
         }
         else if(jTypeInstructions.contains(currentInstruction[0]) == true){ //Tenho certeza que eh uma instrucao do tipo J. (jal)
           String rd = registerNames[currentInstruction[1]];
-          print(rd);
           String opcode = jTypeInstructionsOpCodeString[currentInstruction[0]];
-          print(opcode);
           int offset;
           try{
           offset = labelsAddress[currentInstruction[2] + ":"];
           }catch(e){
             print("errou miseravi!!!");
           }
-          print("offset: $offset");
+          print("offset de ${currentInstruction[2]}: $offset");
           String instruction = "";
           String immediate = BigInt.from(offset).toUnsigned(20).toRadixString(2);
           if(immediate.length == 20){ //deu imediato negativo.
@@ -470,7 +510,6 @@ class Assembler{
             //hora de montar a instruction.
             instruction = immediate[0] + immediate.substring(10, 20) + immediate[9] + immediate.substring(1, 9) + rd + opcode;
           }
-          print(instruction);
           machineCode.add(instruction);
         }
       }
@@ -519,7 +558,6 @@ class Assembler{
       if(element.length == 1){ //Pode ser uma label...
         if(element[0].endsWith(':') == true){
           // Eh uma label..
-          print("entrei");
         }else{
           output.add("Invalid instruction: " + element.join(' '));
         }
@@ -529,7 +567,7 @@ class Assembler{
       }
       else{ // O tamanho da instrucao eh valido (3 ou 4). Mas a instrucao pode ser invalida
         //Primeiro teste: Verificar se o nome da instrucao eh invalido.
-        if(rTypeInstructions.contains(element[0]) == false && iTypeInstructions.contains(element[0]) == false && jTypeInstructions.contains(element[0]) == false && sTypeInstructions.contains(element[0]) == false && uTypeInstructions.contains(element[0]) == false && bTypeInstructions.contains(element[0]) == false){
+        if(rTypeInstructions.contains(element[0]) == false && iTypeInstructions.contains(element[0]) == false && jTypeInstructions.contains(element[0]) == false && sTypeInstructions.contains(element[0]) == false && uTypeInstructions.contains(element[0]) == false && bTypeInstructions.contains(element[0]) == false && rv32MInstructions.contains(element[0]) == false){
           output.add("Invalid instruction: " + element.join(' '));
         }
         //Segundo teste: Verificar se tem nome de registrador invalido na instrucao.
@@ -545,7 +583,46 @@ class Assembler{
             }
             output.add("Invalid register at instruction: " + answer.join(' '));
           }
+        }else if(element.length != 4 && rTypeInstructions.contains(element[0]) == true){
+          List<String> answer = [];
+          for(int i = 0; i < element.length; i++){
+            if(i == element.length - 1 || i == 0){
+              answer.add(element[i]);
+            }else{
+              answer.add(element[i] + ",");
+            }
+          }
+          output.add("Invalid number of operands at instruction: " + answer.join(' '));
         }
+
+
+
+        if(element.length == 4 && rv32MInstructions.contains(element[0]) == true){ //Checando se os registradores das instrucoes do RV32M estao Ok.
+          if(registerNames.containsKey(element[1]) == false || registerNames.containsKey(element[2]) == false || registerNames.containsKey(element[3]) == false){
+            List<String> answer = [];
+            for(int i = 0; i < element.length; i++){
+              if(i == element.length - 1 || i == 0){
+                answer.add(element[i]);
+              }else{
+                answer.add(element[i] + ",");
+              }
+            }
+            output.add("Invalid register at instruction: " + answer.join(' '));
+          }
+        }else if(element.length != 4 && rv32MInstructions.contains(element[0]) == true){
+          List<String> answer = [];
+          for(int i = 0; i < element.length; i++){
+            if(i == element.length - 1 || i == 0){
+              answer.add(element[i]);
+            }else{
+              answer.add(element[i] + ",");
+            }
+          }
+          output.add("Invalid number of operands at instruction: " + answer.join(' '));
+        }
+
+
+
         if(element.length == 4 && sTypeInstructions.contains(element[0]) == true){ //checando por possiveis erros em instrucoes type-S: registradores invalidos ou immediato fora de range.
           if(registerNames.containsKey(element[1]) == false || registerNames.containsKey(element[3]) == false){ //registrador invalido
             List<String> answer = [];
@@ -582,7 +659,20 @@ class Assembler{
             }
             output.add("Invalid immediate (not a number) at instruction: " + answer.join(' '));
           }
+        }else if(element.length != 4 && sTypeInstructions.contains(element[0]) == true){
+          List<String> answer = [];
+          for(int i = 0; i < element.length; i++){
+            if(i == element.length - 1 || i == 0){
+              answer.add(element[i]);
+            }else{
+              answer.add(element[i] + ",");
+            }
+          }
+          output.add("Invalid number of operands at instruction: " + answer.join(' '));
         }
+
+
+
         if(element.length == 3 && uTypeInstructions.contains(element[0]) == true){ //checando por possiveis erros em instrucoes type-U: registradores invalidos ou immediatos fora do range
           if(registerNames.containsKey(element[1]) == false){ //registrador invalido
             List<String> answer = [];
@@ -619,7 +709,20 @@ class Assembler{
             }
             output.add("Invalid immediate (not a number) at instruction: " + answer.join(' '));
           }
+        }else if(element.length != 3 && uTypeInstructions.contains(element[0]) == true){
+          List<String> answer = [];
+          for(int i = 0; i < element.length; i++){
+            if(i == element.length - 1 || i == 0){
+              answer.add(element[i]);
+            }else{
+              answer.add(element[i] + ",");
+            }
+          }
+          output.add("Invalid number of operands at instruction: " + answer.join(' '));
         }
+
+
+
         if(element.length == 3 && jTypeInstructions.contains(element[0]) == true){ //checando por possiveis erros em instrucoes type-J: registradores invalidos ou labels inexistentes
           if(registerNames.containsKey(element[1]) == false){ //registrador invalido
             List<String> answer = [];
@@ -643,7 +746,20 @@ class Assembler{
             }
             output.add("Invalid label at instruction: " + answer.join(' '));
           }
+        }else if(element.length != 3 && jTypeInstructions.contains(element[0]) == true){
+          List<String> answer = [];
+          for(int i = 0; i < element.length; i++){
+            if(i == element.length - 1 || i == 0){
+              answer.add(element[i]);
+            }else{
+              answer.add(element[i] + ",");
+            }
+          }
+          output.add("Invalid number of operands at instruction: " + answer.join(' '));
         }
+
+
+
         if(element.length == 4 && bTypeInstructions.contains(element[0]) == true){ //checando por possiveis erros em instrucoes type-B: registradores invalidos ou labels inexistentes.
           if(registerNames.containsKey(element[1]) == false || registerNames.containsKey(element[2]) == false){
             List<String> answer = [];
@@ -667,7 +783,20 @@ class Assembler{
             }
             output.add("Invalid label at instruction: " + answer.join(' '));
           }
+        }else if(element.length != 4 && bTypeInstructions.contains(element[0]) == true){
+          List<String> answer = [];
+          for(int i = 0; i < element.length; i++){
+            if(i == element.length - 1 || i == 0){
+              answer.add(element[i]);
+            }else{
+              answer.add(element[i] + ",");
+            }
+          }
+          output.add("Invalid number of operands at instruction: " + answer.join(' '));
         }
+
+
+
         if(element.length == 4 && iTypeInstructions.contains(element[0]) == true){ //checando por possiveis erros em instrucoes type-I: registradores invalidos ou labels inexistentes.
           //Tem que filtrar mais as instrucoes do type-I
           if(iTypeImmInstructions.contains(element[0])){ //addi, slti, sltiu, xori, ori, andi
@@ -815,6 +944,16 @@ class Assembler{
               output.add("Invalid immediate (not a number) at instruction: " + answer.join(' '));
             }
           }
+        }else if(element.length != 4 && iTypeInstructions.contains(element[0]) == true){
+          List<String> answer = [];
+          for(int i = 0; i < element.length; i++){
+            if(i == element.length - 1 || i == 0){
+              answer.add(element[i]);
+            }else{
+              answer.add(element[i] + ",");
+            }
+          }
+          output.add("Invalid number of operands at instruction: " + answer.join(' '));
         }
       }
     }
