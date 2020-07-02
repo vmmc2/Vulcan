@@ -1,7 +1,7 @@
 # Supondo que a palavra procurada na string seja sempre "riscv"
 
 # Carregando a string na memoria
-# STRING   -->  "sivprsc"
+# STRING   -->  "svprsc"
 # A string na qual faremos a busca vai ser carregada no endereco 0
 # endereco inicial da string: x6
 add x7, x6, x0  # x7 vai guardar o endereco da string para podermos percorre-la
