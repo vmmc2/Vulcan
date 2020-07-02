@@ -1,5 +1,5 @@
 # Primeira parte, carregar a string na memoria
-# string = "BBCCEEIIOU"
+# string = "AACCEEIIOU"
 # Vou comecar a salvar a string na memoria a partir do endereco 0
 
 addi x20, x0, 65  # A
