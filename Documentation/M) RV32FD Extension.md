@@ -17,7 +17,8 @@
 ## Elaboração: A extensão RV32FD permite que o modo de arredondamento seja "setado" por instrução.
 * Esse modo de arredondamento (chamado de "static rounding") ajuda o desempenho quando você só precisa alterar o modo de arredondamento para uma instrução específica.
 * O padrão é usar o modo de arredondamento dinâmico em fcsr. __O arredondamento estático é especificado como um último argumento opcional, pois fadd.s ft0, ft1, ft2, rtz irá arredondar para zero, independentemente de fcsr.__
-* Existem outros modos de arredondamento que serão apresentandos a seguir.
+* Existem outros modos de arredondamento que serão apresentandos a seguir:
+![[rv32fd_rounding_modes](https://http://riscv.org/)](rv32fd_rounding_modes.png)
 
 ## Instructions
 ![[rv32fd](https://http://riscv.org/)](rv32fd.png)
