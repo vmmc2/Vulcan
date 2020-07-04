@@ -11,6 +11,9 @@ RISC-V Instruction Set Simulator Built For Education.
 - [x] Memory visualization.
 - [x] Syntax Error Alert.
 
+## To do
+- [ ] RV32F Extension. (__Studying how to do it in a proper way.__)
+
 ## Limitations
 * Unfortunately, by the time that I did the initial version, Flutter Web does not support responsive web apps. Because of it, one must use Vulcan in fullscreen mode. Otherwise, the app will throw overflow exceptions.
 
