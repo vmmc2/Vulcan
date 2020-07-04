@@ -15,5 +15,5 @@
 * A extensão RV32A adiciona as seguintes instruções ao RISC-V.
 ![[rv32a](https://http://riscv.org/)](rv32a_instructions.png)
 
-* Os opcodes das instruções do RV32A estão mostradas abaixo:
+* O mapa de opcode das instruções do RV32A estão mostradas abaixo:
 ![[rv32a_opcodes](https://http://riscv.org/)](rv32a_opcodes.png)
