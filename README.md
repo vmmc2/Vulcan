@@ -11,7 +11,7 @@ RISC-V Instruction Set Simulator Built For Education.
 - [x] Memory visualization.
 - [x] Syntax Error Alert.
 
-## To do
+## To do (In a near future)
 - [ ] RV32F Extension. (__Studying how to do it in a proper way.__)
 
 ## Limitations
