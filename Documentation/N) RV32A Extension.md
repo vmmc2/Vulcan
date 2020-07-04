@@ -12,3 +12,8 @@
 * O Store Condicional armazena uma palavra no endereço em um registrador de origem desde que exista uma reserva de carga nesse endereço de memória. Ele grava 0 no registrador de destino se a operação de Store tiver êxito, ou em caso contrário um código de erro diferente de zero.
 
 ## Instruções
+* A extensão RV32A adiciona as seguintes instruções ao RISC-V.
+![[rv32a](https://http://riscv.org/)](rv32a_instructions.png)
+
+* Os opcodes das instruções do RV32A estão mostradas abaixo:
+![[rv32a_opcodes](https://http://riscv.org/)](rv32a_opcodes.png)
