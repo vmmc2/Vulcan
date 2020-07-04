@@ -20,7 +20,7 @@
 * Existem outros modos de arredondamento que serão apresentandos a seguir:
 ![[rv32fd_rounding_modes](https://http://riscv.org/)](rv32fd_rounding_modes.png)
 
-## Instructions
+## Instruções
 ![[rv32fd](https://http://riscv.org/)](rv32fd.png)
 
 
