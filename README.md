@@ -21,8 +21,8 @@ RISC-V Instruction Set Simulator Built For Education.
 ## Usage
 ### Web Browser Status
 - [x] Google Chrome
-- [ ] Mozilla Firefox
-- [ ] Microsoft Edge
+- [x] Mozilla Firefox
+- [x] Microsoft Edge
 
 ### How to use it?
 * You must be familiar with RISC-V Assembly in order to use Vulcan properly. If you want to learn about it, you can check the documentation folder inside this repository.
