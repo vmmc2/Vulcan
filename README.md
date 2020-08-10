@@ -60,7 +60,16 @@ RISC-V Instruction Set Simulator Built For Education.
 - [ ] csrrwi
 - [ ] csrrsi
 - [ ] csrrci
+
 ### RV32M Extension
+- [x] mul
+- [x] mulh
+- [x] mulhsu
+- [x] mulhu
+- [x] div
+- [x] divu
+- [x] rem
+- [x] remu
 
 ### RV32F Extension
 
