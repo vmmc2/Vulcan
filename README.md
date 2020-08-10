@@ -13,7 +13,53 @@ RISC-V Instruction Set Simulator Built For Education.
 
 ## Implemented Instructions
 ### RV32I Extension
-
+- [x] lui
+- [x] auipc
+- [x] jal
+- [x] jalr
+- [x] beq
+- [x] bne
+- [x] blt
+- [x] bge
+- [x] bltu
+- [x] bgeu
+- [x] lb
+- [x] lh
+- [x] lw
+- [x] lbu
+- [x] lhu
+- [x] sb
+- [x] sh
+- [x] sw
+- [x] addi
+- [x] slti
+- [x] sltiu
+- [x] xori
+- [x] ori
+- [x] andi
+- [x] slli
+- [x] srli
+- [x] srai
+- [x] add
+- [x] sub
+- [x] sll
+- [x] slt
+- [x] sltu
+- [x] xor
+- [x] srl
+- [x] sra
+- [x] or
+- [x] and
+- [ ] fence
+- [ ] fence.i
+- [ ] ecall
+- [ ] ebreak
+- [ ] csrrw
+- [ ] csrrs
+- [ ] csrrc
+- [ ] csrrwi
+- [ ] csrrsi
+- [ ] csrrci
 ### RV32M Extension
 
 ### RV32F Extension
