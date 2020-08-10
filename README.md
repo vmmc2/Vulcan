@@ -74,6 +74,9 @@ RISC-V Instruction Set Simulator Built For Education.
 ### RV32F Extension
 
 ### RV32A Extension
+- [ ] lr.w
+- [ ] sc.w
+- [ ] amoswap.w
 
 ## To do (In a near future)
 - [ ] RV32F Extension. (__Studying how to do it in a proper way...__)
