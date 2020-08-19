@@ -100,17 +100,17 @@ RISC-V Instruction Set Simulator Built For Education.
 - [ ] fmv.w.x
 
 ### RV32A Extension
-- [ ] lr.w
-- [ ] sc.w
-- [ ] amoswap.w
-- [ ] amoadd.w
-- [ ] amorxor.w
-- [ ] amoand.w
-- [ ] amoor.w
-- [ ] amomin.w
-- [ ] amomax.w
-- [ ] amominu.w
-- [ ] amomaxu.w
+- [x] lr.w
+- [x] sc.w
+- [x] amoswap.w
+- [x] amoadd.w
+- [x] amorxor.w
+- [x] amoand.w
+- [x] amoor.w
+- [x] amomin.w
+- [x] amomax.w
+- [x] amominu.w
+- [x] amomaxu.w
 
 ## To do (In a near future)
 - [ ] RV32F Extension. (__Studying how to do it in a proper way...__)
