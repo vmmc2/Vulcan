@@ -83,8 +83,16 @@
 
 ### 10) lr.w
 * __Significado: Load Reserved Word (lr.w).__
+* __Síntaxe: lr.w rd, rs1__
+* rs1 = registrador-fonte
+* rd = registrador-destino
+* __Operação Realizada: Essa instrução funciona da seguinte maneira: Carrega os quatro bytes (word) da memória no endereço x[rs1], grava-os em x[rd], realizando uma extensão de sinal no resultado (x[rd] = memória[x[rs1]]) e registra uma reserva nessa palavra de memória.__
 
 ### 11) sc.w
 * __Significado: Store Conditional Word (sc.w).__
+* __Síntaxe: sc.w rd, rs2, rs1__
+* rs1/rs2 = registradores-fonte
+* rd = registrador-destino
+* __Operação Realizada: Armazena os quatro bytes (word) do registrador x[rs2] na memória no endereço x[rs1], desde que já exista um load reservado para este endereço de memória. Grava 0 em x[rd] se o store obtiver êxito e, caso contrário, grava um código dee erro. No Vulcan, decidi usar o número -1 como código de erro.__
 
 
