@@ -65,4 +65,26 @@
 * __Síntaxe: amoor.w rd, rs2, rs1__
 * rs1/rs2 = registradores-fonte
 * rd = registrador-destino
-* __Operação Realizada: Essa instrução funciona da seguinte maneira: Atomicamente, deixa t ser o valor da palavra de memória no endereço x[rs1] (t = memória[x[rs1]]), em seguida seta essa palavra de memoria para o menor valor entre t e x[rs2] , utilizando uma comparação de números com sinal segundo o formato complemento a dois (memoria[x[rs1]] = min(t, x[rs2])). Por fim, seta x[rd] para a extensão de sinal de t (x[rd] = t).__
+* __Operação Realizada: Essa instrução funciona da seguinte maneira: Atomicamente, deixa t ser o valor da palavra de memória no endereço x[rs1] (t = memória[x[rs1]]), em seguida seta essa palavra de memoria para t | x[rs2] (memoria[x[rs1]] = t | x[rs2]). Por fim, seta x[rd] para a extensão de sinal de t (x[rd] = t).__
+
+### 8) amoswap.w
+* __Significado: Atomic Swap Word (amoswap.w).__
+* __Síntaxe: amoswap.w rd, rs2, rs1__
+* rs1/rs2 = registradores-fonte
+* rd = registrador-destino
+* __Operação Realizada: Essa instrução funciona da seguinte maneira: Atomicamente, deixa t ser o valor da palavra de memória no endereço x[rs1] (t = memória[x[rs1]]), em seguida seta essa palavra de memoria para x[rs2] (memoria[x[rs1]] = x[rs2]). Por fim, seta x[rd] para a extensão de sinal de t (x[rd] = t).__
+
+### 9) amoxor.w
+* __Significado: Atomic BitWise Xor Word (amoxor.w).__
+* __Síntaxe: amoxor.w rd, rs2, rs1__
+* rs1/rs2 = registradores-fonte
+* rd = registrador-destino
+* __Operação Realizada: Essa instrução funciona da seguinte maneira: Atomicamente, deixa t ser o valor da palavra de memória no endereço x[rs1] (t = memória[x[rs1]]), em seguida seta essa palavra de memoria para t ^ x[rs2] (memoria[x[rs1]] = t ^ x[rs2]). Por fim, seta x[rd] para a extensão de sinal de t (x[rd] = t).__
+
+### 10) lr.w
+* __Significado: Load Reserved Word (lr.w).__
+
+### 11) sc.w
+* __Significado: Store Conditional Word (sc.w).__
+
+
