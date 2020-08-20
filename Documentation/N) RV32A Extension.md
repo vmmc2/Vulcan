@@ -23,4 +23,19 @@
 * __Síntaxe: amoadd.w rd, rs2, rs1__
 * rs1/rs2 = registradores-fonte
 * rd = registrador-destino
-* __Operação Realizada: Essa instrução funciona da seguinte maneira: Atomicamente, deixa t ser o valor da palavra de memória no endereço x[rs1] (t = memória[x[rs1]]), em seguida seta essa palavra de memoria para t + x[rs2] (memoria[x[rs1]] = t + x[rs2]). Por fim, seta x[rd] para a extensão de sinal de t (x[rd] = t).__ 
+* __Operação Realizada: Essa instrução funciona da seguinte maneira: Atomicamente, deixa t ser o valor da palavra de memória no endereço x[rs1] (t = memória[x[rs1]]), em seguida seta essa palavra de memoria para t + x[rs2] (memória[x[rs1]] = t + x[rs2]). Por fim, seta x[rd] para a extensão de sinal de t (x[rd] = t).__ 
+
+### 2) amoand.w
+* __Significado: Atomic BitWise And Word (amoand.w).__
+* __Síntaxe: amoand.w rd, rs2, rs1__
+* rs1/rs2 = registradores-fonte
+* rd = registrador-destino
+* __Operação Realizada: Essa instrução funciona da seguinte maneira: Atomicamente, deixa t ser o valor da palavra de memória no endereço x[rs1] (t = memória[x[rs1]]), em seguida seta essa palavra de memoria para t & x[rs2] (memória[x[rs1]] = t & x[rs2]). Por fim, seta x[rd] para a extensão de sinal de t (x[rd] = t).__ 
+
+### 3) amomax.w
+* __Significado: Atomic Maximum Word (amomax.w).__
+* __Síntaxe: amomax.w rd, rs2, rs1__
+* rs1/rs2 = registradores-fonte
+* rd = registrador-destino
+* __Operação Realizada: Essa instrução funciona da seguinte maneira: Atomicamente, deixa t ser o valor da palavra de memória no endereço x[rs1] (t = memória[x[rs1]]), em seguida seta essa palavra de memoria para o maior valor entre t e x[rs2] , utilizando uma comparação de números com sinal segundo o formato complemento a dois (memoria[x[rs1]] = max(t, x[rs2])). Por fim, seta x[rd] para a extensão de sinal de t (x[rd] = t).__ 
+
