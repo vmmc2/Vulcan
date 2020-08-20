@@ -17,3 +17,10 @@
 
 * O mapa de opcode das instruções do RV32A está mostrado abaixo:
 ![[rv32a_opcodes](https://http://riscv.org/)](rv32a_opcodes.png)
+
+### 1) amoadd.w
+* __Significado: Atomic Addition Word (amoadd.w).__
+* __Síntaxe: amoadd.w rd, rs2, rs1__
+* rs1/rs2 = registradores-fonte
+* rd = registrador-destino
+* __Operação Realizada: Essa instrução funciona da seguinte maneira: Atomicamente, deixa t ser o valor da palavra de memória no endereço x[rs1] (t = memória[x[rs1]]), em seguida seta essa palavra de memoria para t + x[rs2] (memoria[x[rs1]] = t + x[rs2]). Por fim, seta x[rd] para a extensão de sinal de t (x[rd] = t).__ 
