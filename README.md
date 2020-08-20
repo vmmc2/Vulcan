@@ -3,8 +3,8 @@ RISC-V Instruction Set Simulator Built For Education.
 
 ## Features
 - [x] RV32I Extension.
-- [x] RV32A Extension.
 - [x] RV32M Extension.
+- [x] RV32A Extension.
 - [x] Visualization of programming counter (PC), machine code and original instructions side-by-side.
 - [x] Embedded editor inside Vulcan.
 - [x] Integer registers visualization.
