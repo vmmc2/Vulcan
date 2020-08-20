@@ -39,3 +39,30 @@
 * rd = registrador-destino
 * __Operação Realizada: Essa instrução funciona da seguinte maneira: Atomicamente, deixa t ser o valor da palavra de memória no endereço x[rs1] (t = memória[x[rs1]]), em seguida seta essa palavra de memoria para o maior valor entre t e x[rs2] , utilizando uma comparação de números com sinal segundo o formato complemento a dois (memoria[x[rs1]] = max(t, x[rs2])). Por fim, seta x[rd] para a extensão de sinal de t (x[rd] = t).__ 
 
+### 4) amomaxu.w
+* __Significado: Atomic Maximum Unsgined Word (amomaxu.w).__
+* __Síntaxe: amomaxu.w rd, rs2, rs1__
+* rs1/rs2 = registradores-fonte
+* rd = registrador-destino
+* __Operação Realizada: Essa instrução funciona da seguinte maneira: Atomicamente, deixa t ser o valor da palavra de memória no endereço x[rs1] (t = memória[x[rs1]]), em seguida seta essa palavra de memoria para o maior valor entre t e x[rs2] , utilizando uma comparação de números sem sinal (memoria[x[rs1]] = max(t, x[rs2])). Por fim, seta x[rd] para a extensão de sinal de t (x[rd] = t).__ 
+
+### 5) amomin.w
+* __Significado: Atomic Minimum Word (amomin.w).__
+* __Síntaxe: amomin.w rd, rs2, rs1__
+* rs1/rs2 = registradores-fonte
+* rd = registrador-destino
+* __Operação Realizada: Essa instrução funciona da seguinte maneira: Atomicamente, deixa t ser o valor da palavra de memória no endereço x[rs1] (t = memória[x[rs1]]), em seguida seta essa palavra de memoria para o menor valor entre t e x[rs2] , utilizando uma comparação de números com sinal segundo o formato complemento a dois (memoria[x[rs1]] = min(t, x[rs2])). Por fim, seta x[rd] para a extensão de sinal de t (x[rd] = t).__
+
+### 6) amominu.w
+* __Significado: Atomic Minimum Unsigned Word (amominu.w).__
+* __Síntaxe: amominu.w rd, rs2, rs1__
+* rs1/rs2 = registradores-fonte
+* rd = registrador-destino
+* __Operação Realizada: Essa instrução funciona da seguinte maneira: Atomicamente, deixa t ser o valor da palavra de memória no endereço x[rs1] (t = memória[x[rs1]]), em seguida seta essa palavra de memoria para o menor valor entre t e x[rs2] , utilizando uma comparação de números sem sinal (memoria[x[rs1]] = min(t, x[rs2])). Por fim, seta x[rd] para a extensão de sinal de t (x[rd] = t).__
+
+### 7) amoor.w
+* __Significado: Atomic BitWise Or Word (amoor.w).__
+* __Síntaxe: amoor.w rd, rs2, rs1__
+* rs1/rs2 = registradores-fonte
+* rd = registrador-destino
+* __Operação Realizada: Essa instrução funciona da seguinte maneira: Atomicamente, deixa t ser o valor da palavra de memória no endereço x[rs1] (t = memória[x[rs1]]), em seguida seta essa palavra de memoria para o menor valor entre t e x[rs2] , utilizando uma comparação de números com sinal segundo o formato complemento a dois (memoria[x[rs1]] = min(t, x[rs2])). Por fim, seta x[rd] para a extensão de sinal de t (x[rd] = t).__
