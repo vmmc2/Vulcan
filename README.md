@@ -95,10 +95,10 @@ RISC-V Instruction Set Simulator Built For Education.
 - [x] feq.s
 - [x] flt.s
 - [x] fle.s
-- [ ] fclass.s
+- [x] fclass.s
 - [x] fcvt.s.w
 - [x] fcvt.s.wu
-- [ ] fmv.w.x
+- [x] fmv.w.x
 
 ### RV32A Extension
 - [x] lr.w
