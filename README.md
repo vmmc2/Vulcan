@@ -75,10 +75,10 @@ RISC-V Instruction Set Simulator Built For Education.
 ### RV32F Extension
 - [ ] flw
 - [ ] fsw
-- [ ] fmadd.s
-- [ ] fmsub.s
-- [ ] fnmsub.s
-- [ ] fnmadd.s
+- [x] fmadd.s
+- [x] fmsub.s
+- [x] fnmsub.s
+- [x] fnmadd.s
 - [x] fadd.s
 - [x] fsub.s
 - [x] fmul.s
@@ -87,17 +87,17 @@ RISC-V Instruction Set Simulator Built For Education.
 - [ ] fsgnj.s
 - [ ] fsgnjn.s
 - [ ] fsgnjx.s
-- [ ] fmin.s
-- [ ] fmax.s
+- [x] fmin.s
+- [x] fmax.s
 - [ ] fcvt.w.s
 - [ ] fcvt.wu.s
 - [ ] fmv.x.w
-- [ ] feq.s
-- [ ] flt.s
-- [ ] fle.s
+- [x] feq.s
+- [x] flt.s
+- [x] fle.s
 - [ ] fclass.s
-- [ ] fcvt.s.w
-- [ ] fcvt.s.wu
+- [x] fcvt.s.w
+- [x] fcvt.s.wu
 - [ ] fmv.w.x
 
 ### RV32A Extension
