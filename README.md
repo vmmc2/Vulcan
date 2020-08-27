@@ -114,7 +114,7 @@ RISC-V Instruction Set Simulator Built For Education.
 - [x] amomaxu.w
 
 ## To do (In a near future)
-- [x] RV32F Extension. (__Doing!__)
+- [x] RV32F Extension. (__Doing it right now!__)
 - [x] RV32A Extension. (__Done!__)
 
 ## Limitations
