@@ -28,8 +28,8 @@
 - [ ] fsw
 - [x] fmadd.s
 - [x] fmsub.s
-- [ ] fnmsub.s
-- [ ] fnmadd.s
+- [x] fnmsub.s
+- [x] fnmadd.s
 - [x] fadd.s
 - [x] fsub.s
 - [x] fmul.s
