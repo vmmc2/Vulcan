@@ -26,8 +26,8 @@
 ### Instruções já implementadas
 - [ ] flw
 - [ ] fsw
-- [ ] fmadd.s
-- [ ] fmsub.s
+- [x] fmadd.s
+- [x] fmsub.s
 - [ ] fnmsub.s
 - [ ] fnmadd.s
 - [x] fadd.s
