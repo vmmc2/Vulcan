@@ -30,11 +30,11 @@
 - [ ] fmsub.s
 - [ ] fnmsub.s
 - [ ] fnmadd.s
-- [ ] fadd.s
-- [ ] fsub.s
-- [ ] fmul.s
-- [ ] fdiv.s
-- [ ] fsqrt.s
+- [x] fadd.s
+- [x] fsub.s
+- [x] fmul.s
+- [x] fdiv.s
+- [x] fsqrt.s
 - [ ] fsgnj.s
 - [ ] fsgnjn.s
 - [ ] fsgnjx.s
