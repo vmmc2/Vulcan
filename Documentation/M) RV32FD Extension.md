@@ -51,7 +51,7 @@
 - [ ] fcvt.s.wu
 - [ ] fmv.w.x
 
-### Alerta para erro de sintaxe
+### Alerta para erros de sintaxe
 - [ ] flw
 - [ ] fsw
 - [ ] fmadd.s
