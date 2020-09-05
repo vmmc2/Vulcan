@@ -58,7 +58,7 @@
 - [ ] fmsub.s
 - [ ] fnmsub.s
 - [ ] fnmadd.s
-- [ ] fadd.s
+- [x] fadd.s
 - [ ] fsub.s
 - [ ] fmul.s
 - [ ] fdiv.s
