@@ -20,6 +20,9 @@
 * Existem outros modos de arredondamento que serão apresentandos a seguir:
 ![[rv32fd_rounding_modes](https://http://riscv.org/)](rv32fd_rounding_modes.png)
 
+## Instruções de Conversão de Ponto-Flutuante de Precisão Simples e Instruções de Move
+
+
 ## Instruções
 ![[rv32fd](https://http://riscv.org/)](rv32fd.png)
 
