@@ -95,7 +95,7 @@ RISC-V Instruction Set Simulator Built For Education.
 - [x] feq.s
 - [x] flt.s
 - [x] fle.s
-- [x] fclass.s
+- [ ] fclass.s
 - [x] fcvt.s.w
 - [x] fcvt.s.wu
 - [x] fmv.w.x
