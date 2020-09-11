@@ -1,5 +1,6 @@
 # Vulcan
 RISC-V Instruction Set Simulator Built For Education.
+![[vulcanlogo](https://http://riscv.org/)](vulcan_logo.png)
 
 ## Features
 - [x] RV32I Extension.
