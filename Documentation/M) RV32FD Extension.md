@@ -27,8 +27,8 @@
 ![[rv32fd](https://http://riscv.org/)](rv32fd.png)
 
 ### Instruções já implementadas
-- [ ] flw
-- [ ] fsw
+- [x] flw
+- [x] fsw
 - [x] fmadd.s
 - [x] fmsub.s
 - [x] fnmsub.s
