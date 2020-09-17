@@ -38,9 +38,9 @@
 - [x] fmul.s
 - [x] fdiv.s
 - [x] fsqrt.s
-- [ ] fsgnj.s
-- [ ] fsgnjn.s
-- [ ] fsgnjx.s
+- [x] fsgnj.s
+- [x] fsgnjn.s
+- [x] fsgnjx.s
 - [x] fmin.s
 - [x] fmax.s
 - [x] fcvt.w.s
@@ -49,7 +49,7 @@
 - [x] feq.s
 - [x] flt.s
 - [x] fle.s
-- [x] fclass.s
+- [ ] fclass.s  //Nao sera implementada. (Pelo menos por enquanto).
 - [x] fcvt.s.w
 - [x] fcvt.s.wu
 - [x] fmv.w.x
