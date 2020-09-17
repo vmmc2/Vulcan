@@ -49,7 +49,7 @@
 - [x] feq.s
 - [x] flt.s
 - [x] fle.s
-- [ ] fclass.s  //Nao sera implementada. (Pelo menos por enquanto).
+- [ ] fclass.s  (Não será implementada. Pelo menos por enquanto).
 - [x] fcvt.s.w
 - [x] fcvt.s.wu
 - [x] fmv.w.x
