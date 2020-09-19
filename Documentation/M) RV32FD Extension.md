@@ -62,7 +62,7 @@
 - [ ] fnmsub.s
 - [ ] fnmadd.s
 - [x] fadd.s
-- [ ] fsub.s
+- [x] fsub.s
 - [ ] fmul.s
 - [ ] fdiv.s
 - [ ] fsqrt.s
