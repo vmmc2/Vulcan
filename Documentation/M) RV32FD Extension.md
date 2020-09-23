@@ -65,7 +65,7 @@
 - [x] fsub.s
 - [x] fmul.s
 - [x] fdiv.s
-- [ ] fsqrt.s
+- [x] fsqrt.s
 - [ ] fsgnj.s
 - [ ] fsgnjn.s
 - [ ] fsgnjx.s
