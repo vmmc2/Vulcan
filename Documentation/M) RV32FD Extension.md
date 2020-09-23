@@ -78,7 +78,7 @@
 - [x] flt.s
 - [x] fle.s
 - [ ] fclass.s
-- [ ] fcvt.s.w
-- [ ] fcvt.s.wu
-- [ ] fmv.w.x
+- [x] fcvt.s.w
+- [x] fcvt.s.wu
+- [x] fmv.w.x
 
