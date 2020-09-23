@@ -57,10 +57,10 @@
 ### Alerta para erros de sintaxe
 - [ ] flw
 - [ ] fsw
-- [ ] fmadd.s
-- [ ] fmsub.s
-- [ ] fnmsub.s
-- [ ] fnmadd.s
+- [x] fmadd.s
+- [x] fmsub.s
+- [x] fnmsub.s
+- [x] fnmadd.s
 - [x] fadd.s
 - [x] fsub.s
 - [x] fmul.s
