@@ -66,9 +66,9 @@
 - [x] fmul.s
 - [x] fdiv.s
 - [x] fsqrt.s
-- [ ] fsgnj.s
-- [ ] fsgnjn.s
-- [ ] fsgnjx.s
+- [x] fsgnj.s
+- [x] fsgnjn.s
+- [x] fsgnjx.s
 - [x] fmin.s
 - [x] fmax.s
 - [x] fcvt.w.s
