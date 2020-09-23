@@ -74,9 +74,9 @@
 - [ ] fcvt.w.s
 - [ ] fcvt.wu.s
 - [ ] fmv.x.w
-- [ ] feq.s
-- [ ] flt.s
-- [ ] fle.s
+- [x] feq.s
+- [x] flt.s
+- [x] fle.s
 - [ ] fclass.s
 - [ ] fcvt.s.w
 - [ ] fcvt.s.wu
