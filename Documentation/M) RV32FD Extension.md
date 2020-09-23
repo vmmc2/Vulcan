@@ -63,14 +63,14 @@
 - [ ] fnmadd.s
 - [x] fadd.s
 - [x] fsub.s
-- [ ] fmul.s
-- [ ] fdiv.s
+- [x] fmul.s
+- [x] fdiv.s
 - [ ] fsqrt.s
 - [ ] fsgnj.s
 - [ ] fsgnjn.s
 - [ ] fsgnjx.s
-- [ ] fmin.s
-- [ ] fmax.s
+- [x] fmin.s
+- [x] fmax.s
 - [ ] fcvt.w.s
 - [ ] fcvt.wu.s
 - [ ] fmv.x.w
