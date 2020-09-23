@@ -71,9 +71,9 @@
 - [ ] fsgnjx.s
 - [x] fmin.s
 - [x] fmax.s
-- [ ] fcvt.w.s
-- [ ] fcvt.wu.s
-- [ ] fmv.x.w
+- [x] fcvt.w.s
+- [x] fcvt.wu.s
+- [x] fmv.x.w
 - [x] feq.s
 - [x] flt.s
 - [x] fle.s
