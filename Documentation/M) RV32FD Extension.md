@@ -55,8 +55,8 @@
 - [x] fmv.w.x
 
 ### Alerta para erros de sintaxe
-- [ ] flw
-- [ ] fsw
+- [x] flw
+- [x] fsw
 - [x] fmadd.s
 - [x] fmsub.s
 - [x] fnmsub.s
