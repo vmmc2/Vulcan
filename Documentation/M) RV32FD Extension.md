@@ -89,7 +89,7 @@
 - [ ] fmsub.s
 - [ ] fnmsub.s
 - [ ] fnmadd.s
-- [ ] fadd.s
+- [x] fadd.s
 - [ ] fsub.s
 - [ ] fmul.s
 - [ ] fdiv.s
@@ -106,7 +106,7 @@
 - [ ] flt.s
 - [ ] fle.s
 - [ ] fclass.s
-- [ ] fcvt.s.w
+- [x] fcvt.s.w
 - [ ] fcvt.s.wu
 - [ ] fmv.w.x
 
