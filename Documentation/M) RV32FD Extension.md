@@ -90,9 +90,9 @@
 - [ ] fnmsub.s
 - [ ] fnmadd.s
 - [x] fadd.s
-- [ ] fsub.s
-- [ ] fmul.s
-- [ ] fdiv.s
+- [x] fsub.s
+- [x] fmul.s
+- [x] fdiv.s
 - [ ] fsqrt.s
 - [ ] fsgnj.s
 - [ ] fsgnjn.s
