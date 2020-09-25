@@ -107,6 +107,6 @@
 - [x] fle.s
 - [ ] fclass.s
 - [x] fcvt.s.w
-- [ ] fcvt.s.wu
-- [ ] fmv.w.x
+- [x] fcvt.s.wu
+- [x] fmv.w.x
 
