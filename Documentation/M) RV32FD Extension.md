@@ -83,20 +83,20 @@
 - [x] fmv.w.x
 
 ### Execucao de Testes
-- [ ] flw
-- [ ] fsw
-- [ ] fmadd.s
-- [ ] fmsub.s
-- [ ] fnmsub.s
-- [ ] fnmadd.s
+- [x] flw
+- [x] fsw
+- [x] fmadd.s
+- [x] fmsub.s
+- [x] fnmsub.s
+- [x] fnmadd.s
 - [x] fadd.s
 - [x] fsub.s
 - [x] fmul.s
 - [x] fdiv.s
 - [x] fsqrt.s
-- [ ] fsgnj.s
-- [ ] fsgnjn.s
-- [ ] fsgnjx.s
+- [x] fsgnj.s
+- [x] fsgnjn.s
+- [x] fsgnjx.s
 - [x] fmin.s
 - [x] fmax.s
 - [x] fcvt.w.s
