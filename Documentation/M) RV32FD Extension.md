@@ -93,18 +93,18 @@
 - [x] fsub.s
 - [x] fmul.s
 - [x] fdiv.s
-- [ ] fsqrt.s
+- [x] fsqrt.s
 - [ ] fsgnj.s
 - [ ] fsgnjn.s
 - [ ] fsgnjx.s
-- [ ] fmin.s
-- [ ] fmax.s
+- [x] fmin.s
+- [x] fmax.s
 - [ ] fcvt.w.s
 - [ ] fcvt.wu.s
 - [ ] fmv.x.w
-- [ ] feq.s
-- [ ] flt.s
-- [ ] fle.s
+- [x] feq.s
+- [x] flt.s
+- [x] fle.s
 - [ ] fclass.s
 - [x] fcvt.s.w
 - [ ] fcvt.s.wu
