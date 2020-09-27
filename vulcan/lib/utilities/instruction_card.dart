@@ -10,4 +10,4 @@ class InstructionCard{
 
   InstructionCard({@required this.pc, @required this.machineCode, @required this.originalCode});
 }
-//
+////
