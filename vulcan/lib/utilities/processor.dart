@@ -1,6 +1,8 @@
 // Vulcan is a software developed by:
 // Victor Miguel de Morais Costa.
 // License: MIT.
+import 'dart:math';
+
 class Processor{
   //Ponteiros fixados para os segmentos de memoria.
   final int reserved = 0;
@@ -13,13 +15,16 @@ class Processor{
   List<int> integerRegisters = [];  //List de tamanho 32. Cada elemento da lista representa um dos 32 registradores inteiros do RISC-V.
   List<double> floatingpointRegisters = []; //List de tamanho 32. Cada elemento da lista representa um dos 32 registradores de ponto-flutuante do RISC-V.
   List<String> memory; //List de tamanho 999_992. Cada elemento eh uma string de tamanho 8 (8 bits = 1 byte). Isso acontece pq a memoria eh enderacada por byte.
+  List<bool> reservedMemory; //List utilizada para realizarmos as operacoes atomicas de load e de store.
   int pc = 400;
+  int floatingPointControlRegister = 0; //Registrador de controle para a extensao de ponto flutuante.
 
   //Construtor da Classe
   Processor(){
     this.integerRegisters = List<int>.filled(32, 0, growable: false);
     this.floatingpointRegisters = List<double>.filled(32, 0.0, growable: false);
     this.memory = List<String>.filled(999987, '00000000', growable: false); //999_987
+    this.reservedMemory = List<bool>.filled(999987, false, growable: false); //999_887
     this.integerRegisters[2] = 999986; //registrador x2(sp) funciona como o ponteiro de pilha.
     this.integerRegisters[3] = 200400; //registrador x3 aponta para os dados estaticos (static data).
   }
@@ -67,7 +72,14 @@ class Processor{
           pc = pc + 4;
         }
       }else if(instruction.substring(17, 20) == '001'){ //sll
-        integerRegisters[int.parse(instruction.substring(20, 25), radix: 2)] = integerRegisters[int.parse(instruction.substring(12, 17), radix: 2)] << integerRegisters[int.parse(instruction.substring(7, 12), radix: 2)];
+        int rd = int.parse(instruction.substring(20, 25), radix: 2);
+        int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+        int rs2 = int.parse(instruction.substring(7, 12), radix: 2);
+        if(integerRegisters[rs2] < 0){
+          integerRegisters[rd] = 0;
+        }else{
+        integerRegisters[rd] = integerRegisters[rs1] << integerRegisters[rs2];
+        }
         pc = pc + 4;
       }else if(instruction.substring(17, 20) == '010'){ //slt
         if(integerRegisters[int.parse(instruction.substring(12, 17), radix: 2)] < integerRegisters[int.parse(instruction.substring(7, 12), radix: 2)]){
@@ -91,18 +103,37 @@ class Processor{
       }
       else if(instruction.substring(17, 20) == '101'){ //srl ou sra
         if(instruction.substring(0, 7) == '0000000'){ //srl
-          integerRegisters[int.parse(instruction.substring(20, 25), radix: 2)] = integerRegisters[int.parse(instruction.substring(12, 17), radix: 2)] >> integerRegisters[int.parse(instruction.substring(7, 12), radix: 2)];
+          int rd = int.parse(instruction.substring(20, 25), radix: 2);
+          int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+          int rs2 = int.parse(instruction.substring(7, 12), radix: 2);
+          if(integerRegisters[rs2] < 0){
+            integerRegisters[rd] = 0;
+          }else{
+            integerRegisters[rd] = integerRegisters[rs1] >> integerRegisters[rs2];
+          }
           pc = pc + 4;
         }else if(instruction.substring(0, 7) == '0100000'){ //sra
           //A funcao sra realiza uma divisao por 2^n (mesmo o dividendo sendo positivo ou negativo).
           int rs1 = integerRegisters[int.parse(instruction.substring(12, 17), radix: 2)];
           int rs2 = integerRegisters[int.parse(instruction.substring(7, 12), radix: 2)];
-          if(integerRegisters[rs1] < 0){
-            integerRegisters[rs1] = integerRegisters[rs1] * (-1);
-            int almost = integerRegisters[rs1] >> integerRegisters[rs2];
-            integerRegisters[int.parse(instruction.substring(20, 25), radix: 2)] = almost * (-1);
-          }else{
-            integerRegisters[int.parse(instruction.substring(20, 25), radix: 2)] = integerRegisters[int.parse(instruction.substring(12, 17), radix: 2)] >> integerRegisters[int.parse(instruction.substring(7, 12), radix: 2)];
+          try{
+            if(integerRegisters[rs1] < 0){
+              integerRegisters[rs1] = integerRegisters[rs1] * (-1);
+              if(integerRegisters[rs2] < 0){
+                integerRegisters[int.parse(instruction.substring(20, 25), radix: 2)] = 0;
+              }else{
+                int almost = integerRegisters[rs1] >> integerRegisters[rs2];
+                integerRegisters[int.parse(instruction.substring(20, 25), radix: 2)] = almost * (-1);
+              }
+            }else{
+              if(integerRegisters[rs2] < 0){
+                integerRegisters[int.parse(instruction.substring(20, 25), radix: 2)] = 0;
+              }else{
+                integerRegisters[int.parse(instruction.substring(20, 25), radix: 2)] = integerRegisters[int.parse(instruction.substring(12, 17), radix: 2)] >> integerRegisters[int.parse(instruction.substring(7, 12), radix: 2)];
+              }
+            }
+          }catch(e){
+            print(e);
           }
           pc = pc + 4;
         }
@@ -194,6 +225,331 @@ class Processor{
         pc = pc + 4;
       }
     }
+
+
+    /////////////////////////
+    // RV32A  INSTRUCTIONS //
+    /////////////////////////
+    // lr.w, sc.w, amoswap.w, amoadd.w, amoxor.w, amoand.w, amoor.w, amomin.w, amomax.wm amominu.w, amomaxu.w
+    else if(instruction.substring(25) == "0101111" && instruction.substring(17, 20) == "010"){
+      if(instruction.substring(0, 5) == "00010"){ //lr.w
+        int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+        int rd = int.parse(instruction.substring(20, 25), radix: 2);
+        int address = integerRegisters[rs1];
+        integerRegisters[rd] = getNumberFromBinaryTwoComplement(getWordFromMemory(address));
+        reservedMemory[address] = true;
+        pc = pc + 4;
+      }else if(instruction.substring(0, 5) == "00011"){ //sc.w
+        int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+        int rs2 = int.parse(instruction.substring(7, 12), radix: 2);
+        int rd = int.parse(instruction.substring(20, 25), radix: 2);
+        if(reservedMemory[integerRegisters[rs1]] == true){
+          loadWordIntoMemory(integerRegisters[rs2], integerRegisters[rs1]);
+          integerRegisters[rd] = 0; //CODIGO DE OKAY PARA STORE ATOMICO BEM-SUCEDIDO
+        }
+        else{
+          integerRegisters[rd] = -1; //CODIGO DE ERRO PARA STORE ATOMICO MAL-SUCEDIDO
+        }
+        pc = pc + 4;
+      }else if(instruction.substring(0, 5) == "00001"){ //amoswap.w
+        // int rd = int.parse(instruction.substring(20, 25) , radix: 2);
+        int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+        int rs2 = int.parse(instruction.substring(7, 12), radix: 2);
+        int rd = int.parse(instruction.substring(20, 25), radix: 2);
+        String almostT = getWordFromMemory(integerRegisters[rs1]);
+        int t = getNumberFromBinaryTwoComplement(almostT);
+        loadWordIntoMemory(integerRegisters[rs2], integerRegisters[rs1]);
+        integerRegisters[rd] = t;
+        pc = pc + 4;
+      }else if(instruction.substring(0, 5) == "00000"){ //amoadd.w
+        int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+        int rs2 = int.parse(instruction.substring(7, 12), radix: 2);
+        int rd = int.parse(instruction.substring(20, 25), radix: 2);
+        String almostT = getWordFromMemory(integerRegisters[rs1]);
+        int t = getNumberFromBinaryTwoComplement(almostT);
+        loadWordIntoMemory(t + integerRegisters[rs2], integerRegisters[rs1]);
+        integerRegisters[rd] = t;
+        pc = pc + 4;
+      }else if(instruction.substring(0, 5) == "00100"){ //amoxor.w
+        int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+        int rs2 = int.parse(instruction.substring(7, 12), radix: 2);
+        int rd = int.parse(instruction.substring(20, 25), radix: 2);
+        String almostT = getWordFromMemory(integerRegisters[rs1]);
+        int t = getNumberFromBinaryTwoComplement(almostT);
+        loadWordIntoMemory(t ^ integerRegisters[rs2], integerRegisters[rs1]);
+        integerRegisters[rd] = t;
+        pc = pc + 4;
+      }else if(instruction.substring(0, 5) == "01100"){ //amoand.w
+        int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+        int rs2 = int.parse(instruction.substring(7, 12), radix: 2);
+        int rd = int.parse(instruction.substring(20, 25), radix: 2);
+        String almostT = getWordFromMemory(integerRegisters[rs1]);
+        int t = getNumberFromBinaryTwoComplement(almostT);
+        loadWordIntoMemory(t & integerRegisters[rs2], integerRegisters[rs1]);
+        integerRegisters[rd] = t;
+        pc = pc + 4;
+      }else if(instruction.substring(0, 5) == "01000"){ //amoor.w
+        int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+        int rs2 = int.parse(instruction.substring(7, 12), radix: 2);
+        int rd = int.parse(instruction.substring(20, 25), radix: 2);
+        String almostT = getWordFromMemory(integerRegisters[rs1]);
+        int t = getNumberFromBinaryTwoComplement(almostT);
+        loadWordIntoMemory(t | integerRegisters[rs2], integerRegisters[rs1]);
+        integerRegisters[rd] = t;
+        pc = pc + 4;
+      }else if(instruction.substring(0, 5) == "10000"){ //amomin.w
+        int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+        int rs2 = int.parse(instruction.substring(7, 12), radix: 2);
+        int rd = int.parse(instruction.substring(20, 25), radix: 2);
+        String almostT = getWordFromMemory(integerRegisters[rs1]);
+        int t = getNumberFromBinaryTwoComplement(almostT);
+        loadWordIntoMemory(min(t, integerRegisters[rs2]), integerRegisters[rs1]);
+        integerRegisters[rd] = t;
+        pc = pc + 4;
+      }else if(instruction.substring(0, 5) == "10100"){ //amomax.w
+        int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+        int rs2 = int.parse(instruction.substring(7, 12), radix: 2);
+        int rd = int.parse(instruction.substring(20, 25), radix: 2);
+        String almostT = getWordFromMemory(integerRegisters[rs1]);
+        int t = getNumberFromBinaryTwoComplement(almostT);
+        loadWordIntoMemory(max(t, integerRegisters[rs2]), integerRegisters[rs1]);
+        integerRegisters[rd] = t;
+        pc = pc + 4;
+      }else if(instruction.substring(0, 5) == "11000"){ //amominu.w
+        int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+        int rs2 = int.parse(instruction.substring(7, 12), radix: 2);
+        int rd = int.parse(instruction.substring(20, 25), radix: 2);
+        String almostT = getWordFromMemory(integerRegisters[rs1]);
+        int t = getNumberFromBinaryTwoComplement(almostT);
+        int answer = min(t.toUnsigned(32), integerRegisters[rs2].toUnsigned(32));
+        int answer2 = answer.toInt();
+        loadWordIntoMemory(answer2, integerRegisters[rs1]);
+        integerRegisters[rd] = t;
+        pc = pc + 4;
+      }else if(instruction.substring(0, 5) == "11100"){ //amomaxu.w
+        int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+        int rs2 = int.parse(instruction.substring(7, 12), radix: 2);
+        int rd = int.parse(instruction.substring(20, 25), radix: 2);
+        String almostT = getWordFromMemory(integerRegisters[rs1]);
+        int t = getNumberFromBinaryTwoComplement(almostT);
+        int answer = max(t.toUnsigned(32), integerRegisters[rs2].toUnsigned(32));
+        int answer2 = answer.toInt();
+        loadWordIntoMemory(answer2, integerRegisters[rs1]);
+        integerRegisters[rd] = t;
+        pc = pc + 4;
+      }
+    }
+    
+
+    /////////////////////////
+    /// RV32F INSTRUCTIONS //
+    /////////////////////////
+    else if(instruction.substring(25) == "0000111" || instruction.substring(25) == "0100111" || instruction.substring(25) == "1000011" || instruction.substring(25) == "1000111" || instruction.substring(25) == "1001011" || instruction.substring(25) == "1001111" || instruction.substring(25) == "1010011"){
+      print("dale porra");
+      if(instruction.substring(25) == "0000111" && instruction.substring(17, 20) == "010"){ //flw
+        int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+        int rd = int.parse(instruction.substring(20, 25), radix: 2);
+        String imm = instruction.substring(0, 12);
+        int immediate = getNumberFromBinaryTwoComplement(imm);
+        int address = immediate + integerRegisters[rs1];
+        String fpString = getWordFromMemory(address);
+        floatingpointRegisters[rd] = convertFPStringToNumber(fpString);
+        pc = pc + 4;
+      }else if(instruction.substring(25) == "0100111" && instruction.substring(17, 20) == "010"){ //fsw
+        int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+        int rs2 = int.parse(instruction.substring(7, 12), radix: 2);
+        String imm115 = instruction.substring(0, 7);
+        String imm40 = instruction.substring(20, 25);
+        String imm = imm115 + imm40;
+        int immediate = getNumberFromBinaryTwoComplement(imm);
+        int address = integerRegisters[rs1] + immediate;
+        String value = generateStringFromFloatingPoint(floatingpointRegisters[rs2]);
+        if(address < 0 || address >= 999987){
+          pc = pc + 4;
+          return;
+        }
+        memory[address] = value.substring(24);
+        memory[address + 1] = value.substring(16, 24);
+        memory[address + 2] = value.substring(8, 16);
+        memory[address + 3] = value.substring(0, 8);
+        pc = pc + 4;
+      }else if(instruction.substring(25) == "1000011" && instruction.substring(5, 7) == "00"){ //fmadd.s
+        int rs3 = int.parse(instruction.substring(0, 5), radix: 2);
+        int rs2 = int.parse(instruction.substring(7, 12), radix: 2);
+        int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+        int rd = int.parse(instruction.substring(20, 25), radix: 2);
+        floatingpointRegisters[rd] = (floatingpointRegisters[rs1] * floatingpointRegisters[rs2]) + floatingpointRegisters[rs3];
+        pc = pc + 4;
+      }else if(instruction.substring(25) == "1000111" && instruction.substring(5, 7) == "00"){ //fmsub.s        
+        int rs3 = int.parse(instruction.substring(0, 5), radix: 2);
+        int rs2 = int.parse(instruction.substring(7, 12), radix: 2);
+        int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+        int rd = int.parse(instruction.substring(20, 25), radix: 2);
+        floatingpointRegisters[rd] = (floatingpointRegisters[rs1] * floatingpointRegisters[rs2]) - floatingpointRegisters[rs3];
+        pc = pc + 4;
+      }else if(instruction.substring(25) == "1001011" && instruction.substring(5, 7) == "00"){ //fnmsub.s
+        int rs3 = int.parse(instruction.substring(0, 5), radix: 2);
+        int rs2 = int.parse(instruction.substring(7, 12), radix: 2);
+        int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+        int rd = int.parse(instruction.substring(20, 25), radix: 2);
+        floatingpointRegisters[rd] = -(floatingpointRegisters[rs1] * floatingpointRegisters[rs2]) + floatingpointRegisters[rs3];
+        pc = pc + 4;
+      }else if(instruction.substring(25) == "1001111" && instruction.substring(5, 7) == "00"){ //fnmadd.s
+        int rs3 = int.parse(instruction.substring(0, 5), radix: 2);
+        int rs2 = int.parse(instruction.substring(7, 12), radix: 2);
+        int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+        int rd = int.parse(instruction.substring(20, 25), radix: 2);
+        floatingpointRegisters[rd] = -(floatingpointRegisters[rs1] * floatingpointRegisters[rs2]) - floatingpointRegisters[rs3];
+        pc = pc + 4;
+      }else if(instruction.substring(25) == "1010011"){ // the rest of the instructions...
+        if(instruction.substring(0, 7) == "0000000"){ //fadd.s
+          print("entrei no fadd.s");
+          int rd = int.parse(instruction.substring(20, 25), radix: 2);
+          int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+          int rs2 = int.parse(instruction.substring(7, 12) , radix: 2);
+          floatingpointRegisters[rd] = floatingpointRegisters[rs1] + floatingpointRegisters[rs2];
+          pc = pc + 4;
+        }else if(instruction.substring(0, 7) == "0000100"){ // fsub.s
+          int rd = int.parse(instruction.substring(20, 25), radix: 2);
+          int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+          int rs2 = int.parse(instruction.substring(7, 12) , radix: 2);
+          floatingpointRegisters[rd] = floatingpointRegisters[rs1] - floatingpointRegisters[rs2];
+          pc = pc + 4;
+        }else if(instruction.substring(0, 7) == "0001000"){ //fmul.s
+          int rd = int.parse(instruction.substring(20, 25), radix: 2);
+          int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+          int rs2 = int.parse(instruction.substring(7, 12) , radix: 2);
+          floatingpointRegisters[rd] = floatingpointRegisters[rs1] * floatingpointRegisters[rs2];
+          pc = pc + 4;
+        }else if(instruction.substring(0, 7) == "0001100"){ //fdiv.s
+          int rd = int.parse(instruction.substring(20, 25), radix: 2);
+          int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+          int rs2 = int.parse(instruction.substring(7, 12) , radix: 2);
+          if(floatingpointRegisters[rs2] == 0){
+            floatingpointRegisters[rd] = 0;
+          }else{
+            floatingpointRegisters[rd] = floatingpointRegisters[rs1] / floatingpointRegisters[rs2];
+          }
+          pc = pc + 4;
+        }else if(instruction.substring(0, 7) == "0101100" && instruction.substring(7, 12) == "00000"){ //fsqrt.s
+          int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+          int rd = int.parse(instruction.substring(20, 25), radix: 2);
+          floatingpointRegisters[rd] = sqrt(floatingpointRegisters[rs1]);
+          pc = pc + 4;
+        }else if(instruction.substring(0, 7) == "0010100" && instruction.substring(17, 20) == "000"){ //fmin.s
+          int rd = int.parse(instruction.substring(20, 25), radix: 2);
+          int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+          int rs2 = int.parse(instruction.substring(7, 12), radix: 2);
+          floatingpointRegisters[rd] = min(floatingpointRegisters[rs1], floatingpointRegisters[rs2]);
+          pc = pc + 4;
+        }else if(instruction.substring(0, 7) == "0010100" && instruction.substring(17, 20) == "001"){ //fmax.s
+          int rd = int.parse(instruction.substring(20, 25), radix: 2);
+          int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+          int rs2 = int.parse(instruction.substring(7, 12), radix: 2);
+          floatingpointRegisters[rd] = max(floatingpointRegisters[rs1], floatingpointRegisters[rs2]);
+          pc = pc + 4;
+        }else if(instruction.substring(0, 7) == "1010000" && instruction.substring(17, 20) == "010"){ //feq.s
+          int rd = int.parse(instruction.substring(20, 25), radix: 2);
+          int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+          int rs2 = int.parse(instruction.substring(7, 12), radix: 2);
+          if(floatingpointRegisters[rs1] == floatingpointRegisters[rs2]){
+            integerRegisters[rd] = 1;
+          }else{
+            integerRegisters[rd] = 0;
+          }
+          pc = pc + 4;
+        }else if(instruction.substring(0, 7) == "1010000" && instruction.substring(17, 20) == "000"){ //fle.s
+          int rd = int.parse(instruction.substring(20, 25), radix: 2);
+          int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+          int rs2 = int.parse(instruction.substring(7, 12), radix: 2);
+          if(floatingpointRegisters[rs1] <= floatingpointRegisters[rs2]){
+            integerRegisters[rd] = 1;
+          }else{
+            integerRegisters[rd] = 0;
+          }
+          pc = pc + 4;
+        }else if(instruction.substring(0, 7) == "1010000" && instruction.substring(17, 20) == "001"){ //flt.s
+          int rd = int.parse(instruction.substring(20, 25), radix: 2);
+          int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+          int rs2 = int.parse(instruction.substring(7, 12), radix: 2);
+          if(floatingpointRegisters[rs1] < floatingpointRegisters[rs2]){
+            integerRegisters[rd] = 1;
+          }else{
+            integerRegisters[rd] = 0;
+          }
+          pc = pc + 4;
+        }else if(instruction.substring(0, 7) == "1101000" && instruction.substring(7, 12) == "00000"){ //fcvt.s.w
+          print("entrei no fcvt.s.w");
+          int rd = int.parse(instruction.substring(20, 25), radix: 2);
+          int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+          floatingpointRegisters[rd] = integerRegisters[rs1].toDouble();
+          print("fp-register[${rd}]: ${floatingpointRegisters[rd]}");
+          pc = pc + 4;
+        }else if(instruction.substring(0, 7) == "1101000" && instruction.substring(7, 12) == "00001"){ //fcvt.s.wu
+          int rd = int.parse(instruction.substring(20, 25), radix: 2);
+          int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+          floatingpointRegisters[rd] = integerRegisters[rs1].abs().toDouble();
+          pc = pc + 4;
+        }else if(instruction.substring(0, 7) == "1111000" && instruction.substring(7, 12) == "00000" && instruction.substring(17, 20) == "000"){ //fmv.w.x
+          int rd = int.parse(instruction.substring(20, 25), radix: 2);
+          int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+          floatingpointRegisters[rd] = integerRegisters[rs1].toDouble();
+          pc = pc + 4;
+        }else if(instruction.substring(0, 7) == "1100000" && instruction.substring(7, 12) == "00000"){ //fcvt.w.s
+          int rd = int.parse(instruction.substring(20, 25), radix: 2);
+          int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+          integerRegisters[rd] = floatingpointRegisters[rs1].round();
+          pc = pc + 4;
+        }else if(instruction.substring(0, 7) == "1100000" && instruction.substring(7, 12) == "00001"){ //fcvt.wu.s
+          int rd = int.parse(instruction.substring(20, 25), radix: 2);
+          int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+          integerRegisters[rd] = floatingpointRegisters[rs1].abs().round();
+          pc = pc + 4;
+        }else if(instruction.substring(0, 7) == "1110000" && instruction.substring(7, 12) == "00000" && instruction.substring(17, 20) == "000"){ //fmv.x.w
+          int rd = int.parse(instruction.substring(20, 25), radix: 2);
+          int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+          integerRegisters[rd] = floatingpointRegisters[rs1].round();
+          pc = pc + 4;
+        }else if(instruction.substring(0, 7) == "1110000" && instruction.substring(7, 12) == "00000" && instruction.substring(17, 20) == "001"){ //fclass.s
+          //Nao faco ideia de como implementar isso daqui XD
+          pc = pc + 4;
+        }else if(instruction.substring(0, 7) == "0010000" && instruction.substring(17, 20) == "000"){ //fsgnj.s
+          int rd = int.parse(instruction.substring(20, 25), radix: 2);
+          int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+          int rs2 = int.parse(instruction.substring(7, 12), radix: 2);
+          String valueOfRs1 = generateStringFromFloatingPoint(floatingpointRegisters[rs1]);
+          String valueOfRs2 = generateStringFromFloatingPoint(floatingpointRegisters[rs2]);
+          String valueOfRd = valueOfRs2[0] + valueOfRs1.substring(1);
+          floatingpointRegisters[rd] = convertFPStringToNumber(valueOfRd);
+          pc = pc + 4;
+        }else if(instruction.substring(0, 7) == "0010000" && instruction.substring(17, 20) == "001"){ //fsgnjn.s
+          int rd = int.parse(instruction.substring(20, 25), radix: 2);
+          int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+          int rs2 = int.parse(instruction.substring(7, 12), radix: 2);
+          String valueOfRs1 = generateStringFromFloatingPoint(floatingpointRegisters[rs1]);
+          String valueOfRs2 = generateStringFromFloatingPoint(floatingpointRegisters[rs2]);
+          String valueOfRd = "";
+          if(valueOfRs2[0] == "0"){
+            valueOfRd = "1" + valueOfRs1.substring(1);
+          }else if(valueOfRs2[0] == "1"){
+            valueOfRd = "0" + valueOfRs1.substring(1);
+          }
+          floatingpointRegisters[rd] = convertFPStringToNumber(valueOfRd);
+          pc = pc + 4;
+        }else if(instruction.substring(0, 7) == "0010000" && instruction.substring(17, 20) == "010"){ //fsgnjx.s
+          int rd = int.parse(instruction.substring(20, 25), radix: 2);
+          int rs1 = int.parse(instruction.substring(12, 17), radix: 2);
+          int rs2 = int.parse(instruction.substring(7, 12), radix: 2);
+          String valueOfRs1 = generateStringFromFloatingPoint(floatingpointRegisters[rs1]);
+          String valueOfRs2 = generateStringFromFloatingPoint(floatingpointRegisters[rs2]);
+          int xorResult = int.parse(valueOfRs1[0], radix: 10) ^ int.parse(valueOfRs2[0], radix: 10);
+          String valueOfRd = xorResult.toRadixString(2) + valueOfRs1.substring(1);
+          floatingpointRegisters[rd] = convertFPStringToNumber(valueOfRd);
+          pc = pc + 4;
+        }
+      }
+    }
+
 
     /////////////////////////
     // TYPE-U INSTRUCTIONS //
@@ -513,21 +869,137 @@ class Processor{
   }
 
   String getByteFromMemory(int address){
+    if(address < 0 || address >= 999987){
+      return "00000000";
+    }
     String output = "";
     output = memory[address];
     return output;
   }
 
   String getHalfWordFromMemory(int address){
+    if(address < 0 || address >= 999987){
+      return "0000000000000000";
+    }
     String output = "";
     output = memory[address + 1] + memory[address];
     return output;
   }
 
   String getWordFromMemory(int address){
+    if(address < 0 || address >= 999987){
+      return "00000000000000000000000000000000";
+    }
     String output = "";
     output = memory[address + 3] + memory[address + 2] + memory[address + 1] + memory[address];
     return output;
+  }
+
+  void loadWordIntoMemory(int value, int address){ //Funcao responsavel por carregar uma word na memoria.
+    if(address < 0 || address >= 999987){
+      return;
+    }
+    //Memoria eh enderacada por byte.
+    //Primeira parte: Converter o valor(int) para uma string binaria.
+    String almost = BigInt.from(value).toUnsigned(32).toRadixString(2);
+    //Segunda parte: Carregar o valor que agora eh uma string binaria na memoria.
+    if(almost.length == 32){
+      memory[address] = almost.substring(24, 32);
+      memory[address + 1] = almost.substring(16, 24);
+      memory[address + 2] = almost.substring(8, 16);
+      memory[address + 3] = almost.substring(0, 8);
+    }else if(almost.length < 32){
+      almost = ('0' * (32 - almost.length)) + almost;
+      memory[address] = almost.substring(24, 32);
+      memory[address + 1] = almost.substring(16, 24);
+      memory[address + 2] = almost.substring(8, 16);
+      memory[address + 3] = almost.substring(0, 8);
+    }
+    return;
+  }
+
+  double convertFPStringToNumber(String input){
+    double answer;
+    //1) Pegando o sinal.
+    String signal = input[0];
+    int sign = 0;
+    if(signal == '1'){
+      sign = 1;
+    }
+
+    //2) Pegando os bits do expoente (8 bits) => 1..8
+    String expPart = input.substring(1, 9);
+    int exp = int.parse(expPart, radix: 2);
+    int expUnBias = exp - 127;
+
+    //3) Pegando a mantissa
+    double mantissa = 0;
+    int exponent = -1;
+    for(int i = 9; i < input.length; i++){
+      mantissa +=  int.parse(input[i], radix: 10) * pow(2, exponent);
+      exponent -= 1;
+    }
+
+    answer = pow(-1.0, sign).toDouble() * (1 + mantissa).toDouble() * pow(2, expUnBias).toDouble();
+
+    return answer;
+  }
+
+
+  String fractionToBinary(double fraction){
+    String answer = "";
+    
+    while(fraction != 0 && answer.length <= 32){
+      fraction = fraction * 2;
+      if(fraction >= 1){
+        answer += "1";
+        fraction = fraction - 1;
+      }else{
+        answer += "0";
+      }
+    }
+    return answer;
+  }
+
+
+  String generateStringFromFloatingPoint(double value){
+    String answer = "";
+    //Devemos converter o numero de ponto flutuante para o formato IEE-754
+    //Primeira parte: O primeiro bit eh o bit de sinal
+    // '0' -> numero de ponto flutuante positivo
+    // '1' -> numero de ponto flutuante negativo
+    if(value >= 0){
+      answer += '0';
+    }else{
+      answer += '1';
+    }
+    //Tira o valor absoluto (modulo) do numero e tambem converte a parte inteira dele para a representacao binaria.
+    value = value.abs();
+    int valueInt = value.floor();
+    String valueIntStr = valueInt.toRadixString(2);
+    //Realizando agora a conversao da parte decimal do numero float para uma string.
+    String valueFractionStr = fractionToBinary(value - value.floor());
+    
+    //Pegando o index do primeiro bit '1' na String que representa a parte inteira do valor.
+    int index = -1;
+    for(int i = 0; i < valueIntStr.length; i++){
+      if(valueIntStr[i] == '1'){
+        index = i;
+        break;
+      }
+    }
+    String expStr = ((valueIntStr.length - index - 1) + 127).toRadixString(2);
+    String aux = valueIntStr + valueFractionStr;
+    String mantStr = aux.substring(index + 1);
+    if(mantStr.length < 23){
+      while(mantStr.length != 23){
+        mantStr += '0';
+      }
+    }
+
+    answer += expStr + mantStr;
+
+    return answer.substring(0, 32);
   }
 
   int getNumberFromBinaryTwoComplement(String input){
@@ -596,5 +1068,4 @@ class Processor{
     }
     return;
   }  
-
 }
