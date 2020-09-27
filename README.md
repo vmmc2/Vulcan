@@ -115,10 +115,6 @@ RISC-V Instruction Set Simulator Built For Education.
 - [x] amominu.w
 - [x] amomaxu.w
 
-## To do (In a near future)
-- [x] RV32F Extension. (__Done!__)
-- [x] RV32A Extension. (__Done!__)
-
 ## Limitations
 * Unfortunately, by the time that I did the initial version, Flutter Web does not support responsive web apps. Because of it, one must use Vulcan in fullscreen mode. Otherwise, the app will throw overflow exceptions.
 
@@ -147,7 +143,6 @@ flutter run -d chrome
 
 ### Web usage
 * You can use Vulcan online by the following link: https://vmmc2.github.io/vulcan
-* __This is the version 1.0 (not the final).__
 
 ## Bugs and Errors
 * __If you find any bugs, errors or strange behavior, feel free to open an issue. The only thing that I ask is to provide a detailed explanation of the bug/error/strange behavior. If possible, provide a screenshot.__
