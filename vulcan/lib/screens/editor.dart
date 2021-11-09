@@ -12,8 +12,6 @@ import 'package:vulcan/screens/simulator.dart';
 import 'dart:html' as html;
 import 'dart:ui' as ui;
 
-//iSSO AQUI era stateful antes
-
 class Editor extends StatelessWidget{
 
   String _editorId = "code-editor";
@@ -31,44 +29,6 @@ class Editor extends StatelessWidget{
   var _focusNode = FocusNode();
   var _colNumbers = 20;
   var _lineNumbers = 20;
-
-  /*
-  @override
-  void initState() {
-    super.initState();
-    ui.platformViewRegistry
-        .registerViewFactory(_editorId, (int viewId) => _codeContent);
-    _codeView = HtmlElementView(
-      viewType: _editorId,
-    );
-    var node = html.document.getElementsByTagName("flt-platform-view")[0] as html.HtmlElement; //o problema ta aqui eu acho... confirmado. a treta eh aqui.
-    _codeMirror = CodeMirror.fromElement(_codeContent, options: _editorOptions);
-  }
-  */
-
-  /* ISSO AQUI NAO TAVA COMENTADO ANTES
-  handleEditorCreated(CodeMirror mirror) {
-    _codeMirror = mirror;
-    //Nao tinha essa linha abaixo.
-    _codeMirror.setSize(1300, 580); //width, height
-    //O número de linhas de exibição torna inutilizável
-    _codeMirror.setLineNumbers(true);
-    _codeMirror.refresh(); //nao tinha isso antes. foi a 1 coisa q adicionei
-    _codeMirror.getDoc().setValue("");
-    _codeMirror.onMouseDown.listen((event) { //Para ativar o editor, tem que colocar o mouse em cima dele e clicar duas vezes tava como: onDoubleClick
-      _codeMirror.refresh(); //n tinha isso
-      // numero da linha
-      setState(() {
-        _colNumbers = _codeMirror
-            .getCursor()
-            .ch;
-        _lineNumbers = _codeMirror
-            .getCursor()
-            .line;
-        _focusNode.requestFocus();
-      });
-    });
-  }*/
 
   static String content = "";
   var _controller = TextEditingController(text: content);
@@ -102,7 +62,6 @@ class Editor extends StatelessWidget{
                         ),
                         width: 1300,
                         height: 550,
-                        //Vou tentar fazer esse lance do codigo usando o Rich_Code_Editor. Vamo ver oq rola...
                         child: Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: Theme(
@@ -119,7 +78,7 @@ class Editor extends StatelessWidget{
                               minLines: 21,
                               maxLines: null,
                               autofocus: true,
-                              obscureText: false, //Deixa o conteudo digitado visivel
+                              obscureText: false,
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderSide: BorderSide(color: Color(0xFF02143D)),
@@ -134,20 +93,6 @@ class Editor extends StatelessWidget{
                             ),
                           ),
                         ),
-
-
-
-                        //O que tem aqui embaixo eh o lance do CodeMirror
-                        /*
-                        child: CodeEditor(
-                            editorId: _editorId,
-                            height: 550,
-                            width: 1300,
-                            initialOptions: _editorOptions,
-                            onEditorCreated: handleEditorCreated,
-                            focusNode: _focusNode
-                        ),
-                        */
                       ),
                       SizedBox(width: 40.0),
                       RaisedButton(
@@ -171,31 +116,9 @@ class Editor extends StatelessWidget{
                   ),
                 ],
               ),
-
-              /*
-              body: Container(
-                alignment: Alignment.center,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    FlatButton(onPressed: showCodeEditor, child: Text("show")),
-                    Container(
-                        decoration: BoxDecoration(color: Colors.grey),
-                        width: 400,
-                        height: 400,
-                        child: _codeView,
-                    ),
-                  ],
-                ),
-              ),
-              */
             ),
           ) : ErrorPage(),
         ),
       );
   }
 }
-
-
-
-//
